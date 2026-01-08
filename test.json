@@ -1,0 +1,531 @@
+{
+    "characterInfo": {
+        "characterName": "Omnissiah",
+        "classesAndLevel" : "Paladin 1 / Warlock 2",
+        "species": "High Elf",
+        "background": "Acolyte",
+        "alignment": "Lawful Good",
+        "experiencePoints": "(Milestone)"
+    },
+    "characterDetails" : {
+        "appearance": {
+            "gender": "",
+            "age": 0,
+            "height": "",
+            "weight": "",
+            "size": "Medium",
+            "hair": "",
+            "eyes": "",
+            "skin": "",
+            "faith": "TBD (Acolyte)"
+        },
+        "personality": {
+            "traits": "",
+            "ideals": "",
+            "bonds": "",
+            "flaws": ""
+        },
+        "alliesAndOrganizations": "",
+        "backstory": "",
+        "additionalNotes": ""
+    },
+    "proficiencyBonus": 2,
+    "abilities": {
+        "strength": { "score": 15, "modifier": 2 },
+        "dexterity": { "score": 12, "modifier": 1 },
+        "constitution": { "score": 14, "modifier": 2 },
+        "intelligence": { "score": 9, "modifier": -1 },
+        "wisdom": { "score": 10, "modifier": 0 },
+        "charisma": { "score": 14, "modifier": 2 }
+    },
+    "savingThrows": {
+        "strength": { "proficient": false, "modifier": 2 },
+        "dexterity": { "proficient": false, "modifier": 1 },
+        "constitution": { "proficient": false, "modifier": 2 },
+        "intelligence": { "proficient": false, "modifier": -1 },
+        "wisdom": { "proficient": true, "modifier": 2 },
+        "charisma": { "proficient": true, "modifier": 4 }
+    },
+    "skills": {
+        "acrobatics": { "proficient": false, "modifier": 1 },
+        "animalHandling": { "proficient": false, "modifier": 0 },
+        "arcana": { "proficient": false, "modifier": -1 },
+        "athletics": { "proficient": true, "modifier": 4 },
+        "deception": { "proficient": false, "modifier": 2 },
+        "history": { "proficient": false, "modifier": -1 },
+        "insight": { "proficient": true, "modifier": 2 },
+        "intimidation": { "proficient": false, "modifier": 2 },
+        "investigation": { "proficient": false, "modifier": -1 },
+        "medicine": { "proficient": false, "modifier": 0 },
+        "nature": { "proficient": false, "modifier": -1 },
+        "perception": { "proficient": true, "modifier": 2 },
+        "performance": { "proficient": false, "modifier": 2 },
+        "persuasion": { "proficient": true, "modifier": 4 },
+        "religion": { "proficient": true, "modifier": 1 },
+        "sleightOfHand": { "proficient": false, "modifier": 1 },
+        "stealth": { "proficient": false, "modifier": 1 },
+        "survival": { "proficient": false, "modifier": 0 }
+    },
+    "combat": {
+        "hitPoints": {
+            "max": 20,
+            "current": 20,
+            "temporary": 0
+        },
+        "speed": "30 ft",
+        "armorClass": 19,
+        "initiative": 1,
+        "hitDice": [
+            {
+                "class" : "Paladin",
+                "type" : "d10",
+                "total": 2,
+                "remaining" : 2
+            }
+        ],
+        "heroicInspiration": false
+    },
+    "proficienciesAndTraining": {
+        "armor": ["All Armor", "Shields"],
+        "weapons": ["Simple Weapons", "Martial Weapons"],
+        "tools": [],
+        "languages": ["Common", "Elvish", "Celestial", "Draconic"],
+        "other": ""
+    },
+    "actionEconomy": {
+        "actions": [
+            {
+                "name": "Longsword Attack",
+                "type": "attack",
+                "resource": "none",
+                "notes": "Melee weapon attack (1d8+2 slashing, or 1d10+2 two-handed)"
+            },
+            {
+                "name": "Javelin Attack",
+                "type": "attack",
+                "resource": "none",
+                "notes": "Thrown weapon (30/120 ft, 1d6+2 piercing)"
+            },
+            {
+                "name": "Bless",
+                "type": "spell",
+                "resource": "Spell Slot (Lv 1)",
+                "notes": "Buff up to 3 allies with +1d4 to attacks & saves (Concentration)"
+            },
+            {
+                "name": "Cure Wounds",
+                "type": "spell",
+                "resource": "Spell Slot (Lv 1)",
+                "notes": "Heal a touched creature (1d8+CHA)"
+            },
+            {
+                "name": "Lay on Hands",
+                "type": "feature",
+                "resource": "Lay on Hands Pool",
+                "notes": "Heal or cure disease/poison"
+            },
+            {
+                "name": "Divine Sense",
+                "type": "feature",
+                "resource": "Divine Sense",
+                "notes": "Detect celestials, fiends, undead (60 ft)"
+            },
+            {
+                "name": "Dash / Disengage / Dodge / Help / Hide",
+                "type": "utility",
+                "resource": "none",
+                "notes": "Standard combat actions"
+            }
+        ],
+        "bonusActions": [
+            {
+                "name": "Thunderous Smite",
+                "type": "spell",
+                "resource": "Spell Slot (Lv 1)",
+                "notes": "Next hit deals extra thunder damage and may knock target prone"
+            },
+            {
+                "name": "Divine Smite",
+                "type": "feature",
+                "resource": "Spell Slot",
+                "notes": "Trigger after melee hit for extra radiant damage"
+            }
+        ],
+        "reactions": [
+            {
+                "name": "Opportunity Attack",
+                "type": "attack",
+                "resource": "none",
+                "notes": "Melee attack when enemy leaves reach"
+            }
+        ]
+    },
+    "resourceTrackers": [
+        {
+            "name": "Lay on Hands Pool",
+            "current": 10,
+            "max": 10,
+            "reset": "Long Rest"
+        },
+        {
+            "name": "Divine Sense",
+            "current": 3,
+            "max": 3,
+            "reset": "Long Rest"
+        },
+        {
+            "name": "Spell Slots (Level 1)",
+            "current": 2,
+            "max": 2,
+            "reset": "Long Rest"
+        }
+    ],
+    "attacksAndCantrips": [
+        {
+            "name": "Longsword",
+            "attackBonus": 4,
+            "damage": "1d8+2 (1-hand) / 1d10+2 (2-hands)",
+            "damageType": "Slashing"
+        },
+        {
+            "name": "Javelin",
+            "attackBonus": 4,
+            "damage": "1d6+2",
+            "damageType": "Piercing"
+        },
+        {
+            "name": "Mending (Cantrip)",
+            "attackBonus": 0,
+            "damage": "Utility",
+            "damageType": "N/A"
+        }
+    ],
+    "featuresAndTraits": [
+        {
+            "name": "Darkvision",
+            "description": "Can see in dim light within 60 feet as if it were bright light, and in darkness as if it were dim light.",
+            "source": "High Elf",
+            "sourceType" : "Race"
+        },
+        {
+            "name": "Fey Ancestry",
+            "description": "Advantage on saving throws against being charmed, and magic can't put you to sleep.",
+            "source": "High Elf",
+            "sourceType" : "Race"
+        },
+        {
+            "name": "Trance",
+            "description": "Elves don't need to sleep. They meditate deeply for 4 hours a day.",
+            "source": "High Elf",
+            "sourceType" : "Race"
+        },
+        {
+            "name": "Divine Sense",
+            "description": "The presence of strong evil registers on your senses like a noxious odor, and powerful good rings like heavenly music in your ears.",
+            "source": "Paladin",
+            "sourceType" : "Class"
+        },
+        {
+            "name": "Lay on Hands",
+            "description": "Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest.",
+            "source": "Paladin",
+            "sourceType" : "Class"
+        },
+        {
+            "name": "Shelter of the Faithful",
+            "description": "You can receive free healing and care at establishments of your faith.",
+            "source": "Acolyte",
+            "sourceType" : "Background"
+        },
+        {
+            "name": "Fighting Style: Defense",
+            "description": "Saat mengenakan armor, kamu mendapatkan +1 bonus pada AC (sudah termasuk di status).",
+            "source": "Paladin 2",
+            "sourceType" : "Class"
+        },
+        {
+            "name": "Divine Smite",
+            "description": "Saat memukul makhluk dengan serangan senjata melee, kamu bisa menggunakan satu spell slot untuk memberikan tambahan 2d8 Radiant damage (ditambah 1d8 jika targetnya Undead/Fiend).",
+            "source": "Paladin 2",
+            "sourceType" : "Class"
+        },
+        {
+            "name": "Spellcasting (Paladin)",
+            "description": "Kamu dapat menggunakan Charisma sebagai spellcasting ability. Kamu bisa menyiapkan 3 spell Paladin level 1.",
+            "source": "Paladin 2",
+            "sourceType" : "Class"
+        }
+    ],
+    "passiveScores": {
+        "perception": 12,
+        "insight": 12,
+        "investigation": 9
+    },
+    "defenses": ["Immunities - Magical Sleep"],
+    "senses": ["Darkvision 60 ft"],
+    "equipment": {
+        "currency": {
+            "cp": 621,
+            "sp": 111,
+            "ep": 0,
+            "gp": 168,
+            "pp": 0
+        },
+        "items": [
+            { 
+                "name": "Longsword", 
+                "quantity": 1, 
+                "weight": 3,
+                "equipped": true,
+                "description": "A versatile melee weapon. Deals 1d8 slashing (1-hand) or 1d10 slashing (2-hands)." 
+            },
+            { 
+                "name": "Shield", 
+                "quantity": 1, 
+                "weight": 6,
+                "equipped": true,
+                "description": "A heavy piece of wood or metal carried in the hand. Increases Armor Class by 2." 
+            },
+            { 
+                "name": "Javelin", 
+                "quantity": 5, 
+                "weight": 10,
+                "equipped": false,
+                "description": "A simple thrown weapon (range 30/120 ft) dealing 1d6 piercing damage." 
+            },
+            { 
+                "name": "Chain Mail", 
+                "quantity": 1, 
+                "weight": 55,
+                "equipped": true,
+                "description": "Heavy armor made of interlocking metal rings. Provides AC 16 and gives disadvantage on Stealth checks." 
+            },
+            { 
+                "name": "Holy Symbol", 
+                "quantity": 1, 
+                "weight": 1,
+                "equipped": true,
+                "description": "A representation of a deity or pantheon. Used as a spellcasting focus for Paladin abilities." 
+            },
+            { 
+                "name": "Explorer's Pack", 
+                "quantity": 1, 
+                "weight": 59,
+                "equipped": false,
+                "description": "Includes a backpack, bedroll, mess kit, tinderbox, 10 torches, 10 days of rations, a waterskin, and 50ft of hempen rope." 
+            },
+            { 
+                "name": "Vestments", 
+                "quantity": 1, 
+                "weight": 4,
+                "equipped": false,
+                "description": "Ceremonial clothing worn by members of the clergy during religious services." 
+            },
+            { 
+                "name": "Sticks of incense", 
+                "quantity": 5, 
+                "weight": 0,
+                "equipped": false,
+                "description": "Fragrant wood or paste used during ritual prayers or meditation." 
+            },
+            { 
+                "name": "Empty Map Case (Quest Item)", 
+                "quantity": 1, 
+                "weight": 1,
+                "equipped": false,
+                "description": "A leather tube for holding maps; this one belonged to Gundren Rockseeker and was found at a crash site." 
+            },
+            {
+                "name": "Bone Whistle (Goblin Made)", 
+                "quantity": 1, 
+                "weight": 0,
+                "equipped": false,
+                "description": "A crude whistle carved from a small bone, taken from a goblin. It emits a shrill, piercing sound used for signaling."
+            },
+            {
+                "name": "Potion of Healing", 
+                "quantity": 1, 
+                "weight": 0.5,
+                "equipped": false,
+                "description": "A magical red fluid. Drinking it restores 2d4+2 HP."
+            },
+            {
+                "name": "Cragmaw Shipping Manifest", 
+                "quantity": 1, 
+                "weight": 0.1,
+                "equipped": false,
+                "description": "Dokumen yang menyebutkan pengiriman Sildar ke 'Cragmaw Castle' atas perintah 'The Black Spider'."
+            },
+            {
+                "name": "Rough Map to Cragmaw Castle", 
+                "quantity": 1, 
+                "weight": 0.1,
+                "equipped": false,
+                "description": "Peta kasar yang menunjukkan lokasi kastil di utara Hutan Neverwinter."
+            },
+            {
+                "name": "Crowbar",
+                "quantity": 1,
+                "weight": 5,
+                "equipped": false,
+                "description": "A metal lever used to pry open doors, crates, or chests. Grants advantage on Strength checks where leverage can be applied."
+            },
+            {
+                "name": "Grappling Hook",
+                "quantity": 1,
+                "weight": 4,
+                "equipped": false,
+                "description": "A metal hook attached to a rope, used for climbing or securing objects at a distance."
+            }
+        ],
+        "attunedMagicItems": [],
+        "weightCarried": 148.7,
+        "weightCapacity": 225,
+        "encumbered": false,
+        "pushDragLift": "450 lbs"
+    },
+    "spellcasting": [
+        {
+            "source" : "High Elf",
+            "sourceType": "racial",
+            "ability": "Intelligence",
+            "spellSaveDC": 9,
+            "spellAttackBonus": 1,
+            "spells": {
+                "cantrips" : [
+                    {
+                        "name": "Mending",
+                        "level": 0,
+                        "school": "Transmutation",
+                        "castingTime": "1 minute",
+                        "range": "Touch",
+                        "components": ["V", "S", "M"],
+                        "duration": "Instantaneous",
+                        "prepared": true,
+                        "sourcePage": "PHB 259"
+                    }
+                ]
+            }
+        },
+        {
+            "source" : "Paladin",
+            "sourceType": "class",
+            "ability": "Charisma",
+            "spellSaveDC": 12,
+            "spellAttackBonus": 4,
+            "spells": {
+                "level1": [
+                    {
+                        "name": "Bless",
+                        "level": 1,
+                        "school": "Enchantment",
+                        "castingTime": "1 action",
+                        "range": "30 feet",
+                        "components": ["V", "S", "M"],
+                        "duration": "Concentration, up to 1 minute",
+                        "prepared": true,
+                        "description": "Buff party. Target adds 1d4 to attack rolls and saving throws.",
+                        "sourcePage": "PHB 219"
+                    },
+                    {
+                        "name": "Cure Wounds",
+                        "level": 1,
+                        "school": "Evocation",
+                        "castingTime": "1 action",
+                        "range": "Touch",
+                        "components": ["V", "S"],
+                        "duration": "Instantaneous",
+                        "prepared": true,
+                        "description": "Heal single target dengan sentuhan.",
+                        "sourcePage": "PHB 230"
+                    },
+                    {
+                        "name": "Shield of Faith",
+                        "level": 1,
+                        "school": "Abjuration",
+                        "castingTime": "1 bonus action",
+                        "range": "60 feet",
+                        "components": ["V", "S", "M"],
+                        "duration": "Concentration, up to 10 minutes",
+                        "prepared": false,
+                        "description": "Memberi +2 AC.",
+                        "sourcePage": "PHB 275"
+                    },
+                    {
+                        "name": "Heroism",
+                        "level": 1,
+                        "school": "Enchantment",
+                        "castingTime": "1 action",
+                        "range": "Touch",
+                        "components": ["V", "S"],
+                        "duration": "Concentration, up to 1 minute",
+                        "prepared": false,
+                        "description": "Target kebal terhadap fear dan mendapat temporary HP setiap turn.",
+                        "sourcePage": "PHB 250"
+                    },
+                    {
+                        "name": "Searing Smite",
+                        "level": 1,
+                        "school": "Evocation",
+                        "castingTime": "1 bonus action",
+                        "range": "Self",
+                        "components": ["V"],
+                        "duration": "Concentration, up to 1 minute",
+                        "prepared": false,
+                        "description": "Smite dengan efek api berkelanjutan.",
+                        "sourcePage": "PHB 274"
+                    },
+                    {
+                        "name": "Thunderous Smite",
+                        "level": 1,
+                        "school": "Evocation",
+                        "castingTime": "1 bonus action",
+                        "range": "Self",
+                        "components": ["V"],
+                        "duration": "Concentration, up to 1 minute",
+                        "prepared": true,
+                        "description": "Smite dengan ledakan suara.",
+                        "sourcePage": "PHB 282"
+                    },
+                    {
+                        "name": "Wrathful Smite",
+                        "level": 1,
+                        "school": "Evocation",
+                        "castingTime": "1 bonus action",
+                        "range": "Self",
+                        "components": ["V"],
+                        "duration": "Concentration, up to 1 minute",
+                        "prepared": false,
+                        "description": "Smite yang membuat musuh frightened.",
+                        "sourcePage": "PHB 289"
+                    },
+                    {
+                        "name": "Detect Magic",
+                        "level": 1,
+                        "school": "Divination",
+                        "castingTime": "1 action (ritual)",
+                        "range": "Self",
+                        "components": ["V", "S"],
+                        "duration": "Concentration, up to 10 minutes",
+                        "prepared": false,
+                        "description": "Mendeteksi aura sihir di sekitar.",
+                        "sourcePage": "PHB 231"
+                    },
+                    {
+                        "name": "Detect Evil and Good",
+                        "level": 1,
+                        "school": "Divination",
+                        "castingTime": "1 action",
+                        "range": "Self",
+                        "components": ["V", "S"],
+                        "duration": "Concentration, up to 10 minutes",
+                        "prepared": false,
+                        "description": "Mendeteksi celestial, fiend, undead, dll.",
+                        "sourcePage": "PHB 231"
+                    }
+                ]
+            }
+        }
+    ],
+    "notes": ""
+}
