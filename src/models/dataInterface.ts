@@ -35,6 +35,11 @@ export interface CharacterInfo {
     experiencePoints: string;
 }
 
+export interface InfoStat {
+    proficiencyBonus: number;
+    heroicInspiration: boolean;
+}
+
 /* =========================
    Character Details
 ========================= */

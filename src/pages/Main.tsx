@@ -1,11 +1,14 @@
 import { Typography } from 'antd';
 
 // components
-import Ability from '../components/ability/ability';
-import Savings from '../components/savings/savings';
+import Ability from '../components/ability/Ability';
+import Savings from '../components/savings/Savings';
+import Skills from '../components/skills/Skills';
 
 // hooks
 import useMain from "../hooks/main/useMain";
+import CombatStat from '../components/combatStat/CombatStat';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
@@ -13,7 +16,7 @@ const { Title, Text } = Typography;
 
 export default function Main() {
 
-    const { charInfoData } = useMain();
+    const { charInfoData, infoStatData } = useMain();
 
     return (
         <div style={styles.container}>
@@ -51,10 +54,29 @@ export default function Main() {
                             <Text strong style={{ color: 'white' }} >{charInfoData?.experiencePoints}</Text>
                         </div>
                     </div>
+
+                    <div style={styles.infoStatHolder}>
+                        <div style={styles.statItem}>
+                            <Text strong style={styles.infoLabel}>PROFICIENCY</Text>
+                            <Title level={2} style={{ margin: '0.5rem 0', color: 'white' }}>+{infoStatData?.proficiencyBonus}</Title>
+                        </div>
+                        <div style={styles.statItem}>
+                            <Text strong style={styles.infoLabel}>INSPIRATION</Text>
+                            <div style={{ margin: '0.5rem 0px', fontSize: '1.7rem', color: 'white' }}>
+                                {infoStatData?.heroicInspiration ? (
+                                    <CheckOutlined />
+                                ) : (
+                                    <CloseOutlined />
+                                )}
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <Ability />
                 <Savings />
+                <Skills />
+                <CombatStat />
                 
             </div>
         </div>
@@ -108,5 +130,24 @@ const styles : { [key: string]: React.CSSProperties } = {
     infoLabel : {
         color: 'rgba(255,255,255,0.7)',
         fontSize: '10px'
+    },
+    infoStatHolder : {
+        display: 'flex',
+        marginTop: '1rem',
+        marginBottom: '1rem',
+        width: '100%',
+        justifyContent: 'space-evenly'
+    },
+    statItem : {
+        width: '35%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#4A4ED7',
+        border: '1px solid #6266EB',
+        padding: '1rem',
+        borderRadius: '10px',
+        textAlign: 'center',
     },
 }

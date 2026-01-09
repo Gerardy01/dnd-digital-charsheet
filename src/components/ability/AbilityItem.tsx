@@ -24,7 +24,7 @@ export default function AbilityItem({ name, abilityScore } : Props) {
                 editable={{
                     triggerType: ['text']
                 }}
-            >{abilityScore.modifier > 0 ? `+${abilityScore.modifier}` : abilityScore.modifier}</Title>
+            >{abilityScore.modifier >= 0 ? `+${abilityScore.modifier}` : abilityScore.modifier}</Title>
             <Tag color="cyan" variant="outlined" style={{ borderRadius: '15px' }}>
                 <Text
                     strong

@@ -1,11 +1,19 @@
 import { Divider, Typography } from "antd"
 import { SafetyOutlined } from "@ant-design/icons"
 
+// hooks
+import useSavings from "../../hooks/savings/useSavings";
+
+// Components
+import SavingsItem from "./SavingsItem";
 
 const { Title } = Typography;
 
 
 export default function Savings() {
+
+    const { savingsData } = useSavings();
+
     return (
         <div style={styles.savingsHolder}>
             <div style={styles.header}>
@@ -14,9 +22,41 @@ export default function Savings() {
                     <Title style={styles.titleText} level={5}>SAVING THROWS</Title>
                 </div>
             </div>
-            <Divider style={{ marginTop: " 0.5rem" }} />
+            <Divider style={{ marginTop: "0.5rem", marginBottom: '1rem' }} />
 
-            
+            {savingsData && (
+                <>
+                    <SavingsItem
+                        name="Strength"
+                        savingsData={savingsData.strength}
+                    />
+                    <SavingsItem
+                        name="Dexterity"
+                        savingsData={savingsData.dexterity}
+                    />
+
+                    <SavingsItem
+                        name="Constitution"
+                        savingsData={savingsData.constitution}
+                    />
+
+                    <SavingsItem
+                        name="Intelligence"
+                        savingsData={savingsData.intelligence}
+                    />
+
+                    <SavingsItem
+                        name="Wisdom"
+                        savingsData={savingsData.wisdom}
+                    />
+
+                    <SavingsItem
+                        name="Charisma"
+                        savingsData={savingsData.charisma}
+                    />
+                </>
+            )}
+
         </div>
     )
 }

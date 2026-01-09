@@ -7,6 +7,10 @@
         "alignment": "Lawful Good",
         "experiencePoints": "(Milestone)"
     },
+    "infoStat" : {
+        "proficiencyBonus": 2,
+        "heroicInspiration": false
+    },
     "characterDetails" : {
         "appearance": {
             "gender": "",
@@ -29,7 +33,6 @@
         "backstory": "",
         "additionalNotes": ""
     },
-    "proficiencyBonus": 2,
     "abilities": {
         "strength": { "score": 15, "modifier": 2 },
         "dexterity": { "score": 12, "modifier": 1 },
@@ -40,7 +43,7 @@
     },
     "savingThrows": {
         "strength": { "proficient": false, "modifier": 2 },
-        "dexterity": { "proficient": false, "modifier": 1 },
+        "dexterity": { "proficient": true, "modifier": 1 },
         "constitution": { "proficient": false, "modifier": 2 },
         "intelligence": { "proficient": false, "modifier": -1 },
         "wisdom": { "proficient": true, "modifier": 2 },
@@ -70,7 +73,7 @@
         "hitPoints": {
             "max": 20,
             "current": 20,
-            "temporary": 0
+            "temporary": 5
         },
         "speed": "30 ft",
         "armorClass": 19,
@@ -82,8 +85,7 @@
                 "total": 2,
                 "remaining" : 2
             }
-        ],
-        "heroicInspiration": false
+        ]
     },
     "proficienciesAndTraining": {
         "armor": ["All Armor", "Shields"],
@@ -205,55 +207,74 @@
             "name": "Darkvision",
             "description": "Can see in dim light within 60 feet as if it were bright light, and in darkness as if it were dim light.",
             "source": "High Elf",
-            "sourceType" : "Race"
+            "sourceType" : "Race",
+            "type" : [
+                "senses"
+            ]
         },
         {
             "name": "Fey Ancestry",
             "description": "Advantage on saving throws against being charmed, and magic can't put you to sleep.",
             "source": "High Elf",
-            "sourceType" : "Race"
+            "sourceType" : "Race",
+            "type" : [
+                "defenses"
+            ]
         },
         {
             "name": "Trance",
             "description": "Elves don't need to sleep. They meditate deeply for 4 hours a day.",
             "source": "High Elf",
-            "sourceType" : "Race"
+            "sourceType" : "Race",
+            "type" : []
         },
         {
             "name": "Divine Sense",
             "description": "The presence of strong evil registers on your senses like a noxious odor, and powerful good rings like heavenly music in your ears.",
             "source": "Paladin",
-            "sourceType" : "Class"
+            "sourceType" : "Class",
+            "type" : [
+                "actions"
+            ]
         },
         {
             "name": "Lay on Hands",
             "description": "Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest.",
             "source": "Paladin",
-            "sourceType" : "Class"
+            "sourceType" : "Class",
+            "type" : [
+                "actions"
+            ]
         },
         {
             "name": "Shelter of the Faithful",
             "description": "You can receive free healing and care at establishments of your faith.",
             "source": "Acolyte",
-            "sourceType" : "Background"
+            "sourceType" : "Background",
+            "type" : []
         },
         {
             "name": "Fighting Style: Defense",
             "description": "Saat mengenakan armor, kamu mendapatkan +1 bonus pada AC (sudah termasuk di status).",
             "source": "Paladin 2",
-            "sourceType" : "Class"
+            "sourceType" : "Class",
+            "type" : []
         },
         {
             "name": "Divine Smite",
             "description": "Saat memukul makhluk dengan serangan senjata melee, kamu bisa menggunakan satu spell slot untuk memberikan tambahan 2d8 Radiant damage (ditambah 1d8 jika targetnya Undead/Fiend).",
             "source": "Paladin 2",
-            "sourceType" : "Class"
+            "sourceType" : "Class",
+            "type" : [
+                "bonusActions"
+            ]
         },
         {
             "name": "Spellcasting (Paladin)",
             "description": "Kamu dapat menggunakan Charisma sebagai spellcasting ability. Kamu bisa menyiapkan 3 spell Paladin level 1.",
             "source": "Paladin 2",
-            "sourceType" : "Class"
+            "sourceType" : "Class",
+            "type" : []
         }
     ],
     "passiveScores": {

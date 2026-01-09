@@ -1,7 +1,7 @@
 
 
 // components
-import AbilityItem from "./abilityItem";
+import AbilityItem from "./AbilityItem";
 
 // Hooks
 import useAbility from "../../hooks/ability/useAbility"
