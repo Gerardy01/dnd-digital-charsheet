@@ -19,8 +19,36 @@ export default function useMain() {
         setInfoStatData(getInfoStatData());
     }, []);
 
+    const changeName = (newName : string) => {
+        if (!charInfoData) return;
+
+        const newCharInfoData = {
+            ...charInfoData,
+            characterName: newName
+        };
+
+        setCharInfoData(newCharInfoData);
+
+        // TODO: update data in storage
+    }
+
+    const changeRace = (newRace : string) => {
+        if (!charInfoData) return;
+
+        const newCharInfoData = {
+            ...charInfoData,
+            species: newRace
+        };
+
+        setCharInfoData(newCharInfoData);
+
+        // TODO: update data in storage
+    }
+
     return {
         charInfoData,
         infoStatData,
+        changeName,
+        changeRace,
     }
 }

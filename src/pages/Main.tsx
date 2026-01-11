@@ -4,6 +4,7 @@ import { Typography } from 'antd';
 import Ability from '../components/ability/Ability';
 import Savings from '../components/savings/Savings';
 import Skills from '../components/skills/Skills';
+import ProAndTrain from '../components/proAndTrain/ProAndTrain';
 
 // hooks
 import useMain from "../hooks/main/useMain";
@@ -16,7 +17,12 @@ const { Title, Text } = Typography;
 
 export default function Main() {
 
-    const { charInfoData, infoStatData } = useMain();
+    const {
+        charInfoData,
+        infoStatData,
+        changeName,
+        changeRace,
+    } = useMain();
 
     return (
         <div style={styles.container}>
@@ -28,12 +34,15 @@ export default function Main() {
                         editable={{
                             tooltip: 'click to edit text',
                             triggerType: ['text'],
+                            onChange: (newText) => {changeName(newText)}
                         }}
                     >{charInfoData?.characterName}</Title>
                     <Title
                         style={styles.subTitle}
                         level={4}
-                        editable
+                        editable={{
+                            onChange: (newText) => {changeRace(newText)}
+                        }}
                     >{charInfoData?.species}</Title>
 
                     <div style={styles.infoHolder}>
@@ -77,6 +86,7 @@ export default function Main() {
                 <Savings />
                 <Skills />
                 <CombatStat />
+                <ProAndTrain />
                 
             </div>
         </div>

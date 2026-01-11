@@ -1,6 +1,6 @@
 
 // DTO
-import type { AbilityScores, CharacterInfo, Combat, InfoStat, SavingThrows, Skills } from "../../models/dataInterface";
+import type { AbilityScores, CharacterInfo, Combat, InfoStat, SavingThrows, Skills, ProficienciesAndTraining } from "../../models/dataInterface";
 
 export default function useDataHandler() {
 
@@ -33,6 +33,10 @@ export default function useDataHandler() {
         return getDataFromLocalStorage<Combat>('combat'); 
     }
 
+    const getProficienciesAndTrainingData = () : ProficienciesAndTraining | null => {
+        return getDataFromLocalStorage<ProficienciesAndTraining>('proficienciesAndTraining'); 
+    }
+
     return {
         getCharInfoData,
         getInfoStatData,
@@ -40,5 +44,6 @@ export default function useDataHandler() {
         getSavingsData,
         getSkillsData,
         getCombatData,
+        getProficienciesAndTrainingData
     }
 }

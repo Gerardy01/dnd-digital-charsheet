@@ -116,7 +116,7 @@ const styles : { [key: string]: React.CSSProperties } = {
         borderRadius: '10px',
         boxShadow: '1px 0px 10px -2px lightgray'
     },
-    eader : {
+    header : {
         display: 'flex',
         justifyContent: 'space-between',
     },

@@ -1,6 +1,8 @@
-import { Button, Typography } from "antd"
-import { BulbOutlined, FieldTimeOutlined, HeartTwoTone, MinusOutlined, PlusOutlined, SafetyCertificateOutlined } from "@ant-design/icons"
+import { Button, Divider, Typography } from "antd"
+import { BulbOutlined, FieldTimeOutlined, HeartTwoTone, MinusOutlined, PlusOutlined, SafetyCertificateOutlined, UpCircleOutlined } from "@ant-design/icons"
 
+// components
+import Tracker from "../global/Tracker";
 
 // hooks
 import useCombatStat from "../../hooks/combat/useCombatStat";
@@ -11,15 +13,15 @@ const { Text, Title } = Typography;
 
 export default function CombatStat() {
 
-    const { combatData } = useCombatStat();
+    const { combatData, hpPercentage, changeHitDicePoint, changeHP, changeHpWithBtn } = useCombatStat();
 
     return (
         <div style={styles.holder}>
             <div style={styles.health}>
                 <div style={styles.healthHolder}>
-                    <div style={{ width: '100%', height: '7px', backgroundColor: 'green' }} />
+                    <div style={{ width: `${hpPercentage}%`, height: '7px', backgroundColor: 'green' }} />
                     <div style={styles.healthContent}>
-                        <Button icon={<MinusOutlined />} />
+                        <Button onClick={() => changeHpWithBtn(false)} icon={<MinusOutlined />} />
                         <div style={styles.healthMain}>
                             <HeartTwoTone twoToneColor="red" style={{ fontSize: '1.5rem' }} />
                             <Title level={3} style={{ margin: '0.5rem 0' }}>
@@ -27,7 +29,10 @@ export default function CombatStat() {
                                     strong
                                     style={{ fontSize: '1.5rem' }}
                                     editable={{
-                                        triggerType: ['text']
+                                        triggerType: ['text'],
+                                        onChange: (newText) => {
+                                            changeHP(Number(newText), combatData?.hitPoints.max ?? 0);
+                                        }
                                     }}
                                 >{combatData?.hitPoints.current}</Text>
                                 <Text strong style={{ fontSize: '1.5rem' }}> / </Text>
@@ -35,13 +40,16 @@ export default function CombatStat() {
                                     strong
                                     style={{ fontSize: '1.5rem' }}
                                     editable={{
-                                        triggerType: ['text']
+                                        triggerType: ['text'],
+                                        onChange: (newText) => {
+                                            changeHP(combatData?.hitPoints.current ?? 0, Number(newText));
+                                        }
                                     }}
                                 >{combatData?.hitPoints.max}</Text>
                             </Title>
                             <Text strong style={styles.infoLabel}>HEALTH</Text>
                         </div>
-                        <Button icon={<PlusOutlined />} />
+                        <Button onClick={() => changeHpWithBtn(true)} icon={<PlusOutlined />} />
                     </div>
                 </div>
                 <div style={styles.statItem}>
@@ -72,6 +80,31 @@ export default function CombatStat() {
                     <Title level={4} style={{ margin: '0.5rem 0' }}>{combatData?.speed}</Title>
                     <Text strong style={styles.infoLabel}>SPEED</Text>
                 </div>
+            </div>
+            
+            <div style={styles.hitDice}>
+                <div style={styles.header}>
+                    <div style={styles.headerRight}>
+                        <UpCircleOutlined style={{ fontSize: '1.4rem', color: 'blue' }} />
+                        <Title style={styles.titleText} level={5}>HIT DICE</Title>
+                    </div>
+                </div>
+
+                <Divider style={{ marginTop: "0.5rem", marginBottom: '1rem' }} />
+                
+                {combatData?.hitDice.map((item, i) => {
+                    return (
+                        <Tracker
+                            key={i}
+                            name={`${item.class} (${item.type})`}
+                            current={item.remaining}
+                            max={item.total}
+                            changeCurrent={(newCurrent) => {
+                                changeHitDicePoint(newCurrent, item.class);
+                            }}
+                        />
+                    )
+                })}
             </div>
         </div>
     )
@@ -130,4 +163,27 @@ const styles : { [key: string]: React.CSSProperties } = {
         color: '#6B7280',
         fontSize: '10px'
     },
+    hitDice : {
+        width: '100%',
+        marginTop: '1.5rem',
+        backgroundColor: 'white',
+        border: '1px solid lightgray',
+        padding: '1rem',
+        paddingBottom: '0.3rem',
+        borderRadius: '10px',
+        boxShadow: '1px 0px 10px -2px lightgray'
+    },
+    header : {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    headerRight : {
+        display: 'flex',
+        alignItems: 'center',
+        color: '#6B7280'
+    },
+    titleText : {
+        margin: '0px',
+        marginLeft: '10px',
+    }
 }

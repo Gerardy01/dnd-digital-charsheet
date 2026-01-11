@@ -159,7 +159,7 @@ export interface ProficienciesAndTraining {
     weapons: string[];
     tools: string[];
     languages: string[];
-    other: string;
+    other: string[];
 }
 
 /* =========================

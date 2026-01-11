@@ -1,7 +1,7 @@
 {
     "characterInfo": {
         "characterName": "Omnissiah",
-        "classesAndLevel" : "Paladin 1 / Warlock 2",
+        "classesAndLevel" : "Paladin 2 / Warlock 3",
         "species": "High Elf",
         "background": "Acolyte",
         "alignment": "Lawful Good",
@@ -84,15 +84,21 @@
                 "type" : "d10",
                 "total": 2,
                 "remaining" : 2
+            },
+            {
+                "class" : "Warlock",
+                "type" : "d8",
+                "total": 3,
+                "remaining" : 3
             }
         ]
     },
     "proficienciesAndTraining": {
         "armor": ["All Armor", "Shields"],
         "weapons": ["Simple Weapons", "Martial Weapons"],
-        "tools": [],
+        "tools": ["test", "aaa"],
         "languages": ["Common", "Elvish", "Celestial", "Draconic"],
-        "other": ""
+        "other": []
     },
     "actionEconomy": {
         "actions": [
