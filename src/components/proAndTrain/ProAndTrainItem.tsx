@@ -38,15 +38,16 @@ export default function ProAndTrainItem({ name, category, proAndTrain, handleRem
                     return (
                         <Tag
                             key={i}
-                            style={styles.tag}
+                            style={{ ...styles.tag, border: '' }}
                             closable
                             onClose={(e) => {
                                 e.preventDefault();
                                 handleRemove(category, i);
                             }}
                             color={color ? color : '#F3F4F6'}
+                            variant="outlined"
                         >
-                            <Text>{item}</Text>
+                            <Text style={{ fontSize: '12px' }}>{item}</Text>
                         </Tag>
                     )
                 })}
@@ -59,8 +60,10 @@ export default function ProAndTrainItem({ name, category, proAndTrain, handleRem
                         value={inputValue}
                         onChange={(e) => handleChangeInput(e.target.value)}
                         onBlur={() => {
-                            handleAdd(category, inputValue);
                             resetInput();
+                            if (inputValue.trim() === "") return;
+
+                            handleAdd(category, inputValue);
                         }}
                         onPressEnter={() => {
                             handleAdd(category, inputValue);
@@ -83,7 +86,7 @@ export default function ProAndTrainItem({ name, category, proAndTrain, handleRem
 
 const styles : { [key: string]: React.CSSProperties } = {
     section: {
-        marginTop: 12,
+        padding: "0.7rem 0",
     },
     sectionTitle: {
         color: '#374151',
@@ -93,10 +96,11 @@ const styles : { [key: string]: React.CSSProperties } = {
         display: 'flex',
         flexWrap: 'wrap',
         gap: 8,
+        alignItems: 'center'
     },
     tag: {
-        padding: '6px 8px',
-        borderRadius: 8,
+        padding: '2px 8px',
+        borderRadius: 6,
         fontSize: 10,
     },
     tagPlusStyle : {
@@ -106,12 +110,12 @@ const styles : { [key: string]: React.CSSProperties } = {
         background: 'transparent',
         borderStyle: 'dashed',
         color: 'blue',
-        padding: '6px 8px',
+        padding: '2px 8px',
         fontSize: 10,
     },
     tagInputStyle : {
         width: "6rem",
-        height: "2.2rem",
+        height: '1.8rem',
         marginInlineEnd: 8,
         verticalAlign: 'top',
     }

@@ -13,10 +13,10 @@ export interface CharSheetDataDTO {
     actionEconomy: ActionEconomy;
     resourceTrackers: ResourceTracker[];
     attacksAndCantrips: AttackOrCantrip[];
-    featuresAndTraits: FeatureOrTrait[];
+    featuresAndTraits: FeaturesAndTraits[];
     passiveScores: PassiveScores;
-    defenses: string[];
-    senses: string[];
+    defenses: Defenses[];
+    senses: ExtraSenses[];
     equipment: Equipment;
     spellcasting: SpellcastingSource[];
     notes: string;
@@ -150,9 +150,6 @@ export interface HitDice {
     remaining: number;
 }
 
-/* =========================
-   Proficiencies
-========================= */
 
 export interface ProficienciesAndTraining {
     armor: string[];
@@ -162,9 +159,6 @@ export interface ProficienciesAndTraining {
     other: string[];
 }
 
-/* =========================
-   Action Economy
-========================= */
 
 export interface ActionEconomy {
     actions: ActionItem[];
@@ -201,12 +195,16 @@ export interface AttackOrCantrip {
     damageType: string;
 }
 
-export interface FeatureOrTrait {
+export interface FeaturesAndTraits {
     name: string;
     description: string;
     source: string;
     sourceType: "Race" | "Class" | "Background";
+    type: string[];
+    extraInfo : string;
 }
+
+export type FeaturesAndTraitsType = "defenses" | "actions" | "bonusActions" | "reactions"
 
 /* =========================
    Passive & Senses
@@ -216,6 +214,16 @@ export interface PassiveScores {
     perception: number;
     insight: number;
     investigation: number;
+}
+
+export interface ExtraSenses {
+    name : string;
+    distance : number;
+}
+
+export interface Defenses {
+    name : string;
+    type : string;
 }
 
 /* =========================

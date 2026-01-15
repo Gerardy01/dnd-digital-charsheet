@@ -19,12 +19,12 @@ export default function ProAndTrain() {
         <div style={styles.holder}>
             <div style={styles.header}>
                 <div style={styles.headerRight}>
-                    <ToolOutlined style={{ fontSize: '1.4rem', color: '#10B981' }} />
+                    <ToolOutlined style={{ fontSize: '1.4rem', color: 'blue' }} />
                     <Title style={styles.titleText} level={5}>PROFICIENCIES & TRAINING</Title>
                 </div>
             </div>
 
-            <Divider style={{ marginTop: "0.5rem", marginBottom: '1rem' }} />
+            <Divider style={{ marginTop: "0.5rem", marginBottom: '0.5rem' }} />
             
             {proAndTrain && (
                 <>
@@ -37,7 +37,7 @@ export default function ProAndTrain() {
                     />
                     
                     <ProAndTrainItem
-                        name="Weapons"
+                        name="Waepons"
                         category={ProAndTrainEnum.WEAPONS}
                         proAndTrain={proAndTrain}
                         handleRemove={handleRemove}

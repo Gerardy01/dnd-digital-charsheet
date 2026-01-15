@@ -50,15 +50,16 @@ export default function Tracker({ name, current, max, changeCurrent }: Props) {
 
 const styles : { [key: string]: React.CSSProperties } = {
     card: {
-        backgroundColor: '#F2F5F9',
+        backgroundColor: '#F6F8FB',
         borderRadius: 10,
         padding: '1rem',
         display: 'flex',
         flexDirection: 'column',
         gap: 8,
         minWidth: 200,
-        border: '1px solid lightgray',
+        border: '1px solid #E6EAF0',
         margin: '0.7rem 0',
+        boxShadow: '0 1px 4px rgba(16,24,40,0.04)'
     },
     header: {
         display: 'flex',

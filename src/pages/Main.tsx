@@ -1,15 +1,18 @@
-import { Typography } from 'antd';
+import { Typography, Tabs } from 'antd';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 // components
 import Ability from '../components/ability/Ability';
 import Savings from '../components/savings/Savings';
 import Skills from '../components/skills/Skills';
 import ProAndTrain from '../components/proAndTrain/ProAndTrain';
+import Defenses from '../components/defenses/Defenses';
+import CombatStat from '../components/combatStat/CombatStat';
+import Senses from '../components/senses/Senses';
+import CharacterDetails from '../components/characterDetails/CharacterDetails';
 
 // hooks
 import useMain from "../hooks/main/useMain";
-import CombatStat from '../components/combatStat/CombatStat';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
@@ -20,8 +23,16 @@ export default function Main() {
     const {
         charInfoData,
         infoStatData,
+        selectedTab,
+        tabs,
         changeName,
         changeRace,
+        changeClassAndLevel,
+        changeBackgroud,
+        changeAlignment,
+        changeExp,
+        changeProficiencyBonus,
+        onTabChange,
     } = useMain();
 
     return (
@@ -32,7 +43,6 @@ export default function Main() {
                         style={styles.title}
                         level={1}
                         editable={{
-                            tooltip: 'click to edit text',
                             triggerType: ['text'],
                             onChange: (newText) => {changeName(newText)}
                         }}
@@ -41,6 +51,7 @@ export default function Main() {
                         style={styles.subTitle}
                         level={4}
                         editable={{
+                            triggerType: ['text'],
                             onChange: (newText) => {changeRace(newText)}
                         }}
                     >{charInfoData?.species}</Title>
@@ -48,26 +59,61 @@ export default function Main() {
                     <div style={styles.infoHolder}>
                         <div style={styles.info}>
                             <Text strong style={styles.infoLabel}>CLASS & LEVEL</Text>
-                            <Text strong style={{ color: 'white' }} >{charInfoData?.classesAndLevel}</Text>
+                            <Text
+                                strong
+                                style={{ color: 'white' }}
+                                editable={{
+                                    triggerType: ['text'],
+                                    onChange: (newText) => {changeClassAndLevel(newText)}
+                                }}
+                            >{charInfoData?.classesAndLevel}</Text>
                         </div>
                         <div style={styles.info}>
                             <Text strong style={styles.infoLabel}>BACKGROUND</Text>
-                            <Text strong style={{ color: 'white' }} >{charInfoData?.background}</Text>
+                            <Text
+                                strong
+                                style={{ color: 'white' }}
+                                editable={{
+                                    triggerType: ['text'],
+                                    onChange: (newText) => {changeBackgroud(newText)}
+                                }}
+                            >{charInfoData?.background}</Text>
                         </div>
                         <div style={styles.info}>
                             <Text strong style={styles.infoLabel}>ALIGNMENT</Text>
-                            <Text strong style={{ color: 'white' }} >{charInfoData?.alignment}</Text>
+                            <Text
+                                strong
+                                style={{ color: 'white' }}
+                                editable={{
+                                    triggerType: ['text'],
+                                    onChange: (newText) => {changeAlignment(newText)}
+                                }}
+                            >{charInfoData?.alignment}</Text>
                         </div>
                         <div style={styles.info}>
                             <Text strong style={styles.infoLabel}>EXPERIENCE POINTS</Text>
-                            <Text strong style={{ color: 'white' }} >{charInfoData?.experiencePoints}</Text>
+                            <Text
+                                strong
+                                style={{ color: 'white' }}
+                                editable={{
+                                    triggerType: ['text'],
+                                    onChange: (newText) => {changeExp(newText)}
+                                }}
+                            >{charInfoData?.experiencePoints}</Text>
                         </div>
                     </div>
 
                     <div style={styles.infoStatHolder}>
                         <div style={styles.statItem}>
                             <Text strong style={styles.infoLabel}>PROFICIENCY</Text>
-                            <Title level={2} style={{ margin: '0.5rem 0', color: 'white' }}>+{infoStatData?.proficiencyBonus}</Title>
+                            <Title
+                                level={2}
+                                style={{ margin: '0.5rem 0', color: 'white' }}
+                                editable={{
+                                    triggerType: ['text'],
+                                    onChange: (newText) => {changeProficiencyBonus(newText)}
+                                }}
+                            >+{infoStatData?.proficiencyBonus}</Title>
                         </div>
                         <div style={styles.statItem}>
                             <Text strong style={styles.infoLabel}>INSPIRATION</Text>
@@ -87,6 +133,24 @@ export default function Main() {
                 <Skills />
                 <CombatStat />
                 <ProAndTrain />
+                <Senses />
+                <Defenses />
+                
+                <div style={styles.tabsHolder}>
+                    <Tabs
+                        activeKey={selectedTab}
+                        centered
+                        items={tabs.map(tab => ({
+                            label: tab.label,
+                            key: tab.key,
+                            children: tab.children,
+                            icon: tab.key === selectedTab ? tab.icon : undefined
+                        }))}
+                        onChange={onTabChange}
+                    />
+                </div>
+                
+                <CharacterDetails />
                 
             </div>
         </div>
@@ -95,7 +159,7 @@ export default function Main() {
 
 const styles : { [key: string]: React.CSSProperties } = {
     container : {
-        width: '100%',
+        width: '100vw',
         padding: '1.5rem',
         display: 'flex',
         justifyContent: 'center',
@@ -160,4 +224,13 @@ const styles : { [key: string]: React.CSSProperties } = {
         borderRadius: '10px',
         textAlign: 'center',
     },
+    tabsHolder : {
+        width: '100%',
+        marginTop: '2rem',
+        borderRadius: '10px',
+        backgroundColor: 'white',
+        overflow: 'hidden',
+        border: '1px solid lightgray',
+        boxShadow: '1px 0px 10px -2px lightgray'
+    }
 }
