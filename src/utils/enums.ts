@@ -14,6 +14,7 @@ export const StorageKey = {
     EXTRASENSES: "extraSenses",
     DEFENSES: "defenses",
     CHARDETAILS: "characterDetails",
+    EQUIPMENT: "equipment",
 }
 
 export const ProAndTrainEnum = {
@@ -22,6 +23,14 @@ export const ProAndTrainEnum = {
     TOOLS: "tools",
     LANGUAGES: "languages",
     OTHER: "other",
+} as const;
+
+export const CurrencyEnum = {
+    CP: "cp",
+    SP: "sp",
+    EP: "ep",
+    GP: "gp",
+    PP: "pp",
 } as const;
 
 export const PersonalityEnum = {
@@ -49,8 +58,7 @@ export const AppearanceEnum = {
     FAITH: "faith",
 } as const
 
-export const FeaturesAndTraitsType = {
-    DEFENSES: "defenses",
+export const ActionTypeEnum = {
     ACTION: "actions",
     BONUSACTION: "bonusActions",
     REACTION: "reactions",
@@ -73,4 +81,20 @@ export const DefensesTypeEnum = {
     RESISTANCE: "Resistance",
     IMMUNITIES: "Immunities",
     VULNERABILITY: "Vulnerability",
+} as const
+
+export const DamageTypeEnum = {
+    SLASHING: "Slashing",
+    PIERCING: "Piercing",
+    BLUDGEONING: "Bludgeoning",
+    FIRE: "Fire",
+    COLD: "Cold",
+    LIGHTNING: "Lightning",
+    ACID: "Acid",
+    POISON: "Poison",
+    THUNDER: "Thunder",
+    FORCE: "Force",
+    PSYCHIC: "Psychic",
+    RADIANT: "Radiant",
+    NECROTIC: "Necrotic",
 } as const

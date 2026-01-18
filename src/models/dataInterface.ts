@@ -200,11 +200,8 @@ export interface FeaturesAndTraits {
     description: string;
     source: string;
     sourceType: "Race" | "Class" | "Background";
-    type: string[];
-    extraInfo : string;
+    actionType: string;
 }
-
-export type FeaturesAndTraitsType = "defenses" | "actions" | "bonusActions" | "reactions"
 
 /* =========================
    Passive & Senses
@@ -217,13 +214,13 @@ export interface PassiveScores {
 }
 
 export interface ExtraSenses {
-    name : string;
-    distance : number;
+    name: string;
+    distance: number;
 }
 
 export interface Defenses {
-    name : string;
-    type : string;
+    name: string;
+    type: string;
 }
 
 /* =========================
@@ -233,11 +230,10 @@ export interface Defenses {
 export interface Equipment {
     currency: Currency;
     items: Item[];
-    attunedMagicItems: string[];
-    weightCarried: number;
+    attunedMagicItems: Item[];
     weightCapacity: number;
     encumbered: boolean;
-    pushDragLift: string;
+    pushDragLift: number;
 }
 
 export interface Currency {
@@ -252,8 +248,10 @@ export interface Item {
     name: string;
     quantity: number;
     weight: number;
-    equipped: boolean;
+    equipable: boolean;
     description: string;
+    actionType: string;
+    equipped?: boolean;
 }
 
 /* =========================
@@ -266,12 +264,7 @@ export interface SpellcastingSource {
     ability: string;
     spellSaveDC: number;
     spellAttackBonus: number;
-    spells: SpellLevels;
-}
-
-export interface SpellLevels {
-    cantrips?: Spell[];
-    level1?: Spell[];
+    spells: Spell[];
 }
 
 export interface Spell {
@@ -283,6 +276,7 @@ export interface Spell {
     components: string[];
     duration: string;
     prepared: boolean;
-    description?: string;
+    description: string;
     sourcePage: string;
+    actionType: string;
 }

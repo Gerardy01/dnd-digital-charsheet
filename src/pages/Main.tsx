@@ -44,7 +44,7 @@ export default function Main() {
                         level={1}
                         editable={{
                             triggerType: ['text'],
-                            onChange: (newText) => {changeName(newText)}
+                            onChange: (newText) => { changeName(newText) }
                         }}
                     >{charInfoData?.characterName}</Title>
                     <Title
@@ -52,7 +52,7 @@ export default function Main() {
                         level={4}
                         editable={{
                             triggerType: ['text'],
-                            onChange: (newText) => {changeRace(newText)}
+                            onChange: (newText) => { changeRace(newText) }
                         }}
                     >{charInfoData?.species}</Title>
 
@@ -64,7 +64,7 @@ export default function Main() {
                                 style={{ color: 'white' }}
                                 editable={{
                                     triggerType: ['text'],
-                                    onChange: (newText) => {changeClassAndLevel(newText)}
+                                    onChange: (newText) => { changeClassAndLevel(newText) }
                                 }}
                             >{charInfoData?.classesAndLevel}</Text>
                         </div>
@@ -75,7 +75,7 @@ export default function Main() {
                                 style={{ color: 'white' }}
                                 editable={{
                                     triggerType: ['text'],
-                                    onChange: (newText) => {changeBackgroud(newText)}
+                                    onChange: (newText) => { changeBackgroud(newText) }
                                 }}
                             >{charInfoData?.background}</Text>
                         </div>
@@ -86,7 +86,7 @@ export default function Main() {
                                 style={{ color: 'white' }}
                                 editable={{
                                     triggerType: ['text'],
-                                    onChange: (newText) => {changeAlignment(newText)}
+                                    onChange: (newText) => { changeAlignment(newText) }
                                 }}
                             >{charInfoData?.alignment}</Text>
                         </div>
@@ -97,7 +97,7 @@ export default function Main() {
                                 style={{ color: 'white' }}
                                 editable={{
                                     triggerType: ['text'],
-                                    onChange: (newText) => {changeExp(newText)}
+                                    onChange: (newText) => { changeExp(newText) }
                                 }}
                             >{charInfoData?.experiencePoints}</Text>
                         </div>
@@ -111,7 +111,7 @@ export default function Main() {
                                 style={{ margin: '0.5rem 0', color: 'white' }}
                                 editable={{
                                     triggerType: ['text'],
-                                    onChange: (newText) => {changeProficiencyBonus(newText)}
+                                    onChange: (newText) => { changeProficiencyBonus(newText) }
                                 }}
                             >+{infoStatData?.proficiencyBonus}</Title>
                         </div>
@@ -127,7 +127,7 @@ export default function Main() {
                         </div>
                     </div>
                 </div>
-                
+
                 <Ability />
                 <Savings />
                 <Skills />
@@ -135,7 +135,7 @@ export default function Main() {
                 <ProAndTrain />
                 <Senses />
                 <Defenses />
-                
+
                 <div style={styles.tabsHolder}>
                     <Tabs
                         activeKey={selectedTab}
@@ -144,32 +144,32 @@ export default function Main() {
                             label: tab.label,
                             key: tab.key,
                             children: tab.children,
-                            icon: tab.key === selectedTab ? tab.icon : undefined
+                            // icon: tab.key === selectedTab ? tab.icon : undefined
                         }))}
                         onChange={onTabChange}
                     />
                 </div>
-                
+
                 <CharacterDetails />
-                
+
             </div>
         </div>
     )
 }
 
-const styles : { [key: string]: React.CSSProperties } = {
-    container : {
+const styles: { [key: string]: React.CSSProperties } = {
+    container: {
         width: '100vw',
         padding: '1.5rem',
         display: 'flex',
         justifyContent: 'center',
         backgroundColor: '#F2F5F9'
     },
-    contentHolder : {
-        flex : 1,
+    contentHolder: {
+        flex: 1,
         maxWidth: '72rem',
     },
-    charInfoHolder : {
+    charInfoHolder: {
         width: '100%',
         backgroundColor: 'rgb(67, 56, 202)',
         padding: '1rem',
@@ -179,21 +179,21 @@ const styles : { [key: string]: React.CSSProperties } = {
         alignItems: 'center',
         boxShadow: '1px 0px 10px 1px gray'
     },
-    title : {
-        color : 'white',
+    title: {
+        color: 'white',
         margin: '0px',
         marginBottom: '0.5rem'
     },
-    subTitle : {
+    subTitle: {
         color: '#E6D9A2',
         margin: '0px'
     },
-    infoHolder : {
+    infoHolder: {
         display: 'flex',
         flexWrap: 'wrap',
         marginTop: '1rem'
     },
-    info : {
+    info: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -201,18 +201,18 @@ const styles : { [key: string]: React.CSSProperties } = {
         padding: '1rem 0px',
         textAlign: 'center'
     },
-    infoLabel : {
+    infoLabel: {
         color: 'rgba(255,255,255,0.7)',
         fontSize: '10px'
     },
-    infoStatHolder : {
+    infoStatHolder: {
         display: 'flex',
         marginTop: '1rem',
         marginBottom: '1rem',
         width: '100%',
         justifyContent: 'space-evenly'
     },
-    statItem : {
+    statItem: {
         width: '35%',
         display: 'flex',
         flexDirection: 'column',
@@ -224,7 +224,7 @@ const styles : { [key: string]: React.CSSProperties } = {
         borderRadius: '10px',
         textAlign: 'center',
     },
-    tabsHolder : {
+    tabsHolder: {
         width: '100%',
         marginTop: '2rem',
         borderRadius: '10px',

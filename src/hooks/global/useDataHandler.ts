@@ -3,7 +3,7 @@
 import { StorageKey } from "../../utils/enums";
 
 // DTO
-import type { AbilityScores, CharacterInfo, Combat, InfoStat, SavingThrows, Skills, ProficienciesAndTraining, PassiveScores, FeaturesAndTraits, ExtraSenses, Defenses, CharacterDetails } from "../../models/dataInterface";
+import type { AbilityScores, CharacterInfo, Combat, InfoStat, SavingThrows, Skills, ProficienciesAndTraining, PassiveScores, FeaturesAndTraits, ExtraSenses, Defenses, CharacterDetails, Equipment } from "../../models/dataInterface";
 
 export default function useDataHandler() {
 
@@ -60,6 +60,10 @@ export default function useDataHandler() {
         return getDataFromLocalStorage<Defenses[]>(StorageKey.DEFENSES) ?? [];
     }
 
+    const getEquipmentData = (): Equipment | null => {
+        return getDataFromLocalStorage<Equipment>(StorageKey.EQUIPMENT);
+    }
+
     const changeCharInfoData = (newData: CharacterInfo): void => {
         localStorage.setItem(StorageKey.CHARINFO, JSON.stringify(newData));
     }
@@ -80,6 +84,10 @@ export default function useDataHandler() {
         localStorage.setItem(StorageKey.DEFENSES, JSON.stringify(newData));
     }
 
+    const changeEquipmentData = (newData: Equipment): void => {
+        localStorage.setItem(StorageKey.EQUIPMENT, JSON.stringify(newData));
+    }
+
     return {
         getCharInfoData,
         getInfoStatData,
@@ -93,10 +101,12 @@ export default function useDataHandler() {
         getFeaturesAndTraits,
         getExtraSenses,
         getDefenses,
+        getEquipmentData,
         changeCharInfoData,
         changeCharacterDetailsData,
         changePassiveScores,
         changeExtraSenses,
         changeDefenses,
+        changeEquipmentData,
     }
 }

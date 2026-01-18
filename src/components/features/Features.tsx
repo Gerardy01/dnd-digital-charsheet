@@ -31,7 +31,7 @@ export default function Features() {
 
                         <Text style={{ color: '#2E3740' }}>
                             {item.description}
-                        </Text> 
+                        </Text>
                     </div>
                 )
             })}
@@ -39,15 +39,15 @@ export default function Features() {
     )
 }
 
-const styles : { [key: string]: React.CSSProperties } = {
-    holder : {
+const styles: { [key: string]: React.CSSProperties } = {
+    holder: {
         width: '100%',
-        backgroundColor: '#FAFBFC',
+        backgroundColor: 'white',
         padding: '0rem 1rem',
         maxHeight: '70vh',
         overflow: 'auto'
     },
-    card : {
+    card: {
         backgroundColor: '#F6F8FB',
         borderRadius: 10,
         padding: '1rem',
@@ -71,4 +71,3 @@ const styles : { [key: string]: React.CSSProperties } = {
         fontWeight: 600,
     },
 }
-    

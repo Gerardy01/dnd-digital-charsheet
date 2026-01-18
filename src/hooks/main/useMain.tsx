@@ -3,6 +3,7 @@ import { ArrowsAltOutlined, BookOutlined, InboxOutlined, UserOutlined } from "@a
 
 // components
 import Features from "../../components/features/Features";
+import Equipment from "../../components/equipment/Equipment";
 
 // DTO
 import type { CharacterInfo, InfoStat } from "../../models/dataInterface";
@@ -30,7 +31,7 @@ export default function useMain() {
             label: 'Inventory',
             key: '2',
             icon: <InboxOutlined />,
-            children: "",
+            children: <Equipment />,
         },
         {
             label: 'Spellbook',
@@ -58,10 +59,10 @@ export default function useMain() {
 
     }, [charInfoData]);
 
-    const changeName = (newName : string) : void => {
+    const changeName = (newName: string): void => {
         if (!charInfoData) return;
 
-        const newCharInfoData : CharacterInfo = {
+        const newCharInfoData: CharacterInfo = {
             ...charInfoData,
             characterName: newName
         };
@@ -69,10 +70,10 @@ export default function useMain() {
         setCharInfoData(newCharInfoData);
     }
 
-    const changeRace = (newRace : string) : void => {
+    const changeRace = (newRace: string): void => {
         if (!charInfoData) return;
 
-        const newCharInfoData : CharacterInfo = {
+        const newCharInfoData: CharacterInfo = {
             ...charInfoData,
             species: newRace
         };
@@ -80,65 +81,65 @@ export default function useMain() {
         setCharInfoData(newCharInfoData);
     }
 
-    const changeClassAndLevel = (newClassAndLevel : string) : void => {
+    const changeClassAndLevel = (newClassAndLevel: string): void => {
         if (!charInfoData) return;
-        
-        const newCharInfoData : CharacterInfo = {
+
+        const newCharInfoData: CharacterInfo = {
             ...charInfoData,
-            classesAndLevel : newClassAndLevel,
+            classesAndLevel: newClassAndLevel,
         };
 
         setCharInfoData(newCharInfoData);
     }
 
-    const changeBackgroud = (newBackground : string) : void => {
+    const changeBackgroud = (newBackground: string): void => {
         if (!charInfoData) return;
-        
-        const newCharInfoData : CharacterInfo = {
+
+        const newCharInfoData: CharacterInfo = {
             ...charInfoData,
-            background : newBackground,
+            background: newBackground,
         };
 
         setCharInfoData(newCharInfoData);
     }
 
-    const changeAlignment = (newAlignment : string) : void => {
+    const changeAlignment = (newAlignment: string): void => {
         if (!charInfoData) return;
-        
-        const newCharInfoData : CharacterInfo = {
+
+        const newCharInfoData: CharacterInfo = {
             ...charInfoData,
-            alignment : newAlignment,
+            alignment: newAlignment,
         };
 
         setCharInfoData(newCharInfoData);
     }
 
-    const changeExp = (newExp : string) : void => {
+    const changeExp = (newExp: string): void => {
         if (!charInfoData) return;
-        
-        const newCharInfoData : CharacterInfo = {
+
+        const newCharInfoData: CharacterInfo = {
             ...charInfoData,
-            experiencePoints : newExp,
+            experiencePoints: newExp,
         };
 
         setCharInfoData(newCharInfoData);
     }
 
-    const changeProficiencyBonus = (newProficiencyBonus : string) : void => {
+    const changeProficiencyBonus = (newProficiencyBonus: string): void => {
         if (!infoStatData) return;
 
         const numberValue = Number(newProficiencyBonus);
         if (!numberValue) return;
 
-        const newInfoStat : InfoStat = {
+        const newInfoStat: InfoStat = {
             ...infoStatData,
-            proficiencyBonus : numberValue
+            proficiencyBonus: numberValue
         }
 
         setInfoStatData(newInfoStat);
     }
 
-    const onTabChange = (key : string) => {
+    const onTabChange = (key: string) => {
         setSelectedTab(key);
     }
 
