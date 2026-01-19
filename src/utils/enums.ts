@@ -15,6 +15,7 @@ export const StorageKey = {
     DEFENSES: "defenses",
     CHARDETAILS: "characterDetails",
     EQUIPMENT: "equipment",
+    SPELLCASTING: "spellcasting"
 }
 
 export const ProAndTrainEnum = {
@@ -97,4 +98,27 @@ export const DamageTypeEnum = {
     PSYCHIC: "Psychic",
     RADIANT: "Radiant",
     NECROTIC: "Necrotic",
+} as const
+
+export const SourceEnum = {
+    RACE: "Race",
+    CLASS: "Class",
+    BACKGROUND: "Background",
+} as const
+
+export const SpellComponentsEnum = {
+    V: "V",
+    S: "S",
+    M: "M",
+} as const
+
+export const SpellSchoolEnum = {
+    ABJURATION: "Abjuration",
+    CONJURATION: "Conjuration",
+    DIVINATION: "Divination",
+    ENCHANTMENT: "Enchantment",
+    EVOCATION: "Evocation",
+    ILLUSION: "Illusion",
+    NECROMANCY: "Necromancy",
+    TRANSMUTATION: "Transmutation",
 } as const

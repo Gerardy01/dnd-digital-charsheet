@@ -3,7 +3,7 @@
 import { StorageKey } from "../../utils/enums";
 
 // DTO
-import type { AbilityScores, CharacterInfo, Combat, InfoStat, SavingThrows, Skills, ProficienciesAndTraining, PassiveScores, FeaturesAndTraits, ExtraSenses, Defenses, CharacterDetails, Equipment } from "../../models/dataInterface";
+import type { AbilityScores, CharacterInfo, Combat, InfoStat, SavingThrows, Skills, ProficienciesAndTraining, PassiveScores, FeaturesAndTraits, ExtraSenses, Defenses, CharacterDetails, Equipment, SpellcastingSource } from "../../models/dataInterface";
 
 export default function useDataHandler() {
 
@@ -64,6 +64,10 @@ export default function useDataHandler() {
         return getDataFromLocalStorage<Equipment>(StorageKey.EQUIPMENT);
     }
 
+    const getSpellsData = (): SpellcastingSource[] => {
+        return getDataFromLocalStorage<SpellcastingSource[]>(StorageKey.SPELLCASTING) ?? [];
+    }
+
     const changeCharInfoData = (newData: CharacterInfo): void => {
         localStorage.setItem(StorageKey.CHARINFO, JSON.stringify(newData));
     }
@@ -102,6 +106,7 @@ export default function useDataHandler() {
         getExtraSenses,
         getDefenses,
         getEquipmentData,
+        getSpellsData,
         changeCharInfoData,
         changeCharacterDetailsData,
         changePassiveScores,

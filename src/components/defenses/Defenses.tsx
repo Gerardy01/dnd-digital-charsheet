@@ -23,9 +23,9 @@ export default function Defenses() {
         showInput,
         submitNewDefenses,
     } = useDefense();
-        
-        return (
-         <div style={styles.skillsHolder}>
+
+    return (
+        <div style={styles.skillsHolder}>
             <div style={styles.header}>
                 <div style={styles.headerRight}>
                     <SafetyCertificateOutlined style={{ fontSize: '1.4rem', color: 'blue' }} />
@@ -143,8 +143,8 @@ export default function Defenses() {
     )
 }
 
-const styles : { [key: string]: React.CSSProperties } = {
-    skillsHolder : {
+const styles: { [key: string]: React.CSSProperties } = {
+    skillsHolder: {
         width: '100%',
         marginTop: '2rem',
         backgroundColor: 'white',
@@ -153,38 +153,38 @@ const styles : { [key: string]: React.CSSProperties } = {
         borderRadius: '10px',
         boxShadow: '1px 0px 10px -2px lightgray'
     },
-    header : {
+    header: {
         display: 'flex',
         justifyContent: 'space-between',
     },
-    headerRight : {
+    headerRight: {
         display: 'flex',
         alignItems: 'center',
         color: '#6B7280'
     },
-    titleText : {
+    titleText: {
         margin: '0px',
         marginLeft: '10px',
     },
-    holder : {
+    holder: {
         display: 'flex',
         flexWrap: 'wrap',
         gap: 8,
         alignItems: 'center',
         marginTop: '0.7rem'
     },
-    tag : {
+    tag: {
         width: 'fit-content',
         padding: '2px 8px',
         borderRadius: 6,
         fontWeight: 'bold',
         display: 'flex'
     },
-    tagContent : {
+    tagContent: {
         display: 'flex',
-        alignItems : 'center'
+        alignItems: 'center'
     },
-    tagPlusStyle : {
+    tagPlusStyle: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -194,13 +194,13 @@ const styles : { [key: string]: React.CSSProperties } = {
         padding: '2px 8px',
         fontSize: 10,
     },
-    tagInputStyle : {
+    tagInputStyle: {
         width: "7rem",
         height: '1.8rem',
         marginInlineEnd: 8,
         verticalAlign: 'top',
     },
-    form : {
-        display : 'flex'
+    form: {
+        display: 'flex'
     }
 }

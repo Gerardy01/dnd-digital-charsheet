@@ -4,6 +4,7 @@ import { ArrowsAltOutlined, BookOutlined, InboxOutlined, UserOutlined } from "@a
 // components
 import Features from "../../components/features/Features";
 import Equipment from "../../components/equipment/Equipment";
+import Spells from "../../components/spells/Spells";
 
 // DTO
 import type { CharacterInfo, InfoStat } from "../../models/dataInterface";
@@ -37,7 +38,7 @@ export default function useMain() {
             label: 'Spellbook',
             key: '3',
             icon: <BookOutlined />,
-            children: "",
+            children: <Spells />,
         },
         {
             label: 'Features',

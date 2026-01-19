@@ -199,7 +199,7 @@ export interface FeaturesAndTraits {
     name: string;
     description: string;
     source: string;
-    sourceType: "Race" | "Class" | "Background";
+    sourceType: string;
     actionType: string;
 }
 
@@ -260,10 +260,24 @@ export interface Item {
 
 export interface SpellcastingSource {
     source: string;
-    sourceType: "racial" | "class";
+    sourceType: string;
     ability: string;
     spellSaveDC: number;
     spellAttackBonus: number;
+    spells: Spell[];
+}
+
+export interface SpellcastingTransformed {
+    source: string;
+    sourceType: string;
+    ability: string;
+    spellSaveDC: number;
+    spellAttackBonus: number;
+    spells: SpellTransformed[];
+}
+
+export interface SpellTransformed {
+    levelName: string;
     spells: Spell[];
 }
 

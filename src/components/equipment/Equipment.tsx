@@ -1,7 +1,7 @@
 import { Tag, Typography } from "antd"
 
 // components
-import EquipmentItem from "./equipmentItem";
+import EquipmentItem from "./EquipmentItem";
 
 // hooks
 import useEquipment from "../../hooks/equipment/useEquipment";
