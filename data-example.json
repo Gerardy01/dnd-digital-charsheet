@@ -207,84 +207,175 @@
     "actionEconomy": {
         "actions": [
             {
-                "name": "Longsword Attack",
-                "type": "attack",
-                "resource": "none",
-                "notes": "Melee weapon attack (1d8+2 slashing, or 1d10+2 two-handed)"
+                "name": "Longsword",
+                "level": null,
+                "category": "Equipable",
+                "activation": {
+                    "type": "Attack",
+                    "bonus": 4,
+                    "dice": "1d8+2 (1-hand) / 1d10+2 (2-hands)",
+                    "damageType": "Slashing",
+                    "saveDC": ""
+                },
+                "description": "Melee weapon attack (1d8+2 slashing, or 1d10+2 two-handed)",
+                "resource": ""
             },
             {
-                "name": "Javelin Attack",
-                "type": "attack",
-                "resource": "none",
-                "notes": "Thrown weapon (30/120 ft, 1d6+2 piercing)"
+                "name": "Javelin",
+                "level": null,
+                "category": "Item",
+                "activation": {
+                    "type": "Attack",
+                    "bonus": 4,
+                    "dice": "1d6+2",
+                    "damageType": "Piercing",
+                    "saveDC": ""
+                },
+                "description": "Thrown weapon (30/120 ft, 1d6+2 piercing)",
+                "resource": ""
+            },
+            {
+                "name": "Firebolt",
+                "level": null,
+                "category": "Spell",
+                "activation": {
+                    "type": "Attack",
+                    "bonus": 4,
+                    "dice": "1d10",
+                    "damageType": "Fire",
+                    "saveDC": ""
+                },
+                "description": "Ranged spell attack 1d10 fire damage",
+                "resource": ""
             },
             {
                 "name": "Bless",
-                "type": "spell",
-                "resource": "Spell Slot (Lv 1)",
-                "notes": "Buff up to 3 allies with +1d4 to attacks & saves (Concentration)"
+                "level": 1,
+                "category": "Spell",
+                "activation": {
+                    "type": "Buff",
+                    "bonus": 0,
+                    "dice": "",
+                    "damageType": "",
+                    "saveDC": ""
+                },
+                "description": "Buff up to 3 allies with +1d4 to attacks & saves (Concentration)",
+                "resource": "Spell Slot"
             },
             {
                 "name": "Cure Wounds",
-                "type": "spell",
-                "resource": "Spell Slot (Lv 1)",
-                "notes": "Heal a touched creature (1d8+CHA)"
+                "level": 1,
+                "category": "Spell",
+                "activation": {
+                    "type": "Healing",
+                    "bonus": 0,
+                    "dice": "",
+                    "damageType": "",
+                    "saveDC": ""
+                },
+                "description": "Heal a touched creature (1d8+CHA)",
+                "resource": "Spell Slot"
             },
             {
                 "name": "Lay on Hands",
-                "type": "feature",
-                "resource": "Lay on Hands Pool",
-                "notes": "Heal or cure disease/poison"
+                "level": null,
+                "category": "Feature",
+                "activation": {
+                    "type": "Healing",
+                    "bonus": 0,
+                    "dice": "",
+                    "damageType": "",
+                    "saveDC": ""
+                },
+                "description": "Heal or cure disease/poison",
+                "resource": {
+                    "name": "Lay on Hands Pool",
+                    "current": 10,
+                    "max": 10,
+                    "reset": "Long Rest"
+                }
             },
             {
                 "name": "Divine Sense",
-                "type": "feature",
-                "resource": "Divine Sense",
-                "notes": "Detect celestials, fiends, undead (60 ft)"
+                "level": null,
+                "category": "Feature",
+                "activation": {
+                    "type": "Utility",
+                    "bonus": 0,
+                    "dice": "",
+                    "damageType": "",
+                    "saveDC": ""
+                },
+                "description": "Detect celestials, fiends, undead (60 ft)",
+                "resource": {
+                    "name": "Divine Sense",
+                    "current": 3,
+                    "max": 3,
+                    "reset": "Long Rest"
+                }
             },
             {
-                "name": "Dash / Disengage / Dodge / Help / Hide",
-                "type": "utility",
-                "resource": "none",
-                "notes": "Standard combat actions"
+                "name": "Dash / Disengage / Dodge / Help / Hide / Use an Object",
+                "level": null,
+                "category": "Other",
+                "activation": {
+                    "type": "Utility",
+                    "bonus": 0,
+                    "dice": "",
+                    "damageType": "",
+                    "saveDC": ""
+                },
+                "description": "Standard combat actions",
+                "resource": ""
             }
         ],
         "bonusActions": [
             {
                 "name": "Thunderous Smite",
-                "type": "spell",
-                "resource": "Spell Slot (Lv 1)",
-                "notes": "Next hit deals extra thunder damage and may knock target prone"
+                "level": 1,
+                "category": "Spell",
+                "activation": {
+                    "type": "Buff",
+                    "bonus": 0,
+                    "dice": "",
+                    "damageType": "",
+                    "saveDC": ""
+                },
+                "description": "Deals extra thunder damage and may knock target prone",
+                "resource": "Spell Slot (Lv 1)"
             },
             {
                 "name": "Divine Smite",
-                "type": "feature",
-                "resource": "Spell Slot",
-                "notes": "Trigger after melee hit for extra radiant damage"
+                "level": null,
+                "category": "Feature",
+                "activation": {
+                    "type": "Buff",
+                    "bonus": 0,
+                    "dice": "2d8",
+                    "damageType": "Radiant",
+                    "saveDC": ""
+                },
+                "description": "Saat memukul makhluk dengan serangan senjata melee, kamu bisa menggunakan satu spell slot untuk memberikan tambahan 2d8 Radiant damage (ditambah 1d8 jika targetnya Undead/Fiend).",
+                "resource": ""
             }
         ],
         "reactions": [
             {
                 "name": "Opportunity Attack",
-                "type": "attack",
-                "resource": "none",
-                "notes": "Melee attack when enemy leaves reach"
+                "category": "Other",
+                "activation": {
+                    "type": "Attack",
+                    "bonus": 0,
+                    "dice": "",
+                    "damageType": "",
+                    "saveDC": ""
+                },
+                "description": "Melee attack when enemy leaves reach",
+                "resource": ""
             }
         ]
     },
     "resourceTrackers": [
-        {
-            "name": "Lay on Hands Pool",
-            "current": 10,
-            "max": 10,
-            "reset": "Long Rest"
-        },
-        {
-            "name": "Divine Sense",
-            "current": 3,
-            "max": 3,
-            "reset": "Long Rest"
-        },
         {
             "name": "Spell Slots (Level 1)",
             "current": 2,
@@ -317,55 +408,64 @@
             "name": "Darkvision",
             "description": "Can see in dim light within 60 feet as if it were bright light, and in darkness as if it were dim light.",
             "source": "High Elf",
-            "sourceType": "Race"
+            "sourceType": "Race",
+            "actionType": ""
         },
         {
             "name": "Fey Ancestry",
             "description": "Advantage on saving throws against being charmed, and magic can't put you to sleep.",
             "source": "High Elf",
-            "sourceType": "Race"
+            "sourceType": "Race",
+            "actionType": ""
         },
         {
             "name": "Trance",
             "description": "Elves don't need to sleep. They meditate deeply for 4 hours a day.",
             "source": "High Elf",
-            "sourceType": "Race"
+            "sourceType": "Race",
+            "actionType": ""
         },
         {
             "name": "Divine Sense",
             "description": "The presence of strong evil registers on your senses like a noxious odor, and powerful good rings like heavenly music in your ears.",
             "source": "Paladin",
-            "sourceType": "Class"
+            "sourceType": "Class",
+            "actionType": "actions"
         },
         {
             "name": "Lay on Hands",
             "description": "Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest.",
             "source": "Paladin",
-            "sourceType": "Class"
+            "sourceType": "Class",
+            "actionType": "actions"
         },
         {
             "name": "Shelter of the Faithful",
             "description": "You can receive free healing and care at establishments of your faith.",
             "source": "Acolyte",
-            "sourceType": "Background"
+            "sourceType": "Background",
+            "actionType": ""
         },
         {
             "name": "Fighting Style: Defense",
             "description": "Saat mengenakan armor, kamu mendapatkan +1 bonus pada AC (sudah termasuk di status).",
             "source": "Paladin 2",
-            "sourceType": "Class"
+            "sourceType": "Class",
+            "actionType": ""
         },
         {
             "name": "Divine Smite",
             "description": "Saat memukul makhluk dengan serangan senjata melee, kamu bisa menggunakan satu spell slot untuk memberikan tambahan 2d8 Radiant damage (ditambah 1d8 jika targetnya Undead/Fiend).",
             "source": "Paladin 2",
-            "sourceType": "Class"
+            "sourceType": "Class",
+            "actionType": "bonusActions"
         },
         {
             "name": "Spellcasting (Paladin)",
             "description": "Kamu dapat menggunakan Charisma sebagai spellcasting ability. Kamu bisa menyiapkan 3 spell Paladin level 1.",
             "source": "Paladin 2",
-            "sourceType": "Class"
+            "sourceType": "Class",
+            "actionType": ""
         }
     ],
     "passiveScores": {
@@ -548,6 +648,22 @@
                     "prepared": true,
                     "description": "",
                     "sourcePage": "PHB 259",
+                    "actionType": "actions"
+                },
+                {
+                    "name": "Fire Bolt",
+                    "level": 0,
+                    "school": "Evocation",
+                    "castingTime": "1 action",
+                    "range": "120 feet",
+                    "components": [
+                        "V",
+                        "S"
+                    ],
+                    "duration": "Instantaneous",
+                    "prepared": true,
+                    "description": "You hurl a mote of fire at a creature or object within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 fire damage. A flammable object hit by this spell ignites if it isn't being worn or carried.",
+                    "sourcePage": "PHB 242",
                     "actionType": "actions"
                 }
             ]

@@ -13,6 +13,7 @@ import CharacterDetails from '../components/characterDetails/CharacterDetails';
 
 // hooks
 import useMain from "../hooks/main/useMain";
+import useActionInit from '../hooks/actions/useActionInit';
 
 const { Title, Text } = Typography;
 
@@ -32,8 +33,11 @@ export default function Main() {
         changeAlignment,
         changeExp,
         changeProficiencyBonus,
+        changeInspiration,
         onTabChange,
     } = useMain();
+
+    useActionInit();
 
     return (
         <div style={styles.container}>
@@ -117,7 +121,10 @@ export default function Main() {
                         </div>
                         <div style={styles.statItem}>
                             <Text strong style={styles.infoLabel}>INSPIRATION</Text>
-                            <div style={{ margin: '0.5rem 0px', fontSize: '1.7rem', color: 'white' }}>
+                            <div
+                                style={{ margin: '0.5rem 0px', fontSize: '1.7rem', color: 'white' }}
+                                onClick={() => { changeInspiration() }}
+                            >
                                 {infoStatData?.heroicInspiration ? (
                                     <CheckOutlined />
                                 ) : (

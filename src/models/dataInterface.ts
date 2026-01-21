@@ -168,9 +168,26 @@ export interface ActionEconomy {
 
 export interface ActionItem {
     name: string;
+    level: number | null;
+    category: string;
+    activation: ActionActivation;
+    description: string;
+    resource: ActionResource | string;
+}
+
+export interface ActionActivation {
     type: string;
-    resource: string;
-    notes: string;
+    bonus: number;
+    dice: string;
+    damageType: string;
+    saveDC: number;
+}
+
+export interface ActionResource {
+    name: string;
+    current: number;
+    max: number;
+    reset: string;
 }
 
 /* =========================

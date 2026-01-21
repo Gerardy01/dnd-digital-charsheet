@@ -140,6 +140,17 @@ export default function useMain() {
         setInfoStatData(newInfoStat);
     }
 
+    const changeInspiration = (): void => {
+        if (!infoStatData) return;
+
+        const newInfoStat: InfoStat = {
+            ...infoStatData,
+            heroicInspiration: !infoStatData.heroicInspiration
+        }
+
+        setInfoStatData(newInfoStat);
+    }
+
     const onTabChange = (key: string) => {
         setSelectedTab(key);
     }
@@ -156,6 +167,7 @@ export default function useMain() {
         changeAlignment,
         changeExp,
         changeProficiencyBonus,
+        changeInspiration,
         onTabChange,
     }
 }

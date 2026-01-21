@@ -81,7 +81,7 @@ export default function CombatStat() {
                     <Text strong style={styles.infoLabel}>SPEED</Text>
                 </div>
             </div>
-            
+
             <div style={styles.hitDice}>
                 <div style={styles.header}>
                     <div style={styles.headerRight}>
@@ -91,7 +91,7 @@ export default function CombatStat() {
                 </div>
 
                 <Divider style={{ marginTop: "0.5rem", marginBottom: '1rem' }} />
-                
+
                 {combatData?.hitDice.map((item, i) => {
                     return (
                         <Tracker
@@ -110,18 +110,18 @@ export default function CombatStat() {
     )
 }
 
-const styles : { [key: string]: React.CSSProperties } = {
-    holder : {
+const styles: { [key: string]: React.CSSProperties } = {
+    holder: {
         width: '100%',
         marginTop: '2rem',
     },
-    health : {
+    health: {
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
         marginBottom: '1.3rem',
     },
-    healthHolder : {
+    healthHolder: {
         width: '65%',
         backgroundColor: 'white',
         border: '1px solid lightgray',
@@ -129,24 +129,24 @@ const styles : { [key: string]: React.CSSProperties } = {
         boxShadow: '1px 0px 10px -2px lightgray',
         overflow: 'hidden',
     },
-    healthContent : {
+    healthContent: {
         padding: '1rem',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    healthMain : {
+    healthMain: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
     },
-    statHolder : {
+    statHolder: {
         width: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
     },
-    statItem : {
+    statItem: {
         width: '30%',
         display: 'flex',
         flexDirection: 'column',
@@ -159,11 +159,11 @@ const styles : { [key: string]: React.CSSProperties } = {
         boxShadow: '1px 0px 10px -2px lightgray',
         textAlign: 'center',
     },
-    infoLabel : {
+    infoLabel: {
         color: '#6B7280',
         fontSize: '10px'
     },
-    hitDice : {
+    hitDice: {
         width: '100%',
         marginTop: '1.5rem',
         backgroundColor: 'white',
@@ -173,16 +173,16 @@ const styles : { [key: string]: React.CSSProperties } = {
         borderRadius: '10px',
         boxShadow: '1px 0px 10px -2px lightgray'
     },
-    header : {
+    header: {
         display: 'flex',
         justifyContent: 'space-between',
     },
-    headerRight : {
+    headerRight: {
         display: 'flex',
         alignItems: 'center',
         color: '#6B7280'
     },
-    titleText : {
+    titleText: {
         margin: '0px',
         marginLeft: '10px',
     }

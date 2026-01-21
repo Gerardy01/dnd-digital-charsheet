@@ -15,7 +15,8 @@ export const StorageKey = {
     DEFENSES: "defenses",
     CHARDETAILS: "characterDetails",
     EQUIPMENT: "equipment",
-    SPELLCASTING: "spellcasting"
+    SPELLCASTING: "spellcasting",
+    ACTIONECONOMY: "actionEconomy",
 }
 
 export const ProAndTrainEnum = {
@@ -64,6 +65,27 @@ export const ActionTypeEnum = {
     BONUSACTION: "bonusActions",
     REACTION: "reactions",
 } as const
+
+export const DefaultActionsEnum = {
+    OPPORTUNITY: "Opportunity Attack",
+    STANDARD: "Dash / Disengage / Dodge / Help / Hide / Use an Object",
+}
+
+export const ActionCategoryEnum = {
+    EQUIPABLE: "Equipable",
+    SPELL: "Spell",
+    FEATURE: "Feature",
+    ITEM: "Item",
+    OTHER: "Other",
+} as const;
+
+export const UsabilityEnum = {
+    ATTACK: "Attack",
+    SAVE: "Save",
+    UTILITY: "Utility",
+    HEALING: "Healing",
+    BUFF: "Buff",
+}
 
 export const PassiveTypeEnum = {
     PERCEPTION: "perception",

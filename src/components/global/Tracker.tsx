@@ -6,14 +6,39 @@ interface Props {
     current: number;
     max: number;
     changeCurrent?: (newCurrent: number) => void;
+    onlyShowTracker?: boolean;
 }
 
 const { Text, Title } = Typography;
 
-export default function Tracker({ name, current, max, changeCurrent }: Props) {
+export default function Tracker({ name, current, max, changeCurrent, onlyShowTracker = false }: Props) {
 
     const items = Array.from({ length: max }, (_, i) => i + 1);
 
+    if (onlyShowTracker) {
+        return (
+            <div style={styles.row} aria-hidden="true">
+                {items.map(i => (
+                    <div
+                        key={i}
+                        onClick={() => {
+                            if (i > current) {
+                                changeCurrent && changeCurrent(i);
+                            }
+
+                            if (i <= current) {
+                                changeCurrent && changeCurrent(i - 1);
+                            }
+                        }}
+                        style={{
+                            ...styles.box,
+                            ...(i <= current ? styles.boxFilled : styles.boxEmpty),
+                        }}
+                    />
+                ))}
+            </div>
+        );
+    }
     return (
         <div style={styles.card} role="group" aria-label={`${name} ${current}/${max}`}>
             <div style={styles.header}>
@@ -48,7 +73,7 @@ export default function Tracker({ name, current, max, changeCurrent }: Props) {
 }
 
 
-const styles : { [key: string]: React.CSSProperties } = {
+const styles: { [key: string]: React.CSSProperties } = {
     card: {
         backgroundColor: '#F6F8FB',
         borderRadius: 10,
@@ -65,6 +90,7 @@ const styles : { [key: string]: React.CSSProperties } = {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginBottom: 4
     },
     fraction: {
         fontSize: 12,
@@ -74,7 +100,6 @@ const styles : { [key: string]: React.CSSProperties } = {
         display: 'flex',
         flexWrap: 'wrap',
         gap: 8,
-        marginTop: 4,
     },
     box: {
         width: 20,

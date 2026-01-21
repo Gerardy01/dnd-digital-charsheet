@@ -3,7 +3,7 @@
 import { StorageKey } from "../../utils/enums";
 
 // DTO
-import type { AbilityScores, CharacterInfo, Combat, InfoStat, SavingThrows, Skills, ProficienciesAndTraining, PassiveScores, FeaturesAndTraits, ExtraSenses, Defenses, CharacterDetails, Equipment, SpellcastingSource } from "../../models/dataInterface";
+import type { AbilityScores, CharacterInfo, Combat, InfoStat, SavingThrows, Skills, ProficienciesAndTraining, PassiveScores, FeaturesAndTraits, ExtraSenses, Defenses, CharacterDetails, Equipment, SpellcastingSource, ActionEconomy } from "../../models/dataInterface";
 
 export default function useDataHandler() {
 
@@ -68,6 +68,10 @@ export default function useDataHandler() {
         return getDataFromLocalStorage<SpellcastingSource[]>(StorageKey.SPELLCASTING) ?? [];
     }
 
+    const getActionEconomyData = (): ActionEconomy | null => {
+        return getDataFromLocalStorage<ActionEconomy>(StorageKey.ACTIONECONOMY);
+    }
+
     const changeCharInfoData = (newData: CharacterInfo): void => {
         localStorage.setItem(StorageKey.CHARINFO, JSON.stringify(newData));
     }
@@ -92,6 +96,10 @@ export default function useDataHandler() {
         localStorage.setItem(StorageKey.EQUIPMENT, JSON.stringify(newData));
     }
 
+    const changeActionEconomyData = (newData: ActionEconomy): void => {
+        localStorage.setItem(StorageKey.ACTIONECONOMY, JSON.stringify(newData));
+    }
+
     return {
         getCharInfoData,
         getInfoStatData,
@@ -107,11 +115,13 @@ export default function useDataHandler() {
         getDefenses,
         getEquipmentData,
         getSpellsData,
+        getActionEconomyData,
         changeCharInfoData,
         changeCharacterDetailsData,
         changePassiveScores,
         changeExtraSenses,
         changeDefenses,
         changeEquipmentData,
+        changeActionEconomyData,
     }
 }
