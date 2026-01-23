@@ -1,54 +1,64 @@
-# React + TypeScript + Vite
+# D&D Character Sheet Displayer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive web application designed to visualize Dungeons & Dragons 5th Edition character sheets. This project parses character data from JSON to provide a clean, organized, and accessible digital character sheet experience.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Character Overview**: Comprehensive display of character details including Class, Level, Background, and Experience.
+- **Combat Dashboard**: Real-time tracking of Hit Points, Armor Class, Speed, Initiative, and Hit Dice.
+- **Stat Block**: Visual representation of Ability Scores, Saving Throws, and Skills with proficiency indicators.
+- **Action Economy**: Clear categorization of Actions, Bonus Actions, and Reactions for streamlined combat turns.
+- **Spellbook**: Organized view of spells by level and source, including slot tracking and spell details.
+- **Inventory & Equipment**: Management of gear, currency, and attuned magic items (with encumbrance tracking).
+- **Features & Traits**: Consolidated list of racial, class, and background features.
+- **Responsiveness**: Built with Ant Design for a polished, responsive user interface.
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Framework**: [React 19](https://react.dev/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **UI Component Library**: [Ant Design](https://ant.design/)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Routing**: [React Router](https://reactrouter.com/)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 📦 Installation & Setup
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/yourusername/dnd-charsheet-displayer.git
+    cd dnd-charsheet-displayer
+    ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+3.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+
+4.  **Build for production:**
+    ```bash
+    npm run build
+    ```
+
+## 📝 Data Structure
+
+The application expects character data in a specific JSON format. See `data-example.json` in the root directory for a complete reference of the schema, which supports:
+- **`characterInfo`**: Basic metadata.
+- **`abilities`**, **`savingThrows`**, **`skills`**: Core stats.
+- **`combat`**: Health and combat stats.
+- **`actionEconomy`**: Actions available in combat.
+- **`spellcasting`**: Spells known/prepared and slot tracking.
+- **`equipment`**: Inventory items and currency.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License.
