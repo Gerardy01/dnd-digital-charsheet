@@ -26,8 +26,8 @@ A modern, interactive web application designed to visualize Dungeons & Dragons 5
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/yourusername/dnd-charsheet-displayer.git
-    cd dnd-charsheet-displayer
+    git clone https://github.com/Gerardy01/dnd-digital-charsheet.git
+    cd dnd-digital-charsheet
     ```
 
 2.  **Install dependencies:**
