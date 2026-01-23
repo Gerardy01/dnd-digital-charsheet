@@ -10,7 +10,7 @@ import type { Combat } from "../../models/dataInterface";
 
 export default function useCombatStat() {
 
-    const { getCombatData } = useDataHandler();
+    const { getCombatData, changeCombatData } = useDataHandler();
 
     const [combatData, setCombatData] = useState<Combat | null>(null);
     const [hpPercentage, setHpPercentage] = useState<number>(0);
@@ -24,13 +24,15 @@ export default function useCombatStat() {
 
         const percentage = percentageCalculator(combatData.hitPoints.current, combatData.hitPoints.max);
         setHpPercentage(percentage);
+
+        changeCombatData(combatData);
     }, [combatData]);
 
-    const percentageCalculator = (current: number, max: number) : number => {
+    const percentageCalculator = (current: number, max: number): number => {
         return (current / max) * 100;
     }
 
-    const changeHP = (newCurrent : number, newMax : number) => {
+    const changeHP = (newCurrent: number, newMax: number) => {
         if (!combatData) return;
         if (newCurrent < 0) return;
 
@@ -47,18 +49,16 @@ export default function useCombatStat() {
             current: currentData,
             max: maxData,
         };
-        
+
         const newCombatData = {
             ...combatData,
             hitPoints: newHitPoints
         };
 
         setCombatData(newCombatData);
-
-        // TODO: update data in storage
     }
 
-    const changeHpWithBtn = (isIncrease : boolean) => {
+    const changeHpWithBtn = (isIncrease: boolean) => {
         if (!combatData) return;
 
         const hitPoints = combatData.hitPoints;
@@ -77,11 +77,9 @@ export default function useCombatStat() {
         }
 
         setCombatData(newCombatData);
-
-        // TODO: update data in storage
     }
 
-    const changeHitDicePoint = (newCurrent : number, targetClass : string) => {
+    const changeHitDicePoint = (newCurrent: number, targetClass: string) => {
         if (!combatData) return;
 
         const hitDiceData = combatData.hitDice;
@@ -98,8 +96,6 @@ export default function useCombatStat() {
         };
 
         setCombatData(newCombatData);
-
-        // TODO: update data in storage
     }
 
     return {

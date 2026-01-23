@@ -100,6 +100,14 @@ export default function useDataHandler() {
         localStorage.setItem(StorageKey.ACTIONECONOMY, JSON.stringify(newData));
     }
 
+    const changeProficienciesAndTraining = (newData: ProficienciesAndTraining): void => {
+        localStorage.setItem(StorageKey.PROANDTRAIN, JSON.stringify(newData));
+    }
+
+    const changeCombatData = (newData: Combat): void => {
+        localStorage.setItem(StorageKey.COMBAT, JSON.stringify(newData));
+    }
+
     return {
         getCharInfoData,
         getInfoStatData,
@@ -123,5 +131,7 @@ export default function useDataHandler() {
         changeDefenses,
         changeEquipmentData,
         changeActionEconomyData,
+        changeProficienciesAndTraining,
+        changeCombatData,
     }
 }

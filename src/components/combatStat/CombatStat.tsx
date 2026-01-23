@@ -96,12 +96,13 @@ export default function CombatStat() {
                     return (
                         <Tracker
                             key={i}
-                            name={`${item.class} (${item.type})`}
+                            name={item.class}
                             current={item.remaining}
                             max={item.total}
                             changeCurrent={(newCurrent) => {
                                 changeHitDicePoint(newCurrent, item.class);
                             }}
+                            notes={`Dice: ${item.type}`}
                         />
                     )
                 })}

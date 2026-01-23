@@ -81,11 +81,15 @@ export const ActionCategoryEnum = {
 
 export const UsabilityEnum = {
     ATTACK: "Attack",
-    SAVE: "Save",
     UTILITY: "Utility",
     HEALING: "Healing",
     BUFF: "Buff",
-}
+} as const;
+
+export const ResourceResetEnum = {
+    LONGREST: "Long Rest",
+    SHORTREST: "Short Rest",
+} as const;
 
 export const PassiveTypeEnum = {
     PERCEPTION: "perception",

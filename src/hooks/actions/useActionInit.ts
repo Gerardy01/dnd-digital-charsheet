@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 // hooks
 import useDataHandler from "../global/useDataHandler";
+import { useActionState } from "./useActionState";
 
 // utils
 import { ActionCategoryEnum, ActionTypeEnum, DefaultActionsEnum } from "../../utils/enums";
@@ -19,6 +20,8 @@ export default function useActionInit() {
         getSpellsData,
         changeActionEconomyData,
     } = useDataHandler();
+
+    const { populate } = useActionState();
 
     const [actions] = useState<ActionEconomy | null>(() => {
         return getActionEconomyData();
@@ -42,6 +45,19 @@ export default function useActionInit() {
         if (!updatedActions) return;
         populateActions(updatedActions);
     }, []);
+
+    useEffect(() => {
+        if (!actions) {
+            populate({
+                actions: [],
+                bonusActions: [],
+                reactions: [],
+            });
+            return;
+        }
+
+        populate(actions);
+    }, [actions]);
 
     const removeUnregisteredActions = (): ActionEconomy | null => {
         if (!actions || !equipment) return null;
@@ -187,7 +203,6 @@ export default function useActionInit() {
                 bonus: 0,
                 dice: "",
                 damageType: "",
-                saveDC: 0
             },
             description: "",
             resource: ""

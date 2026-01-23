@@ -7,11 +7,12 @@ interface Props {
     max: number;
     changeCurrent?: (newCurrent: number) => void;
     onlyShowTracker?: boolean;
+    notes?: string;
 }
 
 const { Text, Title } = Typography;
 
-export default function Tracker({ name, current, max, changeCurrent, onlyShowTracker = false }: Props) {
+export default function Tracker({ name, current, max, changeCurrent, notes, onlyShowTracker = false }: Props) {
 
     const items = Array.from({ length: max }, (_, i) => i + 1);
 
@@ -68,6 +69,9 @@ export default function Tracker({ name, current, max, changeCurrent, onlyShowTra
                     />
                 ))}
             </div>
+            {notes && (
+                <Text italic style={{ color: '#45556E' }}>{notes}</Text>
+            )}
         </div>
     );
 }

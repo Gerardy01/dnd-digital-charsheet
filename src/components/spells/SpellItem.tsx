@@ -78,7 +78,7 @@ export default function SpellItem({ spell, handlePrepare, loading }: Props) {
 const styles: { [key: string]: React.CSSProperties } = {
     card: {
         backgroundColor: 'white',
-        borderRadius: 16,
+        borderRadius: "14px",
         padding: '16px',
         border: '1px solid #E2E8F0',
         boxShadow: '0 2px 8px rgba(0,0,0,0.04)',

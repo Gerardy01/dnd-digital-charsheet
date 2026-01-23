@@ -180,7 +180,6 @@ export interface ActionActivation {
     bonus: number;
     dice: string;
     damageType: string;
-    saveDC: number;
 }
 
 export interface ActionResource {

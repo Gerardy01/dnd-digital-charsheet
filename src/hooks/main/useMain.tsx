@@ -5,6 +5,7 @@ import { ArrowsAltOutlined, BookOutlined, InboxOutlined, UserOutlined } from "@a
 import Features from "../../components/features/Features";
 import Equipment from "../../components/equipment/Equipment";
 import Spells from "../../components/spells/Spells";
+import Actions from "../../components/actions/Actions";
 
 // DTO
 import type { CharacterInfo, InfoStat } from "../../models/dataInterface";
@@ -26,7 +27,7 @@ export default function useMain() {
             label: 'Action',
             key: '1',
             icon: <ArrowsAltOutlined />,
-            children: ""
+            children: <Actions />
         },
         {
             label: 'Inventory',

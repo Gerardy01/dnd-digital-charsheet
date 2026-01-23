@@ -174,12 +174,6 @@
                 "type": "d10",
                 "total": 2,
                 "remaining": 2
-            },
-            {
-                "class": "Warlock",
-                "type": "d8",
-                "total": 3,
-                "remaining": 3
             }
         ]
     },
@@ -214,8 +208,7 @@
                     "type": "Attack",
                     "bonus": 4,
                     "dice": "1d8+2 (1-hand) / 1d10+2 (2-hands)",
-                    "damageType": "Slashing",
-                    "saveDC": ""
+                    "damageType": "Slashing"
                 },
                 "description": "Melee weapon attack (1d8+2 slashing, or 1d10+2 two-handed)",
                 "resource": ""
@@ -228,8 +221,7 @@
                     "type": "Attack",
                     "bonus": 4,
                     "dice": "1d6+2",
-                    "damageType": "Piercing",
-                    "saveDC": ""
+                    "damageType": "Piercing"
                 },
                 "description": "Thrown weapon (30/120 ft, 1d6+2 piercing)",
                 "resource": ""
@@ -242,10 +234,22 @@
                     "type": "Attack",
                     "bonus": 4,
                     "dice": "1d10",
-                    "damageType": "Fire",
-                    "saveDC": ""
+                    "damageType": "Fire"
                 },
                 "description": "Ranged spell attack 1d10 fire damage",
+                "resource": ""
+            },
+            {
+                "name": "Mending",
+                "level": null,
+                "category": "Spell",
+                "activation": {
+                    "type": "Utility",
+                    "bonus": 0,
+                    "dice": "",
+                    "damageType": ""
+                },
+                "description": "",
                 "resource": ""
             },
             {
@@ -256,8 +260,7 @@
                     "type": "Buff",
                     "bonus": 0,
                     "dice": "",
-                    "damageType": "",
-                    "saveDC": ""
+                    "damageType": ""
                 },
                 "description": "Buff up to 3 allies with +1d4 to attacks & saves (Concentration)",
                 "resource": "Spell Slot"
@@ -270,8 +273,7 @@
                     "type": "Healing",
                     "bonus": 0,
                     "dice": "",
-                    "damageType": "",
-                    "saveDC": ""
+                    "damageType": ""
                 },
                 "description": "Heal a touched creature (1d8+CHA)",
                 "resource": "Spell Slot"
@@ -284,8 +286,7 @@
                     "type": "Healing",
                     "bonus": 0,
                     "dice": "",
-                    "damageType": "",
-                    "saveDC": ""
+                    "damageType": ""
                 },
                 "description": "Heal or cure disease/poison",
                 "resource": {
@@ -303,8 +304,7 @@
                     "type": "Utility",
                     "bonus": 0,
                     "dice": "",
-                    "damageType": "",
-                    "saveDC": ""
+                    "damageType": ""
                 },
                 "description": "Detect celestials, fiends, undead (60 ft)",
                 "resource": {
@@ -315,17 +315,16 @@
                 }
             },
             {
-                "name": "Dash / Disengage / Dodge / Help / Hide / Use an Object",
+                "name": "Standard combat actions",
                 "level": null,
                 "category": "Other",
                 "activation": {
                     "type": "Utility",
                     "bonus": 0,
                     "dice": "",
-                    "damageType": "",
-                    "saveDC": ""
+                    "damageType": ""
                 },
-                "description": "Standard combat actions",
+                "description": "Dash / Disengage / Dodge / Help / Hide / Use an Object",
                 "resource": ""
             }
         ],
@@ -338,8 +337,7 @@
                     "type": "Buff",
                     "bonus": 0,
                     "dice": "",
-                    "damageType": "",
-                    "saveDC": ""
+                    "damageType": ""
                 },
                 "description": "Deals extra thunder damage and may knock target prone",
                 "resource": "Spell Slot (Lv 1)"
@@ -352,8 +350,7 @@
                     "type": "Buff",
                     "bonus": 0,
                     "dice": "2d8",
-                    "damageType": "Radiant",
-                    "saveDC": ""
+                    "damageType": "Radiant"
                 },
                 "description": "Saat memukul makhluk dengan serangan senjata melee, kamu bisa menggunakan satu spell slot untuk memberikan tambahan 2d8 Radiant damage (ditambah 1d8 jika targetnya Undead/Fiend).",
                 "resource": ""
@@ -367,8 +364,7 @@
                     "type": "Attack",
                     "bonus": 0,
                     "dice": "",
-                    "damageType": "",
-                    "saveDC": ""
+                    "damageType": ""
                 },
                 "description": "Melee attack when enemy leaves reach",
                 "resource": ""
@@ -381,26 +377,6 @@
             "current": 2,
             "max": 2,
             "reset": "Long Rest"
-        }
-    ],
-    "attacksAndCantrips": [
-        {
-            "name": "Longsword",
-            "attackBonus": 4,
-            "damage": "1d8+2 (1-hand) / 1d10+2 (2-hands)",
-            "damageType": "Slashing"
-        },
-        {
-            "name": "Javelin",
-            "attackBonus": 4,
-            "damage": "1d6+2",
-            "damageType": "Piercing"
-        },
-        {
-            "name": "Mending (Cantrip)",
-            "attackBonus": 0,
-            "damage": "Utility",
-            "damageType": "N/A"
         }
     ],
     "featuresAndTraits": [
@@ -651,7 +627,7 @@
                     "actionType": "actions"
                 },
                 {
-                    "name": "Fire Bolt",
+                    "name": "Firebolt",
                     "level": 0,
                     "school": "Evocation",
                     "castingTime": "1 action",

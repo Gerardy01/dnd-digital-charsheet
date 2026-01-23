@@ -8,7 +8,7 @@ import type { ProficienciesAndTraining } from "../../models/dataInterface";
 
 export default function useProAndTrain() {
 
-    const { getProficienciesAndTrainingData } = useDataHandler();
+    const { getProficienciesAndTrainingData, changeProficienciesAndTraining } = useDataHandler();
 
     const [proAndTrain, setProAndTrain] = useState<ProficienciesAndTraining | null>(null);
 
@@ -16,19 +16,23 @@ export default function useProAndTrain() {
         setProAndTrain(getProficienciesAndTrainingData());
     }, []);
 
-    const handleRemove = (category: string, index : number) : void => {
+    useEffect(() => {
         if (!proAndTrain) return;
 
-        const updated = proAndTrain[category as keyof ProficienciesAndTraining].filter((_, i : number) => i !== index);
+        changeProficienciesAndTraining(proAndTrain);
+    }, [proAndTrain]);
+
+    const handleRemove = (category: string, index: number): void => {
+        if (!proAndTrain) return;
+
+        const updated = proAndTrain[category as keyof ProficienciesAndTraining].filter((_, i: number) => i !== index);
         setProAndTrain({
             ...proAndTrain,
             [category]: updated,
         });
-
-        // TODO: update data in storage
     }
 
-    const handleAdd = (category: string, item : string) : void => {
+    const handleAdd = (category: string, item: string): void => {
         if (!proAndTrain) return;
 
         const updated = [...proAndTrain[category as keyof ProficienciesAndTraining], item];
@@ -36,8 +40,6 @@ export default function useProAndTrain() {
             ...proAndTrain,
             [category]: updated,
         });
-
-        // TODO: update data in storage
     }
 
     return {
