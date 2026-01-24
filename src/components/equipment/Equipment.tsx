@@ -1,7 +1,9 @@
 import { Tag, Typography } from "antd"
+import { InboxOutlined, SketchOutlined } from "@ant-design/icons";
 
 // components
 import EquipmentItem from "./EquipmentItem";
+import Icon from "../global/Icon";
 
 // hooks
 import useEquipment from "../../hooks/equipment/useEquipment";
@@ -10,7 +12,7 @@ import useEquipment from "../../hooks/equipment/useEquipment";
 import { CurrencyEnum } from "../../utils/enums";
 
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 
 export default function Equipment() {
@@ -82,35 +84,64 @@ export default function Equipment() {
                 </Tag>
             </div>
 
-            {
-                equipment && (
-                    <div style={styles.carryTracker}>
-                        <div style={styles.carryHeader}>
-                            <Text style={{ color: '#6B7280' }} strong>Carrying Capacity</Text>
-                            <Text strong>{weightCarried} / {weightCarried > equipment.weightCapacity ? equipment.pushDragLift : equipment.weightCapacity} lbs</Text>
-                        </div>
-                        <div style={styles.progress}>
-                            <div
-                                style={{
-                                    width: `${progress}%`,
-                                    height: '100%',
-                                    backgroundColor: `${weightCarried > equipment?.weightCapacity ? 'red' : 'blue'}`
-                                }}
-                            />
-                        </div>
+            {equipment && (
+                <div style={styles.carryTracker}>
+                    <div style={styles.carryHeader}>
+                        <Text style={{ color: '#6B7280' }} strong>Carrying Capacity</Text>
+                        <Text strong>{weightCarried} / {weightCarried > equipment.weightCapacity ? equipment.pushDragLift : equipment.weightCapacity} lbs</Text>
                     </div>
-                )
-            }
-
-            {
-                equipment?.items.map((item, index) => (
-                    <EquipmentItem
-                        key={index}
-                        item={item}
-                        handleEquip={handleEquip}
+                    <div style={styles.progress}>
+                        <div
+                            style={{
+                                width: `${progress}%`,
+                                height: '100%',
+                                backgroundColor: `${weightCarried > equipment?.weightCapacity ? 'red' : 'blue'}`
+                            }}
+                        />
+                    </div>
+                </div>
+            )}
+            <div style={{ marginTop: '0.5rem' }} />
+            <div style={styles.titleHolder}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <Icon
+                        color="#FFF4D1"
+                        icon={<InboxOutlined style={{ fontSize: '1.3rem', color: '#A35200' }} />}
+                        paddingBottom="0.4rem"
                     />
-                ))
-            }
+                    <Title level={4} style={{ marginBottom: 0 }}>Items</Title>
+                </div>
+            </div>
+            {equipment && equipment.items.length > 0 ? equipment?.items.map((item, index) => (
+                <EquipmentItem
+                    key={index}
+                    item={item}
+                    handleEquip={handleEquip}
+                />
+            )) : (
+                <Text italic style={{ textAlign: 'center' }}>--- No Data ---</Text>
+            )}
+            <div style={{ marginTop: '1.5rem' }} />
+            <div style={styles.titleHolder}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <Icon
+                        color="#FFF4D1"
+                        icon={<SketchOutlined style={{ fontSize: '1.3rem', color: '#A35200' }} />}
+                    />
+                    <Title level={4} style={{ marginBottom: 0 }}>Attuned Magic Items</Title>
+                </div>
+            </div>
+            {equipment && equipment.attunedMagicItems.length > 0 ? equipment?.attunedMagicItems.map((item, index) => (
+                <EquipmentItem
+                    key={index}
+                    item={item}
+                    handleEquip={handleEquip}
+                />
+            )) : (
+                <div style={{ paddingBottom: '2rem' }}>
+                    <Text italic style={{ textAlign: 'center' }}>--- No Data ---</Text>
+                </div>
+            )}
         </div >
     )
 }
@@ -166,5 +197,12 @@ const styles: { [key: string]: React.CSSProperties } = {
         borderRadius: 12,
         backgroundColor: '#E6EAF0',
         overflow: 'hidden'
+    },
+    titleHolder: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '0.5rem',
     }
 }

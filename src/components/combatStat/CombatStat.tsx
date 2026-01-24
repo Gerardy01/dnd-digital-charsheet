@@ -1,4 +1,4 @@
-import { Button, Divider, Typography } from "antd"
+import { Button, Divider, Typography, Empty } from "antd"
 import { BulbOutlined, FieldTimeOutlined, HeartTwoTone, MinusOutlined, PlusOutlined, SafetyCertificateOutlined, UpCircleOutlined } from "@ant-design/icons"
 
 // components
@@ -92,7 +92,7 @@ export default function CombatStat() {
 
                 <Divider style={{ marginTop: "0.5rem", marginBottom: '1rem' }} />
 
-                {combatData?.hitDice.map((item, i) => {
+                {combatData && combatData.hitDice.length > 0 ? combatData?.hitDice.map((item, i) => {
                     return (
                         <Tracker
                             key={i}
@@ -105,7 +105,13 @@ export default function CombatStat() {
                             notes={`Dice: ${item.type}`}
                         />
                     )
-                })}
+                }) : (
+                    <div style={{
+                        paddingBottom: '2rem'
+                    }}>
+                        <Empty />
+                    </div>
+                )}
             </div>
         </div>
     )
@@ -170,7 +176,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         backgroundColor: 'white',
         border: '1px solid lightgray',
         padding: '1rem',
-        paddingBottom: '0.3rem',
+        paddingBottom: '0.5rem',
         borderRadius: '10px',
         boxShadow: '1px 0px 10px -2px lightgray'
     },

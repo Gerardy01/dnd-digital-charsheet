@@ -1,7 +1,11 @@
-import { Tag, Typography } from "antd";
+import { Empty, Tag, Typography } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
 // hooks
 import useFeatures from "../../hooks/features/useFeatures";
+
+// components
+import Icon from "../global/Icon";
 
 const { Text, Title } = Typography;
 
@@ -12,7 +16,16 @@ export default function Features() {
 
     return (
         <div style={styles.holder}>
-            {featuresAndTraits.map((item, i) => {
+            <div style={styles.titleHolder}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <Icon
+                        color="#F5F1E8"
+                        icon={<UserOutlined style={{ fontSize: '1.3rem', color: '#800000' }} />}
+                    />
+                    <Title level={4} style={{ marginBottom: 0 }}>Features & Traits</Title>
+                </div>
+            </div>
+            {featuresAndTraits.length > 0 ? featuresAndTraits.map((item, i) => {
                 return (
                     <div style={styles.card} key={i}>
                         <div style={styles.header}>
@@ -34,7 +47,11 @@ export default function Features() {
                         </Text>
                     </div>
                 )
-            })}
+            }) : (
+                <div style={{ paddingBottom: '2rem' }}>
+                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                </div>
+            )}
         </div>
     )
 }
@@ -70,4 +87,11 @@ const styles: { [key: string]: React.CSSProperties } = {
         fontSize: 12,
         fontWeight: 600,
     },
+    titleHolder: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '1.5rem',
+    }
 }

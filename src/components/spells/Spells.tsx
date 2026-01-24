@@ -1,14 +1,17 @@
-import { Typography } from "antd";
+import { Empty, Typography } from "antd";
+import { BookOutlined } from "@ant-design/icons";
 
 // components
 import SpellItem from "./SpellItem";
+import Icon from "../global/Icon";
 
 // hooks
 import useSpells from "../../hooks/spells/useSpells";
 
 
-
 const { Text, Title } = Typography;
+
+
 
 export default function Spells() {
 
@@ -16,7 +19,17 @@ export default function Spells() {
 
     return (
         <div style={styles.holder}>
-            {spellcasting.map((item, i) => (
+            <div style={styles.titleHolder}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <Icon
+                        color="#F3E5F5"
+                        icon={<BookOutlined style={{ fontSize: '1.3rem', color: '#5E35B1' }} />}
+                        paddingBottom="0.4rem"
+                    />
+                    <Title level={4} style={{ marginBottom: 0 }}>Spellbook</Title>
+                </div>
+            </div>
+            {spellcasting.length > 0 ? spellcasting.map((item, i) => (
                 <div key={i} style={{ width: '100%', marginBottom: '1.5rem' }}>
                     <div style={styles.source}>
                         <div>
@@ -56,7 +69,11 @@ export default function Spells() {
                     })}
 
                 </div>
-            ))}
+            )) : (
+                <div style={{ paddingBottom: '2rem' }}>
+                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                </div>
+            )}
         </div>
     )
 }
@@ -85,5 +102,12 @@ const styles: { [key: string]: React.CSSProperties } = {
         backgroundColor: '#EDF2F7',
         border: '1px solid #CBD5E0',
         boxShadow: '0 1px 4px rgba(16,24,40,0.04)'
+    },
+    titleHolder: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '0.5rem',
     }
 }

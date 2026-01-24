@@ -33,24 +33,24 @@ export default function ProAndTrainItem({ name, category, proAndTrain, handleRem
             <Title level={5} style={styles.sectionTitle}>{name}</Title>
             <div style={styles.tags}>
                 {proAndTrain &&
-                proAndTrain[category as keyof ProficienciesAndTraining].length > 0 &&
-                proAndTrain[category as keyof ProficienciesAndTraining].map((item, i) => {
-                    return (
-                        <Tag
-                            key={i}
-                            style={{ ...styles.tag, border: '' }}
-                            closable
-                            onClose={(e) => {
-                                e.preventDefault();
-                                handleRemove(category, i);
-                            }}
-                            color={color ? color : '#F3F4F6'}
-                            variant="outlined"
-                        >
-                            <Text style={{ fontSize: '12px' }}>{item}</Text>
-                        </Tag>
-                    )
-                })}
+                    proAndTrain[category as keyof ProficienciesAndTraining].length > 0 &&
+                    proAndTrain[category as keyof ProficienciesAndTraining].map((item, i) => {
+                        return (
+                            <Tag
+                                key={i}
+                                style={{ ...styles.tag, border: '' }}
+                                closable
+                                onClose={(e) => {
+                                    e.preventDefault();
+                                    handleRemove(category, i);
+                                }}
+                                color={color ? color : '#F3F4F6'}
+                                variant="outlined"
+                            >
+                                <Text style={{ fontSize: '12px' }}>{item}</Text>
+                            </Tag>
+                        )
+                    })}
                 {inputVisible ? (
                     <Input
                         ref={inputRef}
@@ -84,7 +84,7 @@ export default function ProAndTrainItem({ name, category, proAndTrain, handleRem
     )
 }
 
-const styles : { [key: string]: React.CSSProperties } = {
+const styles: { [key: string]: React.CSSProperties } = {
     section: {
         padding: "0.7rem 0",
     },
@@ -103,7 +103,7 @@ const styles : { [key: string]: React.CSSProperties } = {
         borderRadius: 6,
         fontSize: 10,
     },
-    tagPlusStyle : {
+    tagPlusStyle: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -112,8 +112,9 @@ const styles : { [key: string]: React.CSSProperties } = {
         color: 'blue',
         padding: '2px 8px',
         fontSize: 10,
+        cursor: 'pointer',
     },
-    tagInputStyle : {
+    tagInputStyle: {
         width: "6rem",
         height: '1.8rem',
         marginInlineEnd: 8,

@@ -193,6 +193,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         color: 'blue',
         padding: '2px 8px',
         fontSize: 10,
+        cursor: 'pointer',
     },
     tagInputStyle: {
         width: "7rem",

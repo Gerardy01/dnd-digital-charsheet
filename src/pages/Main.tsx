@@ -13,7 +13,6 @@ import CharacterDetails from '../components/characterDetails/CharacterDetails';
 
 // hooks
 import useMain from "../hooks/main/useMain";
-import useActionInit from '../hooks/actions/useActionInit';
 
 const { Title, Text } = Typography;
 
@@ -37,8 +36,6 @@ export default function Main() {
         onTabChange,
     } = useMain();
 
-    useActionInit();
-
     return (
         <div style={styles.container}>
             <div style={styles.contentHolder}>
@@ -50,7 +47,7 @@ export default function Main() {
                             triggerType: ['text'],
                             onChange: (newText) => { changeName(newText) }
                         }}
-                    >{charInfoData?.characterName}</Title>
+                    >{charInfoData?.characterName || 'Character name'}</Title>
                     <Title
                         style={styles.subTitle}
                         level={4}
@@ -58,7 +55,7 @@ export default function Main() {
                             triggerType: ['text'],
                             onChange: (newText) => { changeRace(newText) }
                         }}
-                    >{charInfoData?.species}</Title>
+                    >{charInfoData?.species || 'Character race'}</Title>
 
                     <div style={styles.infoHolder}>
                         <div style={styles.info}>
@@ -70,7 +67,7 @@ export default function Main() {
                                     triggerType: ['text'],
                                     onChange: (newText) => { changeClassAndLevel(newText) }
                                 }}
-                            >{charInfoData?.classesAndLevel}</Text>
+                            >{charInfoData?.classesAndLevel || 'Class & Level'}</Text>
                         </div>
                         <div style={styles.info}>
                             <Text strong style={styles.infoLabel}>BACKGROUND</Text>
@@ -81,7 +78,7 @@ export default function Main() {
                                     triggerType: ['text'],
                                     onChange: (newText) => { changeBackgroud(newText) }
                                 }}
-                            >{charInfoData?.background}</Text>
+                            >{charInfoData?.background || 'Background'}</Text>
                         </div>
                         <div style={styles.info}>
                             <Text strong style={styles.infoLabel}>ALIGNMENT</Text>
@@ -92,7 +89,7 @@ export default function Main() {
                                     triggerType: ['text'],
                                     onChange: (newText) => { changeAlignment(newText) }
                                 }}
-                            >{charInfoData?.alignment}</Text>
+                            >{charInfoData?.alignment || 'Alignment'}</Text>
                         </div>
                         <div style={styles.info}>
                             <Text strong style={styles.infoLabel}>EXPERIENCE POINTS</Text>
@@ -103,7 +100,7 @@ export default function Main() {
                                     triggerType: ['text'],
                                     onChange: (newText) => { changeExp(newText) }
                                 }}
-                            >{charInfoData?.experiencePoints}</Text>
+                            >{charInfoData?.experiencePoints || 'Experience Points'}</Text>
                         </div>
                     </div>
 

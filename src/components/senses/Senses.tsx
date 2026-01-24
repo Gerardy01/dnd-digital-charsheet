@@ -46,7 +46,7 @@ export default function Senses() {
                         name="Passive Perception"
                         points={passiveScores.perception}
                         icon={<EyeOutlined />}
-                        changePassive={(newValue : string) => {
+                        changePassive={(newValue: string) => {
                             changePassive(newValue, PassiveTypeEnum.PERCEPTION)
                         }}
                     />
@@ -54,7 +54,7 @@ export default function Senses() {
                         name="Passive Insight"
                         points={passiveScores.insight}
                         icon={<BulbOutlined />}
-                        changePassive={(newValue : string) => {
+                        changePassive={(newValue: string) => {
                             changePassive(newValue, PassiveTypeEnum.INSIGHT)
                         }}
                     />
@@ -62,7 +62,7 @@ export default function Senses() {
                         name="Passive Investigation"
                         points={passiveScores.investigation}
                         icon={<SearchOutlined />}
-                        changePassive={(newValue : string) => {
+                        changePassive={(newValue: string) => {
                             changePassive(newValue, PassiveTypeEnum.INVESTIGATION)
                         }}
                     />
@@ -109,7 +109,7 @@ export default function Senses() {
                             <InputNumber
                                 type="number"
                                 size="small"
-                                style={{...styles.tagInputStyle, width: '4.5rem'}}
+                                style={{ ...styles.tagInputStyle, width: '4.5rem' }}
                                 placeholder="distance"
                             />
                         </Form.Item>
@@ -137,8 +137,8 @@ export default function Senses() {
 }
 
 
-const styles : { [key: string]: React.CSSProperties } = {
-    holder : {
+const styles: { [key: string]: React.CSSProperties } = {
+    holder: {
         width: '100%',
         marginTop: '2rem',
         backgroundColor: 'white',
@@ -147,20 +147,20 @@ const styles : { [key: string]: React.CSSProperties } = {
         borderRadius: '10px',
         boxShadow: '1px 0px 10px -2px lightgray'
     },
-    header : {
+    header: {
         display: 'flex',
         justifyContent: 'space-between',
     },
-    headerRight : {
+    headerRight: {
         display: 'flex',
         alignItems: 'center',
         color: '#6B7280'
     },
-    titleText : {
+    titleText: {
         margin: '0px',
         marginLeft: '10px',
     },
-    extraHolder : {
+    extraHolder: {
         display: 'flex',
         flexWrap: 'wrap',
         gap: 8,
@@ -171,7 +171,7 @@ const styles : { [key: string]: React.CSSProperties } = {
         padding: '4px 8px',
         borderRadius: 6,
     },
-    tagPlusStyle : {
+    tagPlusStyle: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -180,14 +180,15 @@ const styles : { [key: string]: React.CSSProperties } = {
         color: 'blue',
         padding: '2px 8px',
         fontSize: 10,
+        cursor: 'pointer',
     },
-    tagInputStyle : {
+    tagInputStyle: {
         width: "8rem",
         height: '1.8rem',
         marginInlineEnd: 8,
         verticalAlign: 'top',
     },
-    form : {
-        display : 'flex'
+    form: {
+        display: 'flex'
     }
 }

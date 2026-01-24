@@ -1,4 +1,4 @@
-# D&D Character Sheet Displayer
+# D&D Digital Character Sheet
 
 A modern, interactive web application designed to visualize Dungeons & Dragons 5th Edition character sheets. This project parses character data from JSON to provide a clean, organized, and accessible digital character sheet experience.
 

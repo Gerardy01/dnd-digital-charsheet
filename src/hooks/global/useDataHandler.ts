@@ -76,8 +76,28 @@ export default function useDataHandler() {
         localStorage.setItem(StorageKey.CHARINFO, JSON.stringify(newData));
     }
 
-    const changeCharacterDetailsData = (newData: CharacterDetails): void => {
-        localStorage.setItem(StorageKey.CHARDETAILS, JSON.stringify(newData));
+    const changeInfoStatData = (newData: InfoStat): void => {
+        localStorage.setItem(StorageKey.INFOSTAT, JSON.stringify(newData));
+    }
+
+    const changeAbilitiesData = (newData: AbilityScores): void => {
+        localStorage.setItem(StorageKey.ABILITIES, JSON.stringify(newData));
+    }
+
+    const changeSavingsData = (newData: SavingThrows): void => {
+        localStorage.setItem(StorageKey.SAVINGS, JSON.stringify(newData));
+    }
+
+    const changeSkillsData = (newData: Skills): void => {
+        localStorage.setItem(StorageKey.SKILLS, JSON.stringify(newData));
+    }
+
+    const changeCombatData = (newData: Combat): void => {
+        localStorage.setItem(StorageKey.COMBAT, JSON.stringify(newData));
+    }
+
+    const changeProficienciesAndTraining = (newData: ProficienciesAndTraining): void => {
+        localStorage.setItem(StorageKey.PROANDTRAIN, JSON.stringify(newData));
     }
 
     const changePassiveScores = (newData: PassiveScores): void => {
@@ -92,20 +112,24 @@ export default function useDataHandler() {
         localStorage.setItem(StorageKey.DEFENSES, JSON.stringify(newData));
     }
 
-    const changeEquipmentData = (newData: Equipment): void => {
-        localStorage.setItem(StorageKey.EQUIPMENT, JSON.stringify(newData));
-    }
-
     const changeActionEconomyData = (newData: ActionEconomy): void => {
         localStorage.setItem(StorageKey.ACTIONECONOMY, JSON.stringify(newData));
     }
 
-    const changeProficienciesAndTraining = (newData: ProficienciesAndTraining): void => {
-        localStorage.setItem(StorageKey.PROANDTRAIN, JSON.stringify(newData));
+    const changeEquipmentData = (newData: Equipment): void => {
+        localStorage.setItem(StorageKey.EQUIPMENT, JSON.stringify(newData));
     }
 
-    const changeCombatData = (newData: Combat): void => {
-        localStorage.setItem(StorageKey.COMBAT, JSON.stringify(newData));
+    const changeSpellsData = (newData: SpellcastingSource[]): void => {
+        localStorage.setItem(StorageKey.SPELLCASTING, JSON.stringify(newData));
+    }
+
+    const changeFeaturesAndTraits = (newData: FeaturesAndTraits[]): void => {
+        localStorage.setItem(StorageKey.FEATANDTRAITS, JSON.stringify(newData));
+    }
+
+    const changeCharacterDetailsData = (newData: CharacterDetails): void => {
+        localStorage.setItem(StorageKey.CHARDETAILS, JSON.stringify(newData));
     }
 
     return {
@@ -126,6 +150,10 @@ export default function useDataHandler() {
         getActionEconomyData,
         changeCharInfoData,
         changeCharacterDetailsData,
+        changeInfoStatData,
+        changeAbilitiesData,
+        changeSavingsData,
+        changeSkillsData,
         changePassiveScores,
         changeExtraSenses,
         changeDefenses,
@@ -133,5 +161,7 @@ export default function useDataHandler() {
         changeActionEconomyData,
         changeProficienciesAndTraining,
         changeCombatData,
+        changeSpellsData,
+        changeFeaturesAndTraits,
     }
 }

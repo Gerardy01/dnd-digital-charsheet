@@ -22,7 +22,7 @@ export default function AppearanceItem({ title, value, onEdit }: Props) {
                     triggerType: ['text'],
                     onChange: (newText) => { onEdit(newText) }
                 }}
-            >{value}</Text>
+            >{value || "-"}</Text>
         </div>
     )
 }

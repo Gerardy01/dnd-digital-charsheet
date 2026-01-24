@@ -1,27 +1,6 @@
 
 
 
-export interface CharSheetDataDTO {
-    characterInfo: CharacterInfo;
-    characterDetails: CharacterDetails;
-    proficiencyBonus: number;
-    abilities: AbilityScores;
-    savingThrows: SavingThrows;
-    skills: Skills;
-    combat: Combat;
-    proficienciesAndTraining: ProficienciesAndTraining;
-    actionEconomy: ActionEconomy;
-    resourceTrackers: ResourceTracker[];
-    attacksAndCantrips: AttackOrCantrip[];
-    featuresAndTraits: FeaturesAndTraits[];
-    passiveScores: PassiveScores;
-    defenses: Defenses[];
-    senses: ExtraSenses[];
-    equipment: Equipment;
-    spellcasting: SpellcastingSource[];
-    notes: string;
-}
-
 /* =========================
    Character Info
 ========================= */
