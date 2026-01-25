@@ -109,7 +109,7 @@ export default function CombatStat() {
                     <div style={{
                         paddingBottom: '2rem'
                     }}>
-                        <Empty />
+                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                     </div>
                 )}
             </div>

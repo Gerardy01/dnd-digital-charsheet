@@ -10,6 +10,7 @@ import Defenses from '../components/defenses/Defenses';
 import CombatStat from '../components/combatStat/CombatStat';
 import Senses from '../components/senses/Senses';
 import CharacterDetails from '../components/characterDetails/CharacterDetails';
+import OtherResources from '../components/otherResources/OtherResources';
 
 // hooks
 import useMain from "../hooks/main/useMain";
@@ -139,6 +140,7 @@ export default function Main() {
                 <ProAndTrain />
                 <Senses />
                 <Defenses />
+                <OtherResources />
 
                 <div style={styles.tabsHolder}>
                     <Tabs

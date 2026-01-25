@@ -17,6 +17,7 @@ export const StorageKey = {
     EQUIPMENT: "equipment",
     SPELLCASTING: "spellcasting",
     ACTIONECONOMY: "actionEconomy",
+    OTHERRESOURCES: "otherResources",
 }
 
 export const ProAndTrainEnum = {

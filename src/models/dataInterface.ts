@@ -151,7 +151,7 @@ export interface ActionItem {
     category: string;
     activation: ActionActivation;
     description: string;
-    resource: ActionResource | string;
+    resource: Resources | string;
 }
 
 export interface ActionActivation {
@@ -161,18 +161,11 @@ export interface ActionActivation {
     damageType: string;
 }
 
-export interface ActionResource {
-    name: string;
-    current: number;
-    max: number;
-    reset: string;
-}
-
 /* =========================
    Resources
 ========================= */
 
-export interface ResourceTracker {
+export interface Resources {
     name: string;
     current: number;
     max: number;

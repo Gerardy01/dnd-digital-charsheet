@@ -371,7 +371,7 @@
             }
         ]
     },
-    "resourceTrackers": [
+    "otherResources": [
         {
             "name": "Spell Slots (Level 1)",
             "current": 2,
