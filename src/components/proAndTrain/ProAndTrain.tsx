@@ -25,7 +25,7 @@ export default function ProAndTrain() {
             </div>
 
             <Divider style={{ marginTop: "0.5rem", marginBottom: '0.5rem' }} />
-            
+
             {proAndTrain && (
                 <>
                     <ProAndTrainItem
@@ -35,7 +35,7 @@ export default function ProAndTrain() {
                         handleRemove={handleRemove}
                         handleAdd={handleAdd}
                     />
-                    
+
                     <ProAndTrainItem
                         name="Waepons"
                         category={ProAndTrainEnum.WEAPONS}
@@ -76,8 +76,8 @@ export default function ProAndTrain() {
     )
 }
 
-const styles : { [key: string]: React.CSSProperties } = {
-    holder : {
+const styles: { [key: string]: React.CSSProperties } = {
+    holder: {
         width: '100%',
         marginTop: '2rem',
         backgroundColor: 'white',
@@ -86,16 +86,16 @@ const styles : { [key: string]: React.CSSProperties } = {
         borderRadius: '10px',
         boxShadow: '1px 0px 10px -2px lightgray'
     },
-    header : {
+    header: {
         display: 'flex',
         justifyContent: 'space-between',
     },
-    headerRight : {
+    headerRight: {
         display: 'flex',
         alignItems: 'center',
         color: '#6B7280'
     },
-    titleText : {
+    titleText: {
         margin: '0px',
         marginLeft: '10px',
     },

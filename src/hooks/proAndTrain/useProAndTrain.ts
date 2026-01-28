@@ -22,20 +22,20 @@ export default function useProAndTrain() {
         changeProficienciesAndTraining(proAndTrain);
     }, [proAndTrain]);
 
-    const handleRemove = (category: string, index: number): void => {
+    const handleRemove = (category: keyof ProficienciesAndTraining, index: number): void => {
         if (!proAndTrain) return;
 
-        const updated = proAndTrain[category as keyof ProficienciesAndTraining].filter((_, i: number) => i !== index);
+        const updated = proAndTrain[category].filter((_, i: number) => i !== index);
         setProAndTrain({
             ...proAndTrain,
             [category]: updated,
         });
     }
 
-    const handleAdd = (category: string, item: string): void => {
+    const handleAdd = (category: keyof ProficienciesAndTraining, item: string): void => {
         if (!proAndTrain) return;
 
-        const updated = [...proAndTrain[category as keyof ProficienciesAndTraining], item];
+        const updated = [...proAndTrain[category], item];
         setProAndTrain({
             ...proAndTrain,
             [category]: updated,

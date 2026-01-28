@@ -4,7 +4,7 @@ import { useState } from "react";
 import useDataHandler from "../global/useDataHandler"
 
 // DTO
-import type { Resources } from "../../models/dataInterface";
+import type { OtherResources } from "../../models/dataInterface";
 
 
 
@@ -12,7 +12,7 @@ export default function useOtherResources() {
 
     const { getOtherResourcesData, changeOtherResourcesData } = useDataHandler();
 
-    const [otherResources, setOtherResources] = useState<Resources[]>(() => {
+    const [otherResources, setOtherResources] = useState<OtherResources[]>(() => {
         return getOtherResourcesData();
     });
 

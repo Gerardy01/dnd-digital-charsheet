@@ -37,6 +37,7 @@ export default function OtherResources() {
 
                         }}
                         notes={`Resets on ${item.reset}`}
+                        notes2={item.notes === "" ? undefined : item.notes}
                     />
                 )
             }) : (

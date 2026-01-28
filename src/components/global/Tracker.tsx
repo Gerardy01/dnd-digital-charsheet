@@ -1,4 +1,5 @@
-import { Typography } from "antd";
+import { EditOutlined } from "@ant-design/icons";
+import { Button, Typography } from "antd";
 
 // interface
 interface Props {
@@ -8,11 +9,24 @@ interface Props {
     changeCurrent?: (newCurrent: number) => void;
     onlyShowTracker?: boolean;
     notes?: string;
+    notes2?: string;
+    onClickEdit?: () => void;
+    editDisabled?: boolean;
 }
 
 const { Text, Title } = Typography;
 
-export default function Tracker({ name, current, max, changeCurrent, notes, onlyShowTracker = false }: Props) {
+export default function Tracker({
+    name,
+    current,
+    max,
+    changeCurrent,
+    notes,
+    notes2,
+    onlyShowTracker = false,
+    onClickEdit,
+    editDisabled = false,
+}: Props) {
 
     const items = Array.from({ length: max }, (_, i) => i + 1);
 
@@ -43,7 +57,17 @@ export default function Tracker({ name, current, max, changeCurrent, notes, only
     return (
         <div style={styles.card} role="group" aria-label={`${name} ${current}/${max}`}>
             <div style={styles.header}>
-                <Title level={5} style={{ margin: '0px' }}>{name}</Title>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Title level={5} style={{ margin: '0px' }}>{name}</Title>
+                    {onClickEdit && (
+                        <Button
+                            type="text"
+                            icon={<EditOutlined />}
+                            onClick={onClickEdit}
+                            disabled={editDisabled}
+                        />
+                    )}
+                </div>
                 <Text style={styles.fraction}>
                     {current}/{max}
                 </Text>
@@ -71,6 +95,9 @@ export default function Tracker({ name, current, max, changeCurrent, notes, only
             </div>
             {notes && (
                 <Text italic style={{ color: '#45556E' }}>{notes}</Text>
+            )}
+            {notes2 && (
+                <Text italic style={{ color: '#45556E' }}>{notes2}</Text>
             )}
         </div>
     );

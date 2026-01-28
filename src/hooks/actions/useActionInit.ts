@@ -47,14 +47,7 @@ export default function useActionInit() {
     }, []);
 
     useEffect(() => {
-        if (!actions) {
-            populate({
-                actions: [],
-                bonusActions: [],
-                reactions: [],
-            });
-            return;
-        }
+        if (!actions) return;
 
         populate(actions);
     }, [actions]);

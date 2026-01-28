@@ -3,9 +3,11 @@ import { BulbOutlined, FieldTimeOutlined, HeartTwoTone, MinusOutlined, PlusOutli
 
 // components
 import Tracker from "../global/Tracker";
+import AddHitPointForm from "./AddHitDiceForm";
+import EditHitDiceForm from "./EditHitDiceForm";
 
 // hooks
-import useCombatStat from "../../hooks/combat/useCombatStat";
+import { useCombatStat } from "../../hooks/combat/useCombatStat";
 
 const { Text, Title } = Typography;
 
@@ -13,7 +15,24 @@ const { Text, Title } = Typography;
 
 export default function CombatStat() {
 
-    const { combatData, hpPercentage, changeHitDicePoint, changeHP, changeHpWithBtn } = useCombatStat();
+    const {
+        combatData,
+        hpPercentage,
+        isAdding,
+        editedIndex,
+        adding,
+        changeHitDicePoint,
+        changeHP,
+        changeHpWithBtn,
+        changeTempHp,
+        changeAC,
+        changeInitiative,
+        changeSpeed,
+        onAddHitDice,
+        onClickEdit,
+        onEditHitDice,
+        removeHitDice,
+    } = useCombatStat();
 
     return (
         <div style={styles.holder}>
@@ -58,7 +77,8 @@ export default function CombatStat() {
                         level={3}
                         style={{ margin: '0.5rem 0' }}
                         editable={{
-                            triggerType: ['text']
+                            triggerType: ['text'],
+                            onChange: (newText) => { changeTempHp(newText) }
                         }}
                     >{combatData?.hitPoints.temporary}</Title>
                     <Text strong style={styles.infoLabel}>TEMPORARY</Text>
@@ -67,17 +87,38 @@ export default function CombatStat() {
             <div style={styles.statHolder}>
                 <div style={styles.statItem}>
                     <SafetyCertificateOutlined style={{ fontSize: '1.5rem', color: 'blue' }} />
-                    <Title level={4} style={{ margin: '0.5rem 0' }}>{combatData?.armorClass}</Title>
+                    <Title
+                        level={4}
+                        style={{ margin: '0.5rem 0' }}
+                        editable={{
+                            triggerType: ['text'],
+                            onChange: (newText) => { changeAC(newText) }
+                        }}
+                    >{combatData?.armorClass}</Title>
                     <Text strong style={styles.infoLabel}>ARMOR CLASS</Text>
                 </div>
                 <div style={styles.statItem}>
                     <BulbOutlined style={{ fontSize: '1.5rem', color: '#66D2AD' }} />
-                    <Title level={4} style={{ margin: '0.5rem 0' }}>+{combatData?.initiative}</Title>
+                    <Title
+                        level={4}
+                        style={{ margin: '0.5rem 0' }}
+                        editable={{
+                            triggerType: ['text'],
+                            onChange: (newText) => { changeInitiative(newText) }
+                        }}
+                    >+{combatData?.initiative}</Title>
                     <Text strong style={styles.infoLabel}>INITIATIVE</Text>
                 </div>
                 <div style={styles.statItem}>
                     <FieldTimeOutlined style={{ fontSize: '1.5rem', color: '#F7C04A' }} />
-                    <Title level={4} style={{ margin: '0.5rem 0' }}>{combatData?.speed}</Title>
+                    <Title
+                        level={4}
+                        style={{ margin: '0.5rem 0' }}
+                        editable={{
+                            triggerType: ['text'],
+                            onChange: (newText) => { changeSpeed(newText) }
+                        }}
+                    >{combatData?.speed} ft</Title>
                     <Text strong style={styles.infoLabel}>SPEED</Text>
                 </div>
             </div>
@@ -88,24 +129,63 @@ export default function CombatStat() {
                         <UpCircleOutlined style={{ fontSize: '1.4rem', color: 'blue' }} />
                         <Title style={styles.titleText} level={5}>HIT DICE</Title>
                     </div>
+
+                    {!isAdding && editedIndex === -1 && (
+                        <Button
+                            color="primary"
+                            variant="filled"
+                            size="small"
+                            icon={<PlusOutlined />}
+                            onClick={() => adding(true)}
+                        >Add</Button>
+                    )}
                 </div>
 
                 <Divider style={{ marginTop: "0.5rem", marginBottom: '1rem' }} />
 
-                {combatData && combatData.hitDice.length > 0 ? combatData?.hitDice.map((item, i) => {
-                    return (
-                        <Tracker
-                            key={i}
-                            name={item.class}
-                            current={item.remaining}
-                            max={item.total}
-                            changeCurrent={(newCurrent) => {
-                                changeHitDicePoint(newCurrent, item.class);
-                            }}
-                            notes={`Dice: ${item.type}`}
-                        />
-                    )
-                }) : (
+                {combatData && combatData.hitDice.length > 0 ? (
+                    <>
+                        {combatData?.hitDice.map((item, i) => {
+                            return (
+                                <>
+                                    {editedIndex !== i ? (
+                                        <Tracker
+                                            key={i}
+                                            name={item.class}
+                                            current={item.remaining}
+                                            max={item.total}
+                                            changeCurrent={(newCurrent) => {
+                                                changeHitDicePoint(newCurrent, item.class);
+                                            }}
+                                            notes={`Dice: ${item.type}`}
+                                            onClickEdit={() => {
+                                                onClickEdit(i);
+                                            }}
+                                            editDisabled={isAdding || editedIndex !== -1}
+                                        />
+                                    ) : (
+                                        <EditHitDiceForm
+                                            currentData={item}
+                                            onSubmit={onEditHitDice}
+                                            onRemove={() => {
+                                                onClickEdit(-1);
+                                                removeHitDice(i);
+                                            }}
+                                            onCancel={() => onClickEdit(-1)}
+                                        />
+                                    )}
+                                </>
+                            )
+                        })}
+
+                        {isAdding && (
+                            <AddHitPointForm
+                                onSubmit={onAddHitDice}
+                                onCancel={() => adding(false)}
+                            />
+                        )}
+                    </>
+                ) : (
                     <div style={{
                         paddingBottom: '2rem'
                     }}>
@@ -183,6 +263,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     header: {
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
     },
     headerRight: {
         display: 'flex',

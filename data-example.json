@@ -315,7 +315,7 @@
                 }
             },
             {
-                "name": "Standard combat actions",
+                "name": "Standard Combat Actions",
                 "level": null,
                 "category": "Other",
                 "activation": {
@@ -359,6 +359,7 @@
         "reactions": [
             {
                 "name": "Opportunity Attack",
+                "level": null,
                 "category": "Other",
                 "activation": {
                     "type": "Attack",
@@ -376,7 +377,8 @@
             "name": "Spell Slots (Level 1)",
             "current": 2,
             "max": 2,
-            "reset": "Long Rest"
+            "reset": "Long Rest",
+            "notes": ""
         }
     ],
     "featuresAndTraits": [

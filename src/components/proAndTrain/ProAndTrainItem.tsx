@@ -10,8 +10,8 @@ interface Props {
     name: string;
     category: string;
     proAndTrain: ProficienciesAndTraining;
-    handleRemove: (category: string, index: number) => void;
-    handleAdd: (category: string, item: string) => void;
+    handleRemove: (category: keyof ProficienciesAndTraining, index: number) => void;
+    handleAdd: (category: keyof ProficienciesAndTraining, item: string) => void;
     color?: string;
 }
 
@@ -42,7 +42,7 @@ export default function ProAndTrainItem({ name, category, proAndTrain, handleRem
                                 closable
                                 onClose={(e) => {
                                     e.preventDefault();
-                                    handleRemove(category, i);
+                                    handleRemove(category as keyof ProficienciesAndTraining, i);
                                 }}
                                 color={color ? color : '#F3F4F6'}
                                 variant="outlined"
@@ -63,10 +63,10 @@ export default function ProAndTrainItem({ name, category, proAndTrain, handleRem
                             resetInput();
                             if (inputValue.trim() === "") return;
 
-                            handleAdd(category, inputValue);
+                            handleAdd(category as keyof ProficienciesAndTraining, inputValue);
                         }}
                         onPressEnter={() => {
-                            handleAdd(category, inputValue);
+                            handleAdd(category as keyof ProficienciesAndTraining, inputValue);
                             resetInput();
                         }}
                     />

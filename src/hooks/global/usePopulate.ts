@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 // hooks
 import useDataHandler from "./useDataHandler";
+import { useActionState } from "../actions/useActionState";
 
 
 export default function usePopulate() {
@@ -23,23 +24,26 @@ export default function usePopulate() {
         changeSpellsData,
         changeFeaturesAndTraits,
         changeActionEconomyData,
+        changeOtherResourcesData,
     } = useDataHandler();
 
     useEffect(() => {
         populateData();
     }, []);
 
+    const populate = useActionState((state) => state.populate);
+
     const populateData = () => {
         const charInfoData = getCharInfoData();
         if (charInfoData) return;
 
         changeCharInfoData({
-            characterName: "",
-            classesAndLevel: "",
-            species: "",
-            background: "",
-            alignment: "",
-            experiencePoints: "",
+            characterName: "--- Name ---",
+            classesAndLevel: "-",
+            species: "--- Race ---",
+            background: "-",
+            alignment: "-",
+            experiencePoints: "-",
         });
 
         changeCharacterDetailsData({
@@ -72,11 +76,11 @@ export default function usePopulate() {
 
         changeCombatData({
             hitPoints: {
-                max: 0,
-                current: 0,
+                max: 1,
+                current: 1,
                 temporary: 0,
             },
-            speed: "",
+            speed: 0,
             armorClass: 0,
             initiative: 0,
             hitDice: [],
@@ -246,10 +250,44 @@ export default function usePopulate() {
 
         changeSpellsData([]);
         changeFeaturesAndTraits([]);
-        changeActionEconomyData({
-            actions: [],
+        changeOtherResourcesData([]);
+
+        const actionsData = {
+            actions: [
+                {
+                    name: "Standard combat actions",
+                    level: null,
+                    category: "Other",
+                    activation: {
+                        type: "Utility",
+                        bonus: 0,
+                        dice: "",
+                        damageType: ""
+                    },
+                    description: "Dash / Disengage / Dodge / Help / Hide / Use an Object",
+                    resource: ""
+                }
+            ],
             bonusActions: [],
-            reactions: [],
-        });
+            reactions: [
+                {
+                    name: "Opportunity Attack",
+                    level: null,
+                    category: "Other",
+                    activation: {
+                        type: "Attack",
+                        bonus: 0,
+                        dice: "",
+                        damageType: ""
+                    },
+                    description: "Make one melee attack against a hostile creature that moves out of your reach.",
+                    resource: ""
+                }
+            ],
+        }
+
+        changeActionEconomyData(actionsData);
+
+        populate(actionsData);
     }
 }

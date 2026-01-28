@@ -21,7 +21,7 @@ export default function useMain() {
     usePopulate();
     useActionInit();
 
-    const { getCharInfoData, changeCharInfoData, getInfoStatData } = useDataHandler();
+    const { getCharInfoData, changeCharInfoData, getInfoStatData, changeInfoStatData } = useDataHandler();
 
     const [charInfoData, setCharInfoData] = useState<CharacterInfo | null>(null);
     const [infoStatData, setInfoStatData] = useState<InfoStat | null>(null);
@@ -65,6 +65,13 @@ export default function useMain() {
         changeCharInfoData(charInfoData);
 
     }, [charInfoData]);
+
+    useEffect(() => {
+        if (!infoStatData) return;
+
+        changeInfoStatData(infoStatData);
+
+    }, [infoStatData]);
 
     const changeName = (newName: string): void => {
         if (!charInfoData) return;

@@ -109,7 +109,7 @@ export interface Skills {
 
 export interface Combat {
     hitPoints: HitPoints;
-    speed: string;
+    speed: number;
     armorClass: number;
     initiative: number;
     hitDice: HitDice[];
@@ -170,6 +170,10 @@ export interface Resources {
     current: number;
     max: number;
     reset: string;
+}
+
+export interface OtherResources extends Resources {
+    notes: string;
 }
 
 /* =========================

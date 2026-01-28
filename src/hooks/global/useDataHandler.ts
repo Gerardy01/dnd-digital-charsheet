@@ -3,7 +3,24 @@
 import { StorageKey } from "../../utils/enums";
 
 // DTO
-import type { AbilityScores, CharacterInfo, Combat, InfoStat, SavingThrows, Skills, ProficienciesAndTraining, PassiveScores, FeaturesAndTraits, ExtraSenses, Defenses, CharacterDetails, Equipment, SpellcastingSource, ActionEconomy, Resources } from "../../models/dataInterface";
+import type {
+    AbilityScores,
+    CharacterInfo,
+    Combat,
+    InfoStat,
+    SavingThrows,
+    Skills,
+    ProficienciesAndTraining,
+    PassiveScores,
+    FeaturesAndTraits,
+    ExtraSenses,
+    Defenses,
+    CharacterDetails,
+    Equipment,
+    SpellcastingSource,
+    ActionEconomy,
+    OtherResources
+} from "../../models/dataInterface";
 
 export default function useDataHandler() {
 
@@ -68,8 +85,8 @@ export default function useDataHandler() {
         return getDataFromLocalStorage<SpellcastingSource[]>(StorageKey.SPELLCASTING) ?? [];
     }
 
-    const getOtherResourcesData = (): Resources[] => {
-        return getDataFromLocalStorage<Resources[]>(StorageKey.OTHERRESOURCES) ?? [];
+    const getOtherResourcesData = (): OtherResources[] => {
+        return getDataFromLocalStorage<OtherResources[]>(StorageKey.OTHERRESOURCES) ?? [];
     }
 
     const getActionEconomyData = (): ActionEconomy | null => {
@@ -136,7 +153,7 @@ export default function useDataHandler() {
         localStorage.setItem(StorageKey.CHARDETAILS, JSON.stringify(newData));
     }
 
-    const changeOtherResourcesData = (newData: Resources[]): void => {
+    const changeOtherResourcesData = (newData: OtherResources[]): void => {
         localStorage.setItem(StorageKey.OTHERRESOURCES, JSON.stringify(newData));
     }
 

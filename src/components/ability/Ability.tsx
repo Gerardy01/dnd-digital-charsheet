@@ -1,4 +1,6 @@
 
+// utils
+import { AbilityEnum } from "../../utils/enums";
 
 // components
 import AbilityItem from "./AbilityItem";
@@ -10,7 +12,7 @@ import useAbility from "../../hooks/ability/useAbility"
 
 export default function Ability() {
 
-    const { abilityData } = useAbility();
+    const { abilityData, changeAbilityModifier, changeAbilityScore } = useAbility();
 
     return (
         <div style={styles.abilityHolder}>
@@ -19,26 +21,44 @@ export default function Ability() {
                     <AbilityItem
                         name='STR'
                         abilityScore={abilityData.strength}
+                        abilityName={AbilityEnum.STR}
+                        changeAbilityModifier={changeAbilityModifier}
+                        changeAbilityScore={changeAbilityScore}
                     />
                     <AbilityItem
                         name='DEX'
                         abilityScore={abilityData.dexterity}
+                        abilityName={AbilityEnum.DEX}
+                        changeAbilityModifier={changeAbilityModifier}
+                        changeAbilityScore={changeAbilityScore}
                     />
                     <AbilityItem
                         name='CON'
                         abilityScore={abilityData.constitution}
+                        abilityName={AbilityEnum.CON}
+                        changeAbilityModifier={changeAbilityModifier}
+                        changeAbilityScore={changeAbilityScore}
                     />
                     <AbilityItem
                         name='INT'
                         abilityScore={abilityData.intelligence}
+                        abilityName={AbilityEnum.INT}
+                        changeAbilityModifier={changeAbilityModifier}
+                        changeAbilityScore={changeAbilityScore}
                     />
                     <AbilityItem
                         name='WIS'
                         abilityScore={abilityData.wisdom}
+                        abilityName={AbilityEnum.WIS}
+                        changeAbilityModifier={changeAbilityModifier}
+                        changeAbilityScore={changeAbilityScore}
                     />
-                    <AbilityItem 
+                    <AbilityItem
                         name='CHA'
                         abilityScore={abilityData.charisma}
+                        abilityName={AbilityEnum.CHA}
+                        changeAbilityModifier={changeAbilityModifier}
+                        changeAbilityScore={changeAbilityScore}
                     />
                 </>
             )}
@@ -47,7 +67,7 @@ export default function Ability() {
 }
 
 
-const styles : { [key: string]: React.CSSProperties } = {
+const styles: { [key: string]: React.CSSProperties } = {
     abilityHolder: {
         width: '100%',
         display: 'flex',

@@ -20,6 +20,15 @@ export const StorageKey = {
     OTHERRESOURCES: "otherResources",
 }
 
+export const AbilityEnum = {
+    STR: "strength",
+    DEX: "dexterity",
+    CON: "constitution",
+    INT: "intelligence",
+    WIS: "wisdom",
+    CHA: "charisma",
+} as const;
+
 export const ProAndTrainEnum = {
     ARMOR: "armor",
     WEAPONS: "weapons",
@@ -69,7 +78,7 @@ export const ActionTypeEnum = {
 
 export const DefaultActionsEnum = {
     OPPORTUNITY: "Opportunity Attack",
-    STANDARD: "Dash / Disengage / Dodge / Help / Hide / Use an Object",
+    STANDARD: "Standard Combat Actions",
 }
 
 export const ActionCategoryEnum = {
@@ -148,4 +157,13 @@ export const SpellSchoolEnum = {
     ILLUSION: "Illusion",
     NECROMANCY: "Necromancy",
     TRANSMUTATION: "Transmutation",
+} as const
+
+export const HitDiceEnum = {
+    D4: "d4",
+    D6: "d6",
+    D8: "d8",
+    D10: "d10",
+    D12: "d12",
+    D20: "d20",
 } as const
