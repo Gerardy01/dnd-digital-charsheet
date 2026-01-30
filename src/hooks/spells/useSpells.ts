@@ -19,10 +19,12 @@ export default function useSpells() {
     const [transformed, setTransformed] = useState<SpellcastingTransformed[]>([]);
 
     const [loading, setLoading] = useState<boolean>(false);
+    const [preparedOnly, setPreparedOnly] = useState<boolean>(false);
+    const [hidedList, setHidedList] = useState<number[]>([]);
 
     useEffect(() => {
         handleTransform();
-    }, [spellcasting]);
+    }, [spellcasting, preparedOnly]);
 
     const handleTransform = (): void => {
         setLoading(true);
@@ -33,6 +35,7 @@ export default function useSpells() {
                 if (!acc[level]) {
                     acc[level] = []
                 }
+                if (preparedOnly && !spell.prepared) return acc;
                 acc[level].push(spell);
                 return acc
             }, {} as Record<number, Spell[]>);
@@ -86,9 +89,26 @@ export default function useSpells() {
         setSpellcasting(updatedData);
     }
 
+    const handlePreparedOnlySwitch = (prepared: boolean): void => {
+        setPreparedOnly(prepared);
+    }
+
+    const handleHide = (index: number): void => {
+        setHidedList(prev => {
+            if (prev.includes(index)) {
+                return prev.filter(i => i !== index);
+            }
+            return [...prev, index];
+        });
+    }
+
     return {
         spellcasting: transformed,
-        handlePrepare,
         loading,
+        preparedOnly,
+        hidedList,
+        handlePrepare,
+        handlePreparedOnlySwitch,
+        handleHide,
     }
 }

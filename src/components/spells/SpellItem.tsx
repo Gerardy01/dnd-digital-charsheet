@@ -1,4 +1,4 @@
-import { Spin, Tag, Typography } from "antd";
+import { Spin, Tag, Tooltip, Typography } from "antd";
 import { ThunderboltOutlined, InfoCircleOutlined, CheckCircleFilled, LoadingOutlined } from "@ant-design/icons";
 
 // interfaces
@@ -18,11 +18,14 @@ export default function SpellItem({ spell, handlePrepare, loading }: Props) {
             <div style={styles.headerRow}>
                 <div style={styles.titleSection}>
                     <Title level={5} style={{ margin: 0, marginRight: 8 }}>{spell.name}</Title>
-                    <Tag
-                        variant="outlined"
-                    >
-                        {spell.school}
-                    </Tag>
+                    <Tag variant="outlined">Lvl {spell.level} • {spell.school}</Tag>
+                    {spell.ritual && (
+                        <Tooltip title="Ritual">
+                            <Tag variant="outlined" color="orange">
+                                <Text strong style={{ color: '#F2994A', fontSize: '12px' }}>R</Text>
+                            </Tag>
+                        </Tooltip>
+                    )}
                 </div>
                 <div
                     style={styles.toggleSection}
@@ -49,7 +52,7 @@ export default function SpellItem({ spell, handlePrepare, loading }: Props) {
                 </div>
                 <div style={styles.statItem}>
                     <Text type="secondary" style={styles.label}>Dur:</Text>
-                    <Text>{spell.duration}</Text>
+                    <Text>{spell.concentration ? 'Concentration, ' : ''}{spell.duration}</Text>
                 </div>
                 <div style={styles.statItem}>
                     <Text type="secondary" style={styles.label}>Comp:</Text>
@@ -92,6 +95,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         alignItems: 'center',
     },
     titleSection: {
+        maxWidth: '85%',
         display: 'flex',
         alignItems: 'center',
         gap: '8px',

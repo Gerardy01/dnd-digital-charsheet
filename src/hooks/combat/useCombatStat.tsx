@@ -5,7 +5,7 @@ import { Form, type FormProps } from "antd";
 import useDataHandler from "../global/useDataHandler"
 
 // utils
-import { hitDiceList } from "../../utils/selectionData";
+import { diceList } from "../../utils/selectionData";
 
 // DTO
 import type { Combat, HitDice } from "../../models/dataInterface";
@@ -230,6 +230,7 @@ export function useCombatStat() {
         };
 
         setCombatData(newCombatData);
+        onClickEdit(-1);
     }
 
     return {
@@ -258,7 +259,7 @@ export function useAddHitDice(
 
     const [addHitDiceForm] = Form.useForm();
 
-    const hitDiceSelection = hitDiceList.map(item => {
+    const hitDiceSelection = diceList.map(item => {
         return {
             value: item,
             label: item,
@@ -297,7 +298,7 @@ export function useEditHitDice(
 
     const [editHitDiceForm] = Form.useForm();
 
-    const hitDiceSelection = hitDiceList.map(item => {
+    const hitDiceSelection = diceList.map(item => {
         return {
             value: item,
             label: item,

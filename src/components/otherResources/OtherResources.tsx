@@ -1,11 +1,13 @@
-import { Divider, Empty, Typography } from "antd";
-import { SyncOutlined } from "@ant-design/icons";
+import { Button, Divider, Empty, Typography } from "antd";
+import { PlusOutlined, SyncOutlined } from "@ant-design/icons";
 
 // components
 import Tracker from "../global/Tracker";
+import AddOtherResourcesForm from "./AddOtherResourcesForm";
+import EditOtherResourcesForm from "./EditOtherResourcesForm";
 
 // hooks
-import useOtherResources from "../../hooks/otherResources/useOtherResources";
+import { useOtherResources } from "../../hooks/otherResources/useOtherResources";
 
 
 const { Title } = Typography;
@@ -13,7 +15,17 @@ const { Title } = Typography;
 
 export default function OtherResources() {
 
-    const { otherResources } = useOtherResources();
+    const {
+        otherResources,
+        isAdding,
+        editedIndex,
+        adding,
+        onClickEdit,
+        changePoint,
+        onAddOtherResources,
+        onEditOtherResources,
+        removeOtherResources,
+    } = useOtherResources();
 
     return (
         <div style={styles.holder}>
@@ -22,30 +34,63 @@ export default function OtherResources() {
                     <SyncOutlined style={{ fontSize: '1.4rem', color: 'blue' }} />
                     <Title style={styles.titleText} level={5}>OTHER RESOURCES</Title>
                 </div>
+
+                {!isAdding && editedIndex === -1 && (
+                    <Button
+                        color="primary"
+                        variant="filled"
+                        size="small"
+                        icon={<PlusOutlined />}
+                        onClick={() => adding(true)}
+                    >Add</Button>
+                )}
             </div>
 
             <Divider style={{ marginTop: "0.5rem", marginBottom: '1rem' }} />
 
-            {otherResources && otherResources.length > 0 ? otherResources.map((item, i) => {
-                return (
-                    <Tracker
-                        key={i}
-                        name={item.name}
-                        current={item.current}
-                        max={item.max}
-                        changeCurrent={(newCurrent) => {
+            {isAdding || (otherResources && otherResources.length > 0) ? (
+                <>
+                    {otherResources.map((item, i) => {
+                        return (
+                            <>
+                                {editedIndex !== i ? (
+                                    <Tracker
+                                        key={i}
+                                        name={item.name}
+                                        current={item.current}
+                                        max={item.max}
+                                        changeCurrent={(newCurrent) => {
+                                            changePoint(newCurrent, i);
+                                        }}
+                                        notes={`Resets on ${item.reset}`}
+                                        notes2={item.notes === "" ? undefined : item.notes}
+                                        onClickEdit={() => onClickEdit(i)}
+                                        editDisabled={isAdding || editedIndex !== -1}
+                                    />
+                                ) : (
+                                    <EditOtherResourcesForm
+                                        currentData={item}
+                                        onSubmit={onEditOtherResources}
+                                        onRemove={() => {
+                                            onClickEdit(-1);
+                                            removeOtherResources(i);
+                                        }}
+                                        onCancel={() => onClickEdit(-1)}
+                                    />
+                                )}
+                            </>
+                        )
+                    })}
 
-                        }}
-                        notes={`Resets on ${item.reset}`}
-                        notes2={item.notes === "" ? undefined : item.notes}
-                    />
-                )
-            }) : (
-                <div style={{
-                    paddingBottom: '2rem'
-                }}>
-                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                </div>
+                    {isAdding && (
+                        <AddOtherResourcesForm
+                            onSubmit={onAddOtherResources}
+                            onCancel={() => adding(false)}
+                        />
+                    )}
+                </>
+            ) : (
+                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             )}
         </div>
     )

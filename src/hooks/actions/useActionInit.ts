@@ -100,15 +100,15 @@ export default function useActionInit() {
             if (itemExist) return;
 
             if (item.actionType === ActionTypeEnum.ACTION) {
-                actionTemp.actions.push(dataPopulationTemplate(item.name, ActionCategoryEnum.FEATURE));
+                actionTemp.actions.push(dataPopulationTemplate(item.name, ActionCategoryEnum.FEATURE, item.description));
             }
 
             if (item.actionType === ActionTypeEnum.BONUSACTION) {
-                actionTemp.bonusActions.push(dataPopulationTemplate(item.name, ActionCategoryEnum.FEATURE));
+                actionTemp.bonusActions.push(dataPopulationTemplate(item.name, ActionCategoryEnum.FEATURE, item.description));
             }
 
             if (item.actionType === ActionTypeEnum.REACTION) {
-                actionTemp.reactions.push(dataPopulationTemplate(item.name, ActionCategoryEnum.FEATURE));
+                actionTemp.reactions.push(dataPopulationTemplate(item.name, ActionCategoryEnum.FEATURE, item.description));
             }
         });
 
@@ -121,15 +121,15 @@ export default function useActionInit() {
             if (item.equipable && !item.equipped) return;
 
             if (item.actionType === ActionTypeEnum.ACTION) {
-                actionTemp.actions.push(dataPopulationTemplate(item.name, item.equipable ? ActionCategoryEnum.EQUIPABLE : ActionCategoryEnum.ITEM));
+                actionTemp.actions.push(dataPopulationTemplate(item.name, item.equipable ? ActionCategoryEnum.EQUIPABLE : ActionCategoryEnum.ITEM, item.description));
             }
 
             if (item.actionType === ActionTypeEnum.BONUSACTION) {
-                actionTemp.bonusActions.push(dataPopulationTemplate(item.name, item.equipable ? ActionCategoryEnum.EQUIPABLE : ActionCategoryEnum.ITEM));
+                actionTemp.bonusActions.push(dataPopulationTemplate(item.name, item.equipable ? ActionCategoryEnum.EQUIPABLE : ActionCategoryEnum.ITEM, item.description));
             }
 
             if (item.actionType === ActionTypeEnum.REACTION) {
-                actionTemp.reactions.push(dataPopulationTemplate(item.name, item.equipable ? ActionCategoryEnum.EQUIPABLE : ActionCategoryEnum.ITEM));
+                actionTemp.reactions.push(dataPopulationTemplate(item.name, item.equipable ? ActionCategoryEnum.EQUIPABLE : ActionCategoryEnum.ITEM, item.description));
             }
         });
 
@@ -145,7 +145,14 @@ export default function useActionInit() {
             const spellExist = checkItemExistInActions(spell.name);
             if (spellExist) return;
 
-            actionTemp.actions.push(dataPopulationTemplate(spell.name, ActionCategoryEnum.SPELL, spell.level != 0 ? spell.level : null));
+            actionTemp.actions.push(
+                dataPopulationTemplate(
+                    spell.name,
+                    ActionCategoryEnum.SPELL,
+                    spell.description,
+                    spell.level != 0 ? spell.level : null
+                )
+            );
         });
 
         changeActionEconomyData(actionTemp);
@@ -186,7 +193,12 @@ export default function useActionInit() {
         return itemFound;
     }
 
-    const dataPopulationTemplate = (name: string, category: string, level: number | null = null): ActionItem => {
+    const dataPopulationTemplate = (
+        name: string,
+        category: string,
+        description: string,
+        level: number | null = null
+    ): ActionItem => {
         return {
             name: name,
             level: level,
@@ -197,7 +209,7 @@ export default function useActionInit() {
                 dice: "",
                 damageType: "",
             },
-            description: "",
+            description: description,
             resource: ""
         }
     }

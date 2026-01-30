@@ -1,5 +1,5 @@
-import { Empty, Typography } from "antd";
-import { BookOutlined } from "@ant-design/icons";
+import { Divider, Empty, Switch, Typography } from "antd";
+import { BookOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
 
 // components
 import SpellItem from "./SpellItem";
@@ -15,7 +15,15 @@ const { Text, Title } = Typography;
 
 export default function Spells() {
 
-    const { spellcasting, loading, handlePrepare } = useSpells();
+    const {
+        spellcasting,
+        loading,
+        preparedOnly,
+        hidedList,
+        handlePrepare,
+        handlePreparedOnlySwitch,
+        handleHide,
+    } = useSpells();
 
     return (
         <div style={styles.holder}>
@@ -29,44 +37,72 @@ export default function Spells() {
                     <Title level={4} style={{ marginBottom: 0 }}>Spellbook</Title>
                 </div>
             </div>
+
+            <div style={styles.filterHolder}>
+                <Switch
+                    checked={preparedOnly}
+                    onChange={handlePreparedOnlySwitch}
+                    checkedChildren="Prepared"
+                    unCheckedChildren="All Spells"
+                />
+            </div>
             {spellcasting.length > 0 ? spellcasting.map((item, i) => (
                 <div key={i} style={{ width: '100%', marginBottom: '1.5rem' }}>
-                    <div style={styles.source}>
-                        <div>
-                            <Title level={4} style={{ color: 'blue' }}>{item.source} ({item.sourceType})</Title>
-                            <Text style={{ color: '#2E3740' }}>Ability : {item.ability}</Text>
-                        </div>
-                        <div style={{ display: 'flex', gap: 8 }}>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <Text strong style={{ fontSize: '10px', color: 'gray' }}>SAVE DC</Text>
-                                <Text strong style={{ fontSize: '1.2rem' }}>{item.spellSaveDC}</Text>
+                    <div style={styles.sourceWrapper}>
+                        <div style={styles.source}>
+                            <div>
+                                <Title level={4} style={{ color: 'blue' }}>{item.source} ({item.sourceType})</Title>
+                                <Text style={{ color: '#2E3740' }}>Ability : {item.ability}</Text>
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '10px' }}>
-                                <Text strong style={{ fontSize: '10px', color: 'gray' }}>ATTACK</Text>
-                                <Text strong style={{ fontSize: '1.2rem' }}>+{item.spellAttackBonus}</Text>
+                            <div style={{ display: 'flex', gap: 8 }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                    <Text strong style={{ fontSize: '10px', color: 'gray' }}>SAVE DC</Text>
+                                    <Text strong style={{ fontSize: '1.2rem' }}>{item.spellSaveDC}</Text>
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '10px' }}>
+                                    <Text strong style={{ fontSize: '10px', color: 'gray' }}>ATTACK</Text>
+                                    <Text strong style={{ fontSize: '1.2rem' }}>+{item.spellAttackBonus}</Text>
+                                </div>
+                            </div>
+                        </div>
+                        <Divider style={{ margin: '1rem 0px' }} />
+                        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <div
+                                onClick={() => handleHide(i)}
+                                style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+                                {hidedList.includes(i) ? (
+                                    <DownOutlined />
+                                ) : (
+                                    <UpOutlined />
+                                )}
+                                <Text>{hidedList.includes(i) ? 'Show' : 'Hide'}</Text>
                             </div>
                         </div>
                     </div>
 
-                    {item.spells.map((spellGroup, idx) => {
-                        return (
-                            <div key={idx}>
-                                <Text strong style={{ color: 'gray' }}>{spellGroup.levelName}</Text>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: "0.5rem" }}>
-                                    {spellGroup.spells.map((spell, index) => {
-                                        return (
-                                            <SpellItem
-                                                key={index}
-                                                spell={spell}
-                                                handlePrepare={handlePrepare}
-                                                loading={loading}
-                                            />
-                                        )
-                                    })}
-                                </div>
-                            </div>
-                        )
-                    })}
+                    {!hidedList.includes(i) && (
+                        <>
+                            {item.spells.map((spellGroup, idx) => {
+                                return (
+                                    <div key={idx}>
+                                        <Text strong style={{ color: 'gray' }}>{spellGroup.levelName}</Text>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: "0.5rem" }}>
+                                            {spellGroup.spells.map((spell, index) => {
+                                                return (
+                                                    <SpellItem
+                                                        key={index}
+                                                        spell={spell}
+                                                        handlePrepare={handlePrepare}
+                                                        loading={loading}
+                                                    />
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </>
+                    )}
 
                 </div>
             )) : (
@@ -91,17 +127,21 @@ const styles: { [key: string]: React.CSSProperties } = {
         alignItems: 'center',
         gap: 8,
     },
+    sourceWrapper: {
+        width: '100%',
+        borderRadius: '10px',
+        backgroundColor: '#EDF2F7',
+        border: '1px solid #CBD5E0',
+        boxShadow: '0 1px 4px rgba(16,24,40,0.04)',
+        marginBottom: '1rem',
+        padding: '1rem',
+    },
     source: {
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: '1rem',
-        padding: '1rem',
-        borderRadius: '10px',
-        backgroundColor: '#EDF2F7',
-        border: '1px solid #CBD5E0',
-        boxShadow: '0 1px 4px rgba(16,24,40,0.04)'
+        // marginBottom: '1rem',
     },
     titleHolder: {
         width: '100%',
@@ -109,5 +149,12 @@ const styles: { [key: string]: React.CSSProperties } = {
         justifyContent: 'space-between',
         alignItems: 'center',
         marginBottom: '0.5rem',
+    },
+    filterHolder: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginBottom: '1rem',
+        marginTop: '0.7rem'
     }
 }

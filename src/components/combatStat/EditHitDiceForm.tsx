@@ -31,17 +31,12 @@ export default function EditHitDiceForm({ currentData, onSubmit, onCancel, onRem
             style={styles.form}
             onFinish={submitData}
         >
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px',
-            }}>
+            <div style={styles.formContent}>
                 <Form.Item
                     name="class"
                     rules={[
                         { required: true, message: 'Please key in the class' }
                     ]}
-                    style={{ width: '70%' }}
                     initialValue={currentData.class}
                 >
                     <Input
@@ -59,7 +54,7 @@ export default function EditHitDiceForm({ currentData, onSubmit, onCancel, onRem
                 >
                     <InputNumber
                         type="number"
-                        placeholder="Count"
+                        placeholder="Count : 0"
                     />
                 </Form.Item>
                 <Form.Item
@@ -67,12 +62,11 @@ export default function EditHitDiceForm({ currentData, onSubmit, onCancel, onRem
                     rules={[
                         { required: true, message: 'Please key in the dice' }
                     ]}
-                    style={{ width: '70%' }}
                     initialValue={currentData.type}
                 >
                     <AutoComplete
                         options={hitDiceSelection}
-                        placeholder="Dice"
+                        placeholder="Dice : e.g. d10"
                         showSearch={{
                             filterOption: (inputValue, option) => {
                                 return option !== undefined && option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -81,12 +75,7 @@ export default function EditHitDiceForm({ currentData, onSubmit, onCancel, onRem
                     />
                 </Form.Item>
             </div>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                alignItems: 'flex-end',
-            }}>
+            <div style={styles.btnHolder}>
                 <Button
                     variant="filled"
                     color="red"
@@ -136,5 +125,18 @@ const styles: { [key: string]: React.CSSProperties } = {
         boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
         display: 'flex',
         justifyContent: 'space-between',
+        marginBottom: '0.7rem'
+    },
+    formContent: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '12px',
+        flex: 1,
+    },
+    btnHolder: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
     },
 }

@@ -623,6 +623,8 @@
                         "M"
                     ],
                     "duration": "Instantaneous",
+                    "ritual": false,
+                    "concentration": false,
                     "prepared": true,
                     "description": "",
                     "sourcePage": "PHB 259",
@@ -639,6 +641,8 @@
                         "S"
                     ],
                     "duration": "Instantaneous",
+                    "ritual": false,
+                    "concentration": false,
                     "prepared": true,
                     "description": "You hurl a mote of fire at a creature or object within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 fire damage. A flammable object hit by this spell ignites if it isn't being worn or carried.",
                     "sourcePage": "PHB 242",
@@ -664,7 +668,9 @@
                         "S",
                         "M"
                     ],
-                    "duration": "Concentration, up to 1 minute",
+                    "duration": "1 minute",
+                    "ritual": false,
+                    "concentration": true,
                     "prepared": true,
                     "description": "Buff party. Target adds 1d4 to attack rolls and saving throws.",
                     "sourcePage": "PHB 219",
@@ -681,6 +687,8 @@
                         "S"
                     ],
                     "duration": "Instantaneous",
+                    "ritual": false,
+                    "concentration": false,
                     "prepared": true,
                     "description": "A creature you touch regains a number of Hit Points equal to 2d8 plus your spellcasting ability modifier.",
                     "sourcePage": "PHB 230",
@@ -697,9 +705,11 @@
                         "S",
                         "M"
                     ],
-                    "duration": "Concentration, up to 10 minutes",
+                    "duration": "10 minutes",
+                    "ritual": false,
+                    "concentration": true,
                     "prepared": false,
-                    "description": "Memberi +2 AC.",
+                    "description": "Target gains +2 bonus to AC.",
                     "sourcePage": "PHB 275",
                     "actionType": "bonusAction"
                 },
@@ -713,7 +723,9 @@
                         "V",
                         "S"
                     ],
-                    "duration": "Concentration, up to 1 minute",
+                    "duration": "1 minute",
+                    "ritual": false,
+                    "concentration": true,
                     "prepared": false,
                     "description": "Target kebal terhadap fear dan mendapat temporary HP setiap turn.",
                     "sourcePage": "PHB 250",
@@ -728,7 +740,9 @@
                     "components": [
                         "V"
                     ],
-                    "duration": "Concentration, up to 1 minute",
+                    "duration": "1 minute",
+                    "ritual": false,
+                    "concentration": true,
                     "prepared": false,
                     "description": "Smite dengan efek api berkelanjutan.",
                     "sourcePage": "PHB 274",
@@ -743,7 +757,9 @@
                     "components": [
                         "V"
                     ],
-                    "duration": "Concentration, up to 1 minute",
+                    "duration": "1 minute",
+                    "ritual": false,
+                    "concentration": true,
                     "prepared": true,
                     "description": "Smite dengan ledakan suara.",
                     "sourcePage": "PHB 282",
@@ -758,7 +774,9 @@
                     "components": [
                         "V"
                     ],
-                    "duration": "Concentration, up to 1 minute",
+                    "duration": "1 minute",
+                    "ritual": false,
+                    "concentration": true,
                     "prepared": false,
                     "description": "Smite yang membuat musuh frightened.",
                     "sourcePage": "PHB 289",
@@ -774,7 +792,9 @@
                         "V",
                         "S"
                     ],
-                    "duration": "Concentration, up to 10 minutes",
+                    "duration": "10 minutes",
+                    "ritual": true,
+                    "concentration": true,
                     "prepared": false,
                     "description": "Mendeteksi aura sihir di sekitar.",
                     "sourcePage": "PHB 231",
@@ -790,7 +810,9 @@
                         "V",
                         "S"
                     ],
-                    "duration": "Concentration, up to 10 minutes",
+                    "duration": "10 minutes",
+                    "ritual": true,
+                    "concentration": true,
                     "prepared": false,
                     "description": "Mendeteksi celestial, fiend, undead, dll.",
                     "sourcePage": "PHB 231",

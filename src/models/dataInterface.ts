@@ -161,6 +161,14 @@ export interface ActionActivation {
     damageType: string;
 }
 
+export interface ActionPopulateParams {
+    name: string;
+    actionType: string;
+    category: string;
+    description: string;
+    level: number | null;
+}
+
 /* =========================
    Resources
 ========================= */
@@ -281,6 +289,8 @@ export interface Spell {
     range: string;
     components: string[];
     duration: string;
+    ritual: boolean;
+    concentration: boolean;
     prepared: boolean;
     description: string;
     sourcePage: string;

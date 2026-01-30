@@ -143,7 +143,7 @@ export default function CombatStat() {
 
                 <Divider style={{ marginTop: "0.5rem", marginBottom: '1rem' }} />
 
-                {combatData && combatData.hitDice.length > 0 ? (
+                {isAdding || (combatData && combatData.hitDice.length > 0) ? (
                     <>
                         {combatData?.hitDice.map((item, i) => {
                             return (

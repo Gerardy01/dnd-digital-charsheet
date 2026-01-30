@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
 // DTO
-import type { ActionEconomy } from "../../models/dataInterface";
+import type { ActionEconomy, ActionPopulateParams } from "../../models/dataInterface";
 interface ActionState extends ActionEconomy {
-    addActions: (actionType: string, name: string, category: string, level: number | null) => void;
+    addActions: (data: ActionPopulateParams) => void;
     removeActions: (actionType: string, targetName: string) => void;
     changeName: (actionType: string, targetName: string, newName: string) => void;
     populate: (data: ActionEconomy) => void;
@@ -15,7 +15,7 @@ export const useActionState = create<ActionState>((set) => ({
     bonusActions: [],
     reactions: [],
 
-    addActions: (actionType: string, name: string, category: string, level: number | null) => {
+    addActions: (data: ActionPopulateParams) => {
 
     },
     removeActions: (actionType: string, targetName: string) => {

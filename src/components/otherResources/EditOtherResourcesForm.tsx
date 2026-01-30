@@ -1,44 +1,53 @@
 import { AutoComplete, Button, Form, Input, InputNumber } from "antd";
-import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
+import { CheckOutlined, CloseOutlined, DeleteOutlined } from "@ant-design/icons";
+
 
 // hooks
-import { useAddHitDice } from "../../hooks/combat/useCombatStat";
+import { useEditOtherResources } from "../../hooks/otherResources/useOtherResources";
 
 // interface
-import type { HitDice } from "../../models/dataInterface";
+import type { OtherResources } from "../../models/dataInterface";
 interface Props {
-    onSubmit: (values: HitDice) => void;
+    currentData: OtherResources;
+    onSubmit: (newData: OtherResources) => void;
+    onRemove: () => void;
     onCancel: () => void;
 }
 
 
-export default function AddHitDiceForm({ onSubmit, onCancel }: Props) {
+export default function EditOtherResourcesForm({
+    currentData,
+    onSubmit,
+    onRemove,
+    onCancel,
+}: Props) {
 
     const {
-        addHitDiceForm,
-        hitDiceSelection,
-        submitNewHitDice,
-        reset
-    } = useAddHitDice(onSubmit);
+        editOtherResourcesForm,
+        resetSelection,
+        submitEditData,
+        reset,
+    } = useEditOtherResources(onSubmit);
 
     return (
         <Form
-            form={addHitDiceForm}
-            name="addHitDice"
+            form={editOtherResourcesForm}
+            name="edit"
             layout="inline"
             style={styles.form}
-            onFinish={submitNewHitDice}
+            onFinish={submitEditData}
         >
             <div style={styles.formContent}>
                 <Form.Item
-                    name="class"
+                    name="name"
                     rules={[
-                        { required: true, message: 'Please key in the class' }
+                        { required: true, message: 'Please key in the name' }
                     ]}
+                    initialValue={currentData.name}
                 >
                     <Input
                         type="text"
-                        placeholder="Class"
+                        placeholder="Name"
                     />
                 </Form.Item>
                 <Form.Item
@@ -47,6 +56,7 @@ export default function AddHitDiceForm({ onSubmit, onCancel }: Props) {
                         { type: 'number', min: 1, message: 'Count minimum is 1' },
                         { required: true, message: 'Please key in the count' }
                     ]}
+                    initialValue={currentData.max}
                 >
                     <InputNumber
                         type="number"
@@ -54,14 +64,15 @@ export default function AddHitDiceForm({ onSubmit, onCancel }: Props) {
                     />
                 </Form.Item>
                 <Form.Item
-                    name="dice"
+                    name="reset"
                     rules={[
-                        { required: true, message: 'Please key in the dice' }
+                        { required: true, message: 'Please key in the reset' }
                     ]}
+                    initialValue={currentData.reset}
                 >
                     <AutoComplete
-                        options={hitDiceSelection}
-                        placeholder="Dice : e.g. d10"
+                        options={resetSelection}
+                        placeholder="Reset : e.g. Short Rest"
                         showSearch={{
                             filterOption: (inputValue, option) => {
                                 return option !== undefined && option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -69,8 +80,27 @@ export default function AddHitDiceForm({ onSubmit, onCancel }: Props) {
                         }}
                     />
                 </Form.Item>
+                <Form.Item
+                    name="notes"
+                    initialValue={currentData.notes}
+                >
+                    <Input.TextArea
+                        placeholder="Notes (Optional)"
+                        rows={4}
+                    />
+                </Form.Item>
             </div>
             <div style={styles.btnHolder}>
+                <Button
+                    variant="filled"
+                    color="red"
+                    icon={<DeleteOutlined />}
+                    onClick={() => {
+                        onCancel();
+                        reset();
+                        onRemove();
+                    }}
+                />
                 <Form.Item
                     style={{
                         width: '100%',
@@ -89,6 +119,7 @@ export default function AddHitDiceForm({ onSubmit, onCancel }: Props) {
                         variant="filled"
                         color="red"
                         icon={<CloseOutlined />}
+                        style={{ marginRight: '-0.8rem' }}
                         onClick={() => {
                             reset();
                             onCancel();
@@ -120,7 +151,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     btnHolder: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         alignItems: 'flex-end',
-    },
+    }
 }

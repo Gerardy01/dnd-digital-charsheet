@@ -3,7 +3,10 @@
 import {
     DefensesTypeEnum,
     HitDiceEnum,
-    SensesEnum
+    SensesEnum,
+    RangeEnum,
+    DurationEnum,
+    ResourceResetEnum,
 } from "./enums";
 
 
@@ -20,11 +23,38 @@ export const defenseTypeList: string[] = [
     DefensesTypeEnum.VULNERABILITY,
 ];
 
-export const hitDiceList: string[] = [
+export const diceList: string[] = [
     HitDiceEnum.D4,
     HitDiceEnum.D6,
     HitDiceEnum.D8,
     HitDiceEnum.D10,
     HitDiceEnum.D12,
     HitDiceEnum.D20,
+];
+
+export const rangeList: string[] = [
+    RangeEnum.SELF,
+    RangeEnum.TOUCH,
+    RangeEnum.TENFT,
+    RangeEnum.FIFTEENFT,
+    RangeEnum.THIRTYFT,
+    RangeEnum.SIXTYFT,
+    RangeEnum.HUNDREDFT,
+    RangeEnum.FIVE_MILES,
+    RangeEnum.SIGHT,
+];
+
+export const durationList: string[] = [
+    DurationEnum.INSTANT,
+    DurationEnum.ONEROUND,
+    DurationEnum.ONEMINUTE,
+    DurationEnum.TENMINUTES,
+    DurationEnum.ONEHOUR,
+    DurationEnum.EIGHTHOURS,
+    DurationEnum.TWENTYFOURHOURS,
+];
+
+export const resetList: string[] = [
+    ResourceResetEnum.LONGREST,
+    ResourceResetEnum.SHORTREST,
 ];

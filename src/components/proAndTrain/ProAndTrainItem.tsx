@@ -56,6 +56,7 @@ export default function ProAndTrainItem({ name, category, proAndTrain, handleRem
                         ref={inputRef}
                         type="text"
                         size="small"
+                        placeholder={name}
                         style={styles.tagInputStyle}
                         value={inputValue}
                         onChange={(e) => handleChangeInput(e.target.value)}

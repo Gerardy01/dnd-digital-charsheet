@@ -255,7 +255,7 @@ export default function usePopulate() {
         const actionsData = {
             actions: [
                 {
-                    name: "Standard combat actions",
+                    name: "Standard Combat Actions",
                     level: null,
                     category: "Other",
                     activation: {
