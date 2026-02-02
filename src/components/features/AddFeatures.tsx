@@ -1,32 +1,33 @@
-import { AutoComplete, Button, Form, Input, InputNumber } from "antd";
+import { AutoComplete, Button, Form, Input, Select } from "antd";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 
 // hooks
-import { useAddOtherResources } from "../../hooks/otherResources/useOtherResources";
+import { useAddFeatures } from "../../hooks/features/useFeatures";
 
 // interfaces
-import type { OtherResources } from "../../models/dataInterface";
+import type { FeaturesAndTraits } from "../../models/dataInterface";
 interface Props {
-    onSubmit: (values: OtherResources) => void;
+    onSubmit: (values: FeaturesAndTraits) => void;
     onCancel: () => void;
 }
 
-export default function AddOtherResourcesForm({ onSubmit, onCancel }: Props) {
+export default function AddFeatures({ onSubmit, onCancel }: Props) {
 
     const {
-        addOtherResourcesForm,
-        resetSelection,
-        submitNewOtherResources,
-        reset
-    } = useAddOtherResources(onSubmit);
+        addFeaturesForm,
+        sourceTypeSelection,
+        actionTypeSelection,
+        submitNewFeatures,
+        reset,
+    } = useAddFeatures(onSubmit);
 
     return (
         <Form
-            form={addOtherResourcesForm}
-            name="addOtherResources"
+            form={addFeaturesForm}
+            name="addNewFeatures"
             layout="inline"
             style={styles.form}
-            onFinish={submitNewOtherResources}
+            onFinish={submitNewFeatures}
         >
             <div style={styles.formContent}>
                 <Form.Item
@@ -41,26 +42,14 @@ export default function AddOtherResourcesForm({ onSubmit, onCancel }: Props) {
                     />
                 </Form.Item>
                 <Form.Item
-                    name="count"
+                    name="sourceType"
                     rules={[
-                        { type: 'number', min: 1, message: 'Count minimum is 1' },
-                        { required: true, message: 'Please key in the count' }
-                    ]}
-                >
-                    <InputNumber
-                        type="number"
-                        placeholder="Count : 0"
-                    />
-                </Form.Item>
-                <Form.Item
-                    name="reset"
-                    rules={[
-                        { required: true, message: 'Please key in the reset' }
+                        { required: true, message: 'Please select or key in the source' }
                     ]}
                 >
                     <AutoComplete
-                        options={resetSelection}
-                        placeholder="Reset : e.g. Short Rest"
+                        options={sourceTypeSelection}
+                        placeholder="Source"
                         showSearch={{
                             filterOption: (inputValue, option) => {
                                 return option !== undefined && option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -69,10 +58,30 @@ export default function AddOtherResourcesForm({ onSubmit, onCancel }: Props) {
                     />
                 </Form.Item>
                 <Form.Item
-                    name="notes"
+                    name="source"
+                    rules={[
+                        { required: true, message: 'Please key in the source name' }
+                    ]}
+                >
+                    <Input
+                        type="text"
+                        placeholder="Source Name : e.g. Elf"
+                    />
+                </Form.Item>
+                <Form.Item
+                    name="actionType"
+                    initialValue=""
+                    help="Select this field if this Feature need to be displayed in actions tab"
+                >
+                    <Select
+                        options={actionTypeSelection}
+                    />
+                </Form.Item>
+                <Form.Item
+                    name="description"
                 >
                     <Input.TextArea
-                        placeholder="Notes (Optional)"
+                        placeholder="Description (Optional)"
                         rows={4}
                     />
                 </Form.Item>
@@ -107,6 +116,7 @@ export default function AddOtherResourcesForm({ onSubmit, onCancel }: Props) {
         </Form>
     )
 }
+
 
 const styles: { [key: string]: React.CSSProperties } = {
     form: {

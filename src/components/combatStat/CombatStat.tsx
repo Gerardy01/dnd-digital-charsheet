@@ -147,10 +147,9 @@ export default function CombatStat() {
                     <>
                         {combatData?.hitDice.map((item, i) => {
                             return (
-                                <>
+                                <div key={i}>
                                     {editedIndex !== i ? (
                                         <Tracker
-                                            key={i}
                                             name={item.class}
                                             current={item.remaining}
                                             max={item.total}
@@ -174,7 +173,7 @@ export default function CombatStat() {
                                             onCancel={() => onClickEdit(-1)}
                                         />
                                     )}
-                                </>
+                                </div>
                             )
                         })}
 

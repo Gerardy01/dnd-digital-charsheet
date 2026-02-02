@@ -164,19 +164,19 @@ export default function useActionInit() {
         let itemFound = false;
 
         if (category === ActionCategoryEnum.FEATURE) {
-            itemFound = features.some(feature => feature.name === name);
+            itemFound = features.some(feature => feature.name === name && feature.actionType !== "");
         }
 
         if (category === ActionCategoryEnum.EQUIPABLE) {
-            itemFound = equipment.items.some(eq => eq.name === name && eq.equipped) || equipment.attunedMagicItems.some(eq => eq.name === name && eq.equipped);
+            itemFound = equipment.items.some(eq => eq.name === name && eq.equipped && eq.actionType !== "") || equipment.attunedMagicItems.some(eq => eq.name === name && eq.equipped && eq.actionType !== "");
         }
 
         if (category === ActionCategoryEnum.ITEM) {
-            itemFound = equipment.items.some(eq => eq.name === name) || equipment.attunedMagicItems.some(eq => eq.name === name);
+            itemFound = equipment.items.some(eq => eq.name === name && eq.actionType !== "") || equipment.attunedMagicItems.some(eq => eq.name === name && eq.actionType !== "");
         }
 
         if (category === ActionCategoryEnum.SPELL) {
-            itemFound = spells.some(spell => spell.spells.some(spell => spell.name === name && spell.prepared));
+            itemFound = spells.some(spellCategory => spellCategory.spells.some(spell => spell.name === name && spell.prepared && spell.actionType !== ""));
         }
 
         return itemFound;

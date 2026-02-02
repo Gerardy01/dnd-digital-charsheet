@@ -1,18 +1,29 @@
-import { Empty, Tag, Typography } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Button, Empty, Tag, Typography } from "antd";
+import { EditOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 
 // hooks
-import useFeatures from "../../hooks/features/useFeatures";
+import { useFeatures } from "../../hooks/features/useFeatures";
 
 // components
 import Icon from "../global/Icon";
+import AddFeatures from "./AddFeatures";
+import EditFeatures from "./EditFeatures";
 
 const { Text, Title } = Typography;
 
 
 export default function Features() {
 
-    const { featuresAndTraits } = useFeatures();
+    const {
+        featuresAndTraits,
+        isAdding,
+        editedIndex,
+        adding,
+        onClickEdit,
+        onAddFeatures,
+        onEditFeatures,
+        removeFeatures,
+    } = useFeatures();
 
     return (
         <div style={styles.holder}>
@@ -24,30 +35,71 @@ export default function Features() {
                     />
                     <Title level={4} style={{ marginBottom: 0 }}>Features & Traits</Title>
                 </div>
+                {!isAdding && editedIndex === -1 && (
+                    <Button
+                        color="primary"
+                        variant="filled"
+                        size="small"
+                        icon={<PlusOutlined />}
+                        onClick={() => adding(true)}
+                    >Add</Button>
+                )}
             </div>
-            {featuresAndTraits.length > 0 ? featuresAndTraits.map((item, i) => {
-                return (
-                    <div style={styles.card} key={i}>
-                        <div style={styles.header}>
-                            <Title level={5} style={{
-                                margin: '0px',
-                                color: '#1F2D3D',
-                                marginRight: '5px'
-                            }}>{item.name}</Title>
-                            <Tag
-                                style={styles.tag}
-                                color="blue"
-                            >
-                                {item.sourceType} ({item.source})
-                            </Tag>
-                        </div>
+            {isAdding || featuresAndTraits.length > 0 ? (
+                <>
+                    {featuresAndTraits.map((item, i) => {
+                        return (
+                            <div key={i}>
+                                {editedIndex !== i ? (
+                                    <div style={styles.card}>
+                                        <div style={styles.header}>
+                                            <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px' }}>
+                                                <Title level={5} style={{
+                                                    margin: '0px',
+                                                    color: '#1F2D3D',
+                                                }}>{item.name}</Title>
+                                                <Button
+                                                    type="text"
+                                                    icon={<EditOutlined />}
+                                                    onClick={() => onClickEdit(i)}
+                                                    disabled={isAdding || editedIndex !== -1}
+                                                />
+                                            </div>
+                                            <Tag
+                                                style={styles.tag}
+                                                color="blue"
+                                            >
+                                                {item.sourceType} ({item.source})
+                                            </Tag>
+                                        </div>
 
-                        <Text style={{ color: '#2E3740' }}>
-                            {item.description}
-                        </Text>
-                    </div>
-                )
-            }) : (
+                                        <Text style={{ color: '#2E3740' }}>
+                                            {item.description}
+                                        </Text>
+                                    </div>
+                                ) : (
+                                    <EditFeatures
+                                        currentData={item}
+                                        onSubmit={onEditFeatures}
+                                        onRemove={() => {
+                                            onClickEdit(-1);
+                                            removeFeatures(i);
+                                        }}
+                                        onCancel={() => onClickEdit(-1)}
+                                    />
+                                )}
+                            </div>
+                        )
+                    })}
+
+                    {isAdding && (
+                        <AddFeatures
+                            onSubmit={onAddFeatures}
+                            onCancel={() => adding(false)}
+                        />
+                    )}
+                </>
+            ) : (
                 <div style={{ paddingBottom: '2rem' }}>
                     <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
                 </div>

@@ -38,10 +38,9 @@ export default function Defenses() {
             <div style={styles.holder}>
                 {defenses.map((item, i) => {
                     return (
-                        <>
+                        <div key={i}>
                             {item.type === DefensesTypeEnum.RESISTANCE ? (
                                 <Tag
-                                    key={i}
                                     variant="outlined"
                                     icon={<SafetyOutlined />}
                                     style={styles.tag}
@@ -60,7 +59,6 @@ export default function Defenses() {
                                 </Tag>
                             ) : item.type === DefensesTypeEnum.IMMUNITIES ? (
                                 <Tag
-                                    key={i}
                                     variant="outlined"
                                     icon={<ThunderboltOutlined />}
                                     style={styles.tag}
@@ -79,7 +77,6 @@ export default function Defenses() {
                                 </Tag>
                             ) : (
                                 <Tag
-                                    key={i}
                                     variant="outlined"
                                     icon={<WarningOutlined />}
                                     style={styles.tag}
@@ -97,7 +94,7 @@ export default function Defenses() {
                                     </div>
                                 </Tag>
                             )}
-                        </>
+                        </div>
                     )
                 })}
 

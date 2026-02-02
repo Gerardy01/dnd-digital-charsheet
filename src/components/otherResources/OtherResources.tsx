@@ -52,10 +52,9 @@ export default function OtherResources() {
                 <>
                     {otherResources.map((item, i) => {
                         return (
-                            <>
+                            <div key={i}>
                                 {editedIndex !== i ? (
                                     <Tracker
-                                        key={i}
                                         name={item.name}
                                         current={item.current}
                                         max={item.max}
@@ -78,7 +77,7 @@ export default function OtherResources() {
                                         onCancel={() => onClickEdit(-1)}
                                     />
                                 )}
-                            </>
+                            </div>
                         )
                     })}
 

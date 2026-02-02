@@ -7,6 +7,8 @@ import {
     RangeEnum,
     DurationEnum,
     ResourceResetEnum,
+    SourceEnum,
+    ActionTypeEnum,
 } from "./enums";
 
 
@@ -57,4 +59,17 @@ export const durationList: string[] = [
 export const resetList: string[] = [
     ResourceResetEnum.LONGREST,
     ResourceResetEnum.SHORTREST,
+];
+
+export const SourceTypeList: string[] = [
+    SourceEnum.RACE,
+    SourceEnum.CLASS,
+    SourceEnum.BACKGROUND,
+];
+
+export const actionTypeList: { value: string; label: string }[] = [
+    { value: "", label: "None" },
+    { value: ActionTypeEnum.ACTION, label: "Action" },
+    { value: ActionTypeEnum.BONUSACTION, label: "Bonus Action" },
+    { value: ActionTypeEnum.REACTION, label: "Reaction" },
 ];
