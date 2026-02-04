@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Form, type FormProps } from "antd";
+import { Form, Modal, type FormProps } from "antd";
 
 // hooks
 import useDataHandler from "../global/useDataHandler"
 import { useActionState } from "../actions/useActionState";
 
 // utils
-import { actionTypeList, SourceTypeList } from "../../utils/selectionData";
+import { SourceTypeList } from "../../utils/selectionData";
 import { ActionCategoryEnum } from "../../utils/enums";
 
 // DTO
@@ -18,6 +18,8 @@ interface FeaturesAndTraitsForm {
     sourceType: string;
     actionType: string;
 }
+
+const { confirm } = Modal;
 
 export function useFeatures() {
 
@@ -52,7 +54,7 @@ export function useFeatures() {
         setFeaturesAndTraits(newFeatures);
         adding(false);
 
-        handleActionModify(newData, "add");
+        handleActionUponAdd(newData);
     }
 
     const onEditFeatures = (newData: FeaturesAndTraits) => {
@@ -68,25 +70,50 @@ export function useFeatures() {
         setFeaturesAndTraits(newFeatures);
         onClickEdit(-1);
 
-        handleActionModify(newData, "edit");
+        handleActionUponEdit(newData);
     }
 
     const removeFeatures = (index: number) => {
         if (!featuresAndTraits) return;
 
-        const filteredFeatures = featuresAndTraits.filter((_, i) => i !== index);
+        confirm({
+            title: "Delete Feature",
+            content: `Are you sure you want to delete ${featuresAndTraits[index].name}?`,
+            centered: true,
+            onOk() {
+                const filteredFeatures = featuresAndTraits.filter((_, i) => i !== index);
 
-        setFeaturesAndTraits(filteredFeatures);
-        onClickEdit(-1);
+                setFeaturesAndTraits(filteredFeatures);
+                onClickEdit(-1);
 
-        handleActionModify(featuresAndTraits[index], "remove");
+                handleActionUponRemove(featuresAndTraits[index]);
+            },
+        });
     }
 
-    const handleActionModify = (data: FeaturesAndTraits, upon: "add" | "edit" | "remove") => {
+    const handleActionUponAdd = (data: FeaturesAndTraits) => {
+        if (data.actionType === "") return;
+
+        const category = ActionCategoryEnum.FEATURE;
+        addActions({
+            name: data.name,
+            actionType: data.actionType,
+            category: category,
+            description: data.description,
+            level: null,
+        });
+    }
+
+    const handleActionUponEdit = (data: FeaturesAndTraits) => {
 
         const category = ActionCategoryEnum.FEATURE
+        const currentData = featuresAndTraits[editedIndex];
 
-        if (upon === "add" && data.actionType !== "") {
+        if (data.name !== currentData.name && data.actionType !== "") {
+            changeName(currentData.actionType, currentData.name, data.name);
+        }
+
+        if (currentData.actionType === "" && data.actionType !== "") {
             addActions({
                 name: data.name,
                 actionType: data.actionType,
@@ -94,35 +121,19 @@ export function useFeatures() {
                 description: data.description,
                 level: null,
             });
+        } else if ((data.actionType !== currentData.actionType) && data.actionType !== "") {
+            changeActionType(currentData.actionType, data.name, data.actionType);
         }
 
-        if (upon === "edit") {
-            const currentData = featuresAndTraits[editedIndex];
-
-            if (data.name !== currentData.name && data.actionType !== "") {
-                changeName(currentData.actionType, currentData.name, data.name);
-            }
-
-            if (currentData.actionType === "" && data.actionType !== "") {
-                addActions({
-                    name: data.name,
-                    actionType: data.actionType,
-                    category: category,
-                    description: data.description,
-                    level: null,
-                });
-            } else if ((data.actionType !== currentData.actionType) && data.actionType !== "") {
-                changeActionType(currentData.actionType, data.name, data.actionType);
-            }
-
-            if ((data.actionType !== currentData.actionType) && data.actionType === "") {
-                removeActions(currentData.actionType, data.name);
-            }
+        if ((data.actionType !== currentData.actionType) && data.actionType === "") {
+            removeActions(currentData.actionType, data.name);
         }
+    }
 
-        if (upon === "remove" && data.actionType !== "") {
-            removeActions(data.actionType, data.name);
-        }
+    const handleActionUponRemove = (data: FeaturesAndTraits) => {
+        if (data.actionType === "") return;
+
+        removeActions(data.actionType, data.name);
     }
 
     return {
@@ -151,7 +162,6 @@ export function useAddFeatures(
             label: item,
         }
     });
-    const actionTypeSelection = actionTypeList;
 
     const submitNewFeatures: FormProps<FeaturesAndTraitsForm>['onFinish'] = (values) => {
 
@@ -174,7 +184,6 @@ export function useAddFeatures(
     return {
         addFeaturesForm,
         sourceTypeSelection,
-        actionTypeSelection,
         submitNewFeatures,
         reset,
     }
@@ -194,7 +203,6 @@ export function useEditFeatures(
             label: item,
         }
     });
-    const actionTypeSelection = actionTypeList;
 
     const submitEditData: FormProps<FeaturesAndTraitsForm>['onFinish'] = (values) => {
 
@@ -217,7 +225,6 @@ export function useEditFeatures(
     return {
         editFeaturesForm,
         sourceTypeSelection,
-        actionTypeSelection,
         submitEditData,
         reset,
     }

@@ -29,6 +29,15 @@ export const AbilityEnum = {
     CHA: "charisma",
 } as const;
 
+export const AbilitySelectionEnum = {
+    STR: "Strength",
+    DEX: "Dexterity",
+    CON: "Constitution",
+    INT: "Intelligence",
+    WIS: "Wisdom",
+    CHA: "Charisma",
+} as const;
+
 export const ProAndTrainEnum = {
     ARMOR: "armor",
     WEAPONS: "weapons",

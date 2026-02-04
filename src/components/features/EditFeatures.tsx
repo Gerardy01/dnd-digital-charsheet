@@ -4,6 +4,9 @@ import { CheckOutlined, CloseOutlined, DeleteOutlined } from "@ant-design/icons"
 // hooks
 import { useEditFeatures } from "../../hooks/features/useFeatures";
 
+// utils
+import { actionTypeList } from "../../utils/selectionData";
+
 // interfaces
 import type { FeaturesAndTraits } from "../../models/dataInterface";
 interface Props {
@@ -19,7 +22,6 @@ export default function EditFeatures({ currentData, onSubmit, onRemove, onCancel
     const {
         editFeaturesForm,
         sourceTypeSelection,
-        actionTypeSelection,
         submitEditData,
         reset,
     } = useEditFeatures(onSubmit);
@@ -80,7 +82,7 @@ export default function EditFeatures({ currentData, onSubmit, onRemove, onCancel
                     help="Select this field if this Feature need to be displayed in actions tab"
                 >
                     <Select
-                        options={actionTypeSelection}
+                        options={actionTypeList}
                     />
                 </Form.Item>
                 <Form.Item
@@ -99,7 +101,6 @@ export default function EditFeatures({ currentData, onSubmit, onRemove, onCancel
                     color="red"
                     icon={<DeleteOutlined />}
                     onClick={() => {
-                        onCancel();
                         reset();
                         onRemove();
                     }}

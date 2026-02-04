@@ -12,8 +12,8 @@ import type { CharacterInfo, InfoStat } from "../../models/dataInterface";
 
 // hooks
 import useDataHandler from "../global/useDataHandler"
-import useActionInit from "../actions/useActionInit";
 import usePopulate from "../global/usePopulate";
+import useActionInit from "../actions/useActionInit";
 
 
 export default function useMain() {

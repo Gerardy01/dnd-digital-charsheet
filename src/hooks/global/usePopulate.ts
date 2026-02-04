@@ -1,5 +1,8 @@
 import { useEffect } from "react";
 
+// utils
+import { DefaultActionsEnum, ActionCategoryEnum, UsabilityEnum } from "../../utils/enums";
+
 // hooks
 import useDataHandler from "./useDataHandler";
 import { useActionState } from "../actions/useActionState";
@@ -255,11 +258,11 @@ export default function usePopulate() {
         const actionsData = {
             actions: [
                 {
-                    name: "Standard Combat Actions",
+                    name: DefaultActionsEnum.STANDARD,
                     level: null,
-                    category: "Other",
+                    category: ActionCategoryEnum.OTHER,
                     activation: {
-                        type: "Utility",
+                        type: UsabilityEnum.UTILITY,
                         bonus: 0,
                         dice: "",
                         damageType: ""
@@ -271,11 +274,11 @@ export default function usePopulate() {
             bonusActions: [],
             reactions: [
                 {
-                    name: "Opportunity Attack",
+                    name: DefaultActionsEnum.OPPORTUNITY,
                     level: null,
-                    category: "Other",
+                    category: ActionCategoryEnum.OTHER,
                     activation: {
-                        type: "Attack",
+                        type: UsabilityEnum.ATTACK,
                         bonus: 0,
                         dice: "",
                         damageType: ""

@@ -192,3 +192,7 @@ export default function useDataHandler() {
         changeOtherResourcesData,
     }
 }
+
+export function saveActionEconomyData(data: ActionEconomy) {
+    localStorage.setItem(StorageKey.ACTIONECONOMY, JSON.stringify(data));
+}

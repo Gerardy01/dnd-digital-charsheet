@@ -1,9 +1,11 @@
-import { Divider, Empty, Switch, Typography } from "antd";
-import { BookOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
+import { Button, Divider, Empty, Switch, Typography } from "antd";
+import { BookOutlined, DownOutlined, EditOutlined, PlusOutlined, UpOutlined } from "@ant-design/icons";
 
 // components
 import SpellItem from "./SpellItem";
 import Icon from "../global/Icon";
+import AddSpellsourceForm from "./AddSpellsourceForm";
+import EditSpellsourceForm from "./EditSpellsourceForm";
 
 // hooks
 import useSpells from "../../hooks/spells/useSpells";
@@ -20,9 +22,16 @@ export default function Spells() {
         loading,
         preparedOnly,
         hidedList,
+        isAddingSpellsource,
+        editedSpellsourceIndex,
         handlePrepare,
         handlePreparedOnlySwitch,
         handleHide,
+        addSpellSource,
+        editSpellSource,
+        onAddSpellSource,
+        onEditSpellSource,
+        removeSpellSource,
     } = useSpells();
 
     return (
@@ -36,6 +45,15 @@ export default function Spells() {
                     />
                     <Title level={4} style={{ marginBottom: 0 }}>Spellbook</Title>
                 </div>
+                {!isAddingSpellsource && editedSpellsourceIndex === -1 && (
+                    <Button
+                        color="primary"
+                        variant="filled"
+                        size="small"
+                        icon={<PlusOutlined />}
+                        onClick={() => addSpellSource(true)}
+                    >Add</Button>
+                )}
             </div>
 
             <div style={styles.filterHolder}>
@@ -46,61 +64,101 @@ export default function Spells() {
                     unCheckedChildren="All Spells"
                 />
             </div>
+
+            {isAddingSpellsource && (
+                <AddSpellsourceForm
+                    onSubmit={onAddSpellSource}
+                    onCancel={() => addSpellSource(false)}
+                />
+            )}
             {spellcasting.length > 0 ? spellcasting.map((item, i) => (
                 <div key={i} style={{ width: '100%', marginBottom: '1.5rem' }}>
-                    <div style={styles.sourceWrapper}>
-                        <div style={styles.source}>
-                            <div>
-                                <Title level={4} style={{ color: 'blue' }}>{item.source} ({item.sourceType})</Title>
-                                <Text style={{ color: '#2E3740' }}>Ability : {item.ability}</Text>
+                    {editedSpellsourceIndex !== i ? (
+                        <div style={styles.sourceWrapper}>
+                            <div style={styles.source}>
+                                <div>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <Title level={4} style={{ color: 'blue' }}>{item.source} ({item.sourceType})</Title>
+                                        <Button
+                                            type="text"
+                                            icon={<EditOutlined />}
+                                            onClick={() => editSpellSource(i)}
+                                            disabled={isAddingSpellsource || editedSpellsourceIndex !== -1}
+                                        />
+                                    </div>
+                                    <Text style={{ color: '#2E3740' }}>Ability : {item.ability}</Text>
+                                </div>
+                                <div style={{ display: 'flex', gap: 8 }}>
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <Text strong style={{ fontSize: '10px', color: 'gray' }}>SAVE DC</Text>
+                                        <Text strong style={{ fontSize: '1.2rem' }}>{item.spellSaveDC}</Text>
+                                    </div>
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '10px' }}>
+                                        <Text strong style={{ fontSize: '10px', color: 'gray' }}>ATTACK</Text>
+                                        <Text strong style={{ fontSize: '1.2rem' }}>+{item.spellAttackBonus}</Text>
+                                    </div>
+                                </div>
                             </div>
-                            <div style={{ display: 'flex', gap: 8 }}>
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                    <Text strong style={{ fontSize: '10px', color: 'gray' }}>SAVE DC</Text>
-                                    <Text strong style={{ fontSize: '1.2rem' }}>{item.spellSaveDC}</Text>
+                            <Divider style={{ margin: '1rem 0px' }} />
+                            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div
+                                    onClick={() => handleHide(i)}
+                                    style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+                                    {hidedList.includes(i) ? (
+                                        <DownOutlined />
+                                    ) : (
+                                        <UpOutlined />
+                                    )}
+                                    <Text>{hidedList.includes(i) ? 'Show' : 'Hide'}</Text>
                                 </div>
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '10px' }}>
-                                    <Text strong style={{ fontSize: '10px', color: 'gray' }}>ATTACK</Text>
-                                    <Text strong style={{ fontSize: '1.2rem' }}>+{item.spellAttackBonus}</Text>
-                                </div>
+                                <Button
+                                    size="small"
+                                    variant="text"
+                                    color="primary"
+                                    icon={<PlusOutlined />}
+                                >
+                                    Add Spell
+                                </Button>
                             </div>
                         </div>
-                        <Divider style={{ margin: '1rem 0px' }} />
-                        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <div
-                                onClick={() => handleHide(i)}
-                                style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
-                                {hidedList.includes(i) ? (
-                                    <DownOutlined />
-                                ) : (
-                                    <UpOutlined />
-                                )}
-                                <Text>{hidedList.includes(i) ? 'Show' : 'Hide'}</Text>
-                            </div>
-                        </div>
-                    </div>
+                    ) : (
+                        <EditSpellsourceForm
+                            currentData={item}
+                            onSubmit={onEditSpellSource}
+                            onRemove={() => {
+                                removeSpellSource();
+                            }}
+                            onCancel={() => editSpellSource(-1)}
+                        />
+                    )}
 
                     {!hidedList.includes(i) && (
                         <>
-                            {item.spells.map((spellGroup, idx) => {
-                                return (
-                                    <div key={idx}>
-                                        <Text strong style={{ color: 'gray' }}>{spellGroup.levelName}</Text>
-                                        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: "0.5rem" }}>
-                                            {spellGroup.spells.map((spell, index) => {
-                                                return (
-                                                    <SpellItem
-                                                        key={index}
-                                                        spell={spell}
-                                                        handlePrepare={handlePrepare}
-                                                        loading={loading}
-                                                    />
-                                                )
-                                            })}
+                            {item.spells.length > 0 ? (
+                                item.spells.map((spellGroup, idx) => {
+                                    return (
+                                        <div key={idx}>
+                                            <Text strong style={{ color: 'gray' }}>{spellGroup.levelName}</Text>
+                                            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: "0.5rem" }}>
+                                                {spellGroup.spells.map((spell, index) => {
+                                                    return (
+                                                        <SpellItem
+                                                            key={index}
+                                                            spell={spell}
+                                                            handlePrepare={handlePrepare}
+                                                            loading={loading}
+                                                        />
+                                                    )
+                                                })}
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            })}
+                                    )
+                                })
+                            ) : (
+                                <div>
+                                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                                </div>
+                            )}
                         </>
                     )}
 
@@ -120,7 +178,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         backgroundColor: 'white',
         padding: '0rem 1rem',
         paddingBottom: '0rem',
-        maxHeight: '70vh',
+        maxHeight: '85vh',
         overflow: 'auto',
         display: 'flex',
         flexDirection: 'column',
@@ -135,20 +193,26 @@ const styles: { [key: string]: React.CSSProperties } = {
         boxShadow: '0 1px 4px rgba(16,24,40,0.04)',
         marginBottom: '1rem',
         padding: '1rem',
+        position: 'sticky',
+        top: 55,
+        zIndex: 1,
     },
     source: {
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        // marginBottom: '1rem',
     },
     titleHolder: {
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: '0.5rem',
+        paddingBottom: '1rem',
+        position: 'sticky',
+        top: 0,
+        zIndex: 5,
+        backgroundColor: 'white',
     },
     filterHolder: {
         width: '100%',

@@ -82,7 +82,6 @@ export default function Features() {
                                         currentData={item}
                                         onSubmit={onEditFeatures}
                                         onRemove={() => {
-                                            onClickEdit(-1);
                                             removeFeatures(i);
                                         }}
                                         onCancel={() => onClickEdit(-1)}
@@ -144,6 +143,11 @@ const styles: { [key: string]: React.CSSProperties } = {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: '1.5rem',
+        paddingBottom: '1rem',
+        marginBottom: '1rem',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1,
+        backgroundColor: 'white',
     }
 }

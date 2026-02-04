@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 // utils
 import { ActionTypeEnum } from "../../utils/enums";
+import { saveActionEconomyData } from "../global/useDataHandler";
 
 // DTO
 import type { ActionEconomy, ActionItem, ActionPopulateParams } from "../../models/dataInterface";
@@ -36,11 +37,14 @@ export const useActionState = create<ActionState>((set) => ({
         }
 
         set((state) => {
-            return {
+            const newState = {
                 actions: data.actionType === ActionTypeEnum.ACTION ? [...state.actions, newAction] : state.actions,
                 bonusActions: data.actionType === ActionTypeEnum.BONUSACTION ? [...state.bonusActions, newAction] : state.bonusActions,
                 reactions: data.actionType === ActionTypeEnum.REACTION ? [...state.reactions, newAction] : state.reactions,
             }
+
+            saveActionEconomyData(newState);
+            return newState;
         });
     },
     removeActions: (actionType: string, targetName: string) => {
@@ -63,11 +67,14 @@ export const useActionState = create<ActionState>((set) => ({
                 reactionData = state.reactions.filter((item) => item.name !== targetName);
             }
 
-            return {
+            const newState = {
                 actions: actionData,
                 bonusActions: bonusActionData,
                 reactions: reactionData,
             }
+
+            saveActionEconomyData(newState);
+            return newState;
         });
     },
     changeName: (actionType: string, targetName: string, newName: string) => {
@@ -88,11 +95,14 @@ export const useActionState = create<ActionState>((set) => ({
                 reactionData = state.reactions.map((item) => item.name === targetName ? { ...item, name: newName } : item);
             }
 
-            return {
+            const newState = {
                 actions: actionData,
                 bonusActions: bonusActionData,
                 reactions: reactionData,
             }
+
+            saveActionEconomyData(newState);
+            return newState;
         });
     },
     changeActionType: (actionType: string, targetName: string, newActionType: string) => {
@@ -120,11 +130,14 @@ export const useActionState = create<ActionState>((set) => ({
 
             if (!targetAction) return state;
 
-            return {
+            const newState = {
                 actions: newActionType === ActionTypeEnum.ACTION ? [...actionData, targetAction] : actionData,
                 bonusActions: newActionType === ActionTypeEnum.BONUSACTION ? [...bonusActionData, targetAction] : bonusActionData,
                 reactions: newActionType === ActionTypeEnum.REACTION ? [...reactionData, targetAction] : reactionData,
             }
+
+            saveActionEconomyData(newState);
+            return newState;
         });
     },
     populate: (data: ActionEconomy) => {

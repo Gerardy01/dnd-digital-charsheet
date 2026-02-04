@@ -9,6 +9,7 @@ import {
     ResourceResetEnum,
     SourceEnum,
     ActionTypeEnum,
+    AbilitySelectionEnum,
 } from "./enums";
 
 
@@ -72,4 +73,13 @@ export const actionTypeList: { value: string; label: string }[] = [
     { value: ActionTypeEnum.ACTION, label: "Action" },
     { value: ActionTypeEnum.BONUSACTION, label: "Bonus Action" },
     { value: ActionTypeEnum.REACTION, label: "Reaction" },
+];
+
+export const abilityList: string[] = [
+    AbilitySelectionEnum.STR,
+    AbilitySelectionEnum.DEX,
+    AbilitySelectionEnum.CON,
+    AbilitySelectionEnum.INT,
+    AbilitySelectionEnum.WIS,
+    AbilitySelectionEnum.CHA,
 ];

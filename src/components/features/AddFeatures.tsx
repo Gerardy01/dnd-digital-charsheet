@@ -4,6 +4,9 @@ import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 // hooks
 import { useAddFeatures } from "../../hooks/features/useFeatures";
 
+// utils
+import { actionTypeList } from "../../utils/selectionData";
+
 // interfaces
 import type { FeaturesAndTraits } from "../../models/dataInterface";
 interface Props {
@@ -16,7 +19,6 @@ export default function AddFeatures({ onSubmit, onCancel }: Props) {
     const {
         addFeaturesForm,
         sourceTypeSelection,
-        actionTypeSelection,
         submitNewFeatures,
         reset,
     } = useAddFeatures(onSubmit);
@@ -74,7 +76,7 @@ export default function AddFeatures({ onSubmit, onCancel }: Props) {
                     help="Select this field if this Feature need to be displayed in actions tab"
                 >
                     <Select
-                        options={actionTypeSelection}
+                        options={actionTypeList}
                     />
                 </Form.Item>
                 <Form.Item
