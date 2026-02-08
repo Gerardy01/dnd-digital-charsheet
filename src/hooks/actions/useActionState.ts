@@ -2,14 +2,15 @@ import { create } from "zustand";
 
 // utils
 import { ActionTypeEnum } from "../../utils/enums";
-import { saveActionEconomyData } from "../global/useDataHandler";
 
 // DTO
 import type { ActionEconomy, ActionItem, ActionPopulateParams } from "../../models/dataInterface";
 interface ActionState extends ActionEconomy {
+    isPopulated: boolean;
     addActions: (data: ActionPopulateParams) => void;
     removeActions: (actionType: string, targetName: string) => void;
     changeName: (actionType: string, targetName: string, newName: string) => void;
+    changeLevel: (actionType: string, targetName: string, newLevel: number | null) => void;
     changeActionType: (actionType: string, targetName: string, newActionType: string) => void;
     populate: (data: ActionEconomy) => void;
 }
@@ -19,6 +20,7 @@ export const useActionState = create<ActionState>((set) => ({
     actions: [],
     bonusActions: [],
     reactions: [],
+    isPopulated: false,
 
     addActions: (data: ActionPopulateParams) => {
 
@@ -43,7 +45,6 @@ export const useActionState = create<ActionState>((set) => ({
                 reactions: data.actionType === ActionTypeEnum.REACTION ? [...state.reactions, newAction] : state.reactions,
             }
 
-            saveActionEconomyData(newState);
             return newState;
         });
     },
@@ -73,7 +74,6 @@ export const useActionState = create<ActionState>((set) => ({
                 reactions: reactionData,
             }
 
-            saveActionEconomyData(newState);
             return newState;
         });
     },
@@ -101,7 +101,33 @@ export const useActionState = create<ActionState>((set) => ({
                 reactions: reactionData,
             }
 
-            saveActionEconomyData(newState);
+            return newState;
+        });
+    },
+    changeLevel: (actionType: string, targetName: string, newLevel: number | null) => {
+        set((state) => {
+            let actionData = state.actions;
+            let bonusActionData = state.bonusActions;
+            let reactionData = state.reactions;
+
+            if (actionType === ActionTypeEnum.ACTION) {
+                actionData = state.actions.map((item) => item.name === targetName ? { ...item, level: newLevel } : item);
+            }
+
+            if (actionType === ActionTypeEnum.BONUSACTION) {
+                bonusActionData = state.bonusActions.map((item) => item.name === targetName ? { ...item, level: newLevel } : item);
+            }
+
+            if (actionType === ActionTypeEnum.REACTION) {
+                reactionData = state.reactions.map((item) => item.name === targetName ? { ...item, level: newLevel } : item);
+            }
+
+            const newState = {
+                actions: actionData,
+                bonusActions: bonusActionData,
+                reactions: reactionData,
+            }
+
             return newState;
         });
     },
@@ -136,7 +162,6 @@ export const useActionState = create<ActionState>((set) => ({
                 reactions: newActionType === ActionTypeEnum.REACTION ? [...reactionData, targetAction] : reactionData,
             }
 
-            saveActionEconomyData(newState);
             return newState;
         });
     },
@@ -145,6 +170,7 @@ export const useActionState = create<ActionState>((set) => ({
             actions: data.actions,
             bonusActions: data.bonusActions,
             reactions: data.reactions,
+            isPopulated: true,
         });
-    }
+    },
 }));

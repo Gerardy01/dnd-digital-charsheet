@@ -2,19 +2,40 @@ import { useEffect, useState } from "react";
 import { Form, Modal, notification, type FormProps } from "antd";
 
 // hooks
-import useDataHandler from "../global/useDataHandler"
+import useDataHandler from "../global/useDataHandler";
+import { useActionState } from "../actions/useActionState";
 
 // utils
-import { SourceTypeList, abilityList } from "../../utils/selectionData";
+import { SourceTypeList, abilityList, castingTimeList, componentList, durationList, rangeList, schoolList } from "../../utils/selectionData";
+import { ActionCategoryEnum } from "../../utils/enums";
 
 // DTO
 import type { Spell, SpellcastingSource, SpellcastingTransformed, SpellTransformed } from "../../models/dataInterface";
+interface EditSpellIndex {
+    sourceIdx: number;
+    lvlGroupIdx: number;
+    spellIdx: number;
+}
 interface SpellSourceForm {
     source: string;
     sourceType: string;
     ability: string;
     spellSaveDC: number;
     spellAttackBonus: number;
+}
+interface SpellForm {
+    name: string;
+    level: number;
+    school: string;
+    castingTime: string;
+    range: string;
+    components: string[];
+    duration: string;
+    ritual: boolean;
+    concentration: boolean;
+    description: string;
+    sourcePage: string;
+    actionType: string;
 }
 
 const { confirm } = Modal;
@@ -23,6 +44,7 @@ const { confirm } = Modal;
 export default function useSpells() {
 
     const { getSpellsData, changeSpellsData } = useDataHandler();
+    const { addActions, removeActions, changeName, changeActionType, changeLevel } = useActionState();
 
     const [spellcasting, setSpellcasting] = useState<SpellcastingSource[]>(() => {
         return getSpellsData();
@@ -36,6 +58,13 @@ export default function useSpells() {
 
     const [isAddingSpellsource, setIsAddingSpellsource] = useState<boolean>(false);
     const [editedSpellsourceIndex, setEditedSpellsourceIndex] = useState<number>(-1);
+
+    const [addingSpellIndex, setAddingSpellIndex] = useState<number>(-1);
+    const [editedSpellIndex, setEditedSpellIndex] = useState<EditSpellIndex>({
+        sourceIdx: -1,
+        lvlGroupIdx: -1,
+        spellIdx: -1,
+    });
 
     useEffect(() => {
         handleTransform();
@@ -104,8 +133,10 @@ export default function useSpells() {
                 }
             }
             return item;
-        })
+        });
         setSpellcasting(updatedData);
+
+        handleActionUponPrepare(spellName, prepared);
     }
 
     const handlePreparedOnlySwitch = (prepared: boolean): void => {
@@ -127,6 +158,14 @@ export default function useSpells() {
 
     const editSpellSource = (index: number): void => {
         setEditedSpellsourceIndex(index);
+    }
+
+    const addSpell = (index: number): void => {
+        setAddingSpellIndex(index);
+    }
+
+    const editSpell = (sourceIdx: number, lvlGroupIdx: number, spellIdx: number): void => {
+        setEditedSpellIndex({ sourceIdx, lvlGroupIdx, spellIdx });
     }
 
     const onAddSpellSource = (values: SpellcastingSource): void => {
@@ -156,12 +195,12 @@ export default function useSpells() {
     const removeSpellSource = (): void => {
         if (loading) return;
 
-        const preparedSpells = spellcasting[editedSpellsourceIndex].spells.filter(spell => spell.prepared);
+        const preparedSpells = spellcasting[editedSpellsourceIndex].spells.filter(spell => spell.prepared && spell.level > 0);
 
         if (preparedSpells.length > 0) {
             notification.warning({
                 message: 'Spell Source Cannot Be Deleted',
-                description: 'Please unprepare all spells in this spell source before deleting it.',
+                description: 'Please unprepare all spells (except cantrips) in this spell source before deleting it.',
                 placement: 'top',
                 style: { backgroundColor: '#fef08a', color: '#92400e' }
             });
@@ -173,11 +212,169 @@ export default function useSpells() {
             content: "Are you sure you want to delete this spell source?",
             centered: true,
             onOk() {
+                const spellList = spellcasting[editedSpellsourceIndex].spells;
+
                 const updatedData = spellcasting.filter((_, i) => i !== editedSpellsourceIndex);
                 setSpellcasting(updatedData);
                 editSpellSource(-1);
+
+                spellList.forEach(spell => {
+                    handleActionUponRemove(spell);
+                });
             },
         });
+    }
+
+    const onAddSpell = (values: Spell): void => {
+        if (loading) return;
+
+        const updatedData = spellcasting.map((item, i) => {
+            if (i === addingSpellIndex) {
+                return {
+                    ...item,
+                    spells: [...item.spells, values],
+                };
+            }
+            return item;
+        })
+
+        setSpellcasting(updatedData);
+        addSpell(-1);
+
+        handleActionUponAdd(values);
+    }
+
+    const onEditSpell = (values: Spell): void => {
+        if (loading) return;
+
+        const sourceIdx = editedSpellIndex.sourceIdx;
+        const lvlGroupIdx = editedSpellIndex.lvlGroupIdx;
+        const spellIdx = editedSpellIndex.spellIdx;
+
+        const targetSpellName = transformed[sourceIdx].spells[lvlGroupIdx].spells[spellIdx].name;
+
+        const targetSpell = spellcasting[sourceIdx].spells.find(spell => spell.name === targetSpellName);
+
+        if (!targetSpell) return;
+
+        const updatedData = spellcasting.map((item, i) => {
+            if (i === sourceIdx) {
+                return {
+                    ...item,
+                    spells: item.spells.map((spell) => {
+                        if (spell.name === targetSpellName) {
+                            return {
+                                ...values,
+                                prepared: values.level === 0 ? true : spell.prepared,
+                            }
+                        }
+                        return spell;
+                    })
+                }
+            }
+            return item;
+        })
+        setSpellcasting(updatedData);
+        editSpell(-1, -1, -1);
+
+        handleActionUponEdit(values, targetSpell);
+    }
+
+    const removeSpell = (): void => {
+        if (loading) return;
+
+        const sourceIdx = editedSpellIndex.sourceIdx;
+        const lvlGroupIdx = editedSpellIndex.lvlGroupIdx;
+        const spellIdx = editedSpellIndex.spellIdx;
+
+        const targetSpellName = transformed[sourceIdx].spells[lvlGroupIdx].spells[spellIdx].name;
+
+        const targetSpell = spellcasting[sourceIdx].spells.find(spell => spell.name === targetSpellName);
+
+        if (!targetSpell) return;
+
+        confirm({
+            title: "Delete Spell",
+            content: `Are you sure you want to delete ${targetSpellName}? ${targetSpell.prepared && targetSpell.level > 0 ? "This spell is prepared." : ""}`,
+            centered: true,
+            onOk() {
+                const updatedData = spellcasting.map((item, i) => {
+                    if (i === sourceIdx) {
+                        return {
+                            ...item,
+                            spells: item.spells.filter(spell => spell.name !== targetSpellName),
+                        };
+                    }
+                    return item;
+                })
+                setSpellcasting(updatedData);
+                editSpell(-1, -1, -1);
+
+                handleActionUponRemove(targetSpell);
+            }
+        });
+    }
+
+    const handleActionUponPrepare = (spellName: string, prepared: boolean) => {
+        const targetSpellSource = spellcasting.find(item => item.spells.some(spell => spell.name === spellName));
+        const targetSpell = targetSpellSource?.spells.find(spell => spell.name === spellName);
+        if (!targetSpell || targetSpell.level === 0) return;
+
+        if (prepared) {
+            addActions({
+                name: targetSpell.name,
+                actionType: targetSpell.actionType,
+                category: ActionCategoryEnum.SPELL,
+                description: targetSpell.description,
+                level: targetSpell.level,
+            });
+        } else {
+            removeActions(targetSpell.actionType, targetSpell.name);
+        }
+    }
+
+    const handleActionUponAdd = (data: Spell) => {
+        if (data.level !== 0) return;
+
+        const category = ActionCategoryEnum.SPELL;
+        addActions({
+            name: data.name,
+            actionType: data.actionType,
+            category: category,
+            description: data.description,
+            level: null,
+        });
+    }
+
+    const handleActionUponEdit = (newData: Spell, currentData: Spell) => {
+
+        if (newData.name !== currentData.name && currentData.prepared) {
+            changeName(currentData.actionType, currentData.name, newData.name);
+        }
+
+        if (currentData.actionType !== newData.actionType && currentData.prepared) {
+            changeActionType(currentData.actionType, newData.name, newData.actionType);
+        }
+
+        if (newData.level === 0 && currentData.level !== 0 && !currentData.prepared) {
+            addActions({
+                name: newData.name,
+                actionType: newData.actionType,
+                category: ActionCategoryEnum.SPELL,
+                description: newData.description,
+                level: null,
+            });
+        }
+
+        if (currentData.level !== newData.level && currentData.prepared) {
+            changeLevel(currentData.actionType, newData.name, newData.level === 0 ? null : newData.level);
+        }
+    }
+
+    const handleActionUponRemove = (data: Spell) => {
+        if (!data.prepared) return;
+
+        removeActions(data.actionType, data.name);
     }
 
     return {
@@ -187,6 +384,8 @@ export default function useSpells() {
         hidedList,
         isAddingSpellsource,
         editedSpellsourceIndex,
+        addingSpellIndex,
+        editedSpellIndex,
         handlePrepare,
         handlePreparedOnlySwitch,
         handleHide,
@@ -195,8 +394,14 @@ export default function useSpells() {
         onAddSpellSource,
         onEditSpellSource,
         removeSpellSource,
+        addSpell,
+        editSpell,
+        onAddSpell,
+        onEditSpell,
+        removeSpell,
     }
 }
+
 
 
 export function useAddSpellSource(
@@ -247,6 +452,8 @@ export function useAddSpellSource(
     }
 }
 
+
+
 export function useEditSpellSource(
     onSubmit: (values: SpellcastingSource) => void,
 ) {
@@ -290,6 +497,168 @@ export function useEditSpellSource(
         editSpellsourceForm,
         sourceTypeSelection,
         abilitySelection,
+        reset,
+        submitEditData,
+    }
+}
+
+
+
+export function useAddSpell(
+    onSubmit: (values: Spell) => void,
+) {
+
+    const [addSpellForm] = Form.useForm();
+
+    const castingTimeSelection = castingTimeList.map(item => {
+        return {
+            value: item,
+            label: item,
+        }
+    });
+
+    const schoolOptions = schoolList.map(item => {
+        return {
+            value: item,
+            label: item,
+        }
+    });
+
+    const rangeSelection = rangeList.map(item => {
+        return {
+            value: item,
+            label: item,
+        }
+    });
+
+    const durationSelection = durationList.map(item => {
+        return {
+            value: item,
+            label: item,
+        }
+    });
+
+    const componentSelection = componentList.map(item => {
+        return {
+            value: item,
+            label: item,
+        }
+    });
+
+    const submitNewSpell: FormProps<SpellForm>['onFinish'] = (values) => {
+
+        const newData: Spell = {
+            name: values.name,
+            level: values.level,
+            school: values.school,
+            castingTime: values.castingTime,
+            range: values.range,
+            components: values.components,
+            duration: values.duration,
+            ritual: values.ritual,
+            concentration: values.concentration,
+            prepared: values.level === 0 ? true : false,
+            description: values.description,
+            sourcePage: values.sourcePage,
+            actionType: values.actionType,
+        }
+
+        onSubmit(newData);
+        reset();
+    }
+
+    const reset = () => {
+        addSpellForm.resetFields();
+    }
+
+    return {
+        addSpellForm,
+        castingTimeSelection,
+        schoolOptions,
+        rangeSelection,
+        durationSelection,
+        componentSelection,
+        reset,
+        submitNewSpell,
+    }
+}
+
+
+
+export function useEditSpell(
+    onSubmit: (values: Spell) => void,
+) {
+
+    const [editSpellForm] = Form.useForm();
+
+    const castingTimeSelection = castingTimeList.map(item => {
+        return {
+            value: item,
+            label: item,
+        }
+    });
+
+    const schoolOptions = schoolList.map(item => {
+        return {
+            value: item,
+            label: item,
+        }
+    });
+
+    const rangeSelection = rangeList.map(item => {
+        return {
+            value: item,
+            label: item,
+        }
+    });
+
+    const durationSelection = durationList.map(item => {
+        return {
+            value: item,
+            label: item,
+        }
+    });
+
+    const componentSelection = componentList.map(item => {
+        return {
+            value: item,
+            label: item,
+        }
+    });
+
+    const submitEditData: FormProps<SpellForm>['onFinish'] = (values) => {
+
+        const newData: Spell = {
+            name: values.name,
+            level: values.level,
+            school: values.school,
+            castingTime: values.castingTime,
+            range: values.range,
+            components: values.components,
+            duration: values.duration,
+            ritual: values.ritual,
+            concentration: values.concentration,
+            prepared: false,
+            description: values.description,
+            sourcePage: values.sourcePage,
+            actionType: values.actionType,
+        }
+
+        onSubmit(newData);
+        reset();
+    }
+
+    const reset = () => {
+        editSpellForm.resetFields();
+    }
+
+    return {
+        editSpellForm,
+        castingTimeSelection,
+        schoolOptions,
+        rangeSelection,
+        durationSelection,
+        componentSelection,
         reset,
         submitEditData,
     }

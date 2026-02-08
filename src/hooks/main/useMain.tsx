@@ -13,15 +13,18 @@ import type { CharacterInfo, InfoStat } from "../../models/dataInterface";
 // hooks
 import useDataHandler from "../global/useDataHandler"
 import usePopulate from "../global/usePopulate";
-import useActionInit from "../actions/useActionInit";
 
 
 export default function useMain() {
 
     usePopulate();
-    useActionInit();
 
-    const { getCharInfoData, changeCharInfoData, getInfoStatData, changeInfoStatData } = useDataHandler();
+    const {
+        getCharInfoData,
+        changeCharInfoData,
+        getInfoStatData,
+        changeInfoStatData,
+    } = useDataHandler();
 
     const [charInfoData, setCharInfoData] = useState<CharacterInfo | null>(null);
     const [infoStatData, setInfoStatData] = useState<InfoStat | null>(null);

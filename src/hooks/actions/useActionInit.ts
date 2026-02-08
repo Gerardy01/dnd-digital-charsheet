@@ -38,13 +38,13 @@ export default function useActionInit() {
     });
 
 
-    // useEffect(() => {
-    //     if (!actions || !equipment) return;
-    //     const updatedActions = removeUnregisteredActions();
+    useEffect(() => {
+        if (!actions || !equipment) return;
+        const updatedActions = removeUnregisteredActions();
 
-    //     if (!updatedActions) return;
-    //     populateActions(updatedActions);
-    // }, []);
+        if (!updatedActions) return;
+        populateActions(updatedActions);
+    }, []);
 
     useEffect(() => {
         if (!actions) return;

@@ -6,6 +6,8 @@ import SpellItem from "./SpellItem";
 import Icon from "../global/Icon";
 import AddSpellsourceForm from "./AddSpellsourceForm";
 import EditSpellsourceForm from "./EditSpellsourceForm";
+import AddSpellForm from "./AddSpellForm";
+import EditSpellForm from "./EditSpellForm";
 
 // hooks
 import useSpells from "../../hooks/spells/useSpells";
@@ -24,6 +26,8 @@ export default function Spells() {
         hidedList,
         isAddingSpellsource,
         editedSpellsourceIndex,
+        addingSpellIndex,
+        editedSpellIndex,
         handlePrepare,
         handlePreparedOnlySwitch,
         handleHide,
@@ -32,6 +36,11 @@ export default function Spells() {
         onAddSpellSource,
         onEditSpellSource,
         removeSpellSource,
+        addSpell,
+        editSpell,
+        onAddSpell,
+        onEditSpell,
+        removeSpell,
     } = useSpells();
 
     return (
@@ -77,8 +86,8 @@ export default function Spells() {
                         <div style={styles.sourceWrapper}>
                             <div style={styles.source}>
                                 <div>
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Title level={4} style={{ color: 'blue' }}>{item.source} ({item.sourceType})</Title>
+                                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+                                        <Title level={4} style={{ color: 'blue', marginBottom: 0 }}>{item.source} ({item.sourceType})</Title>
                                         <Button
                                             type="text"
                                             icon={<EditOutlined />}
@@ -111,14 +120,17 @@ export default function Spells() {
                                     )}
                                     <Text>{hidedList.includes(i) ? 'Show' : 'Hide'}</Text>
                                 </div>
-                                <Button
-                                    size="small"
-                                    variant="text"
-                                    color="primary"
-                                    icon={<PlusOutlined />}
-                                >
-                                    Add Spell
-                                </Button>
+                                {addingSpellIndex === -1 && editedSpellIndex.spellIdx === -1 && (
+                                    <Button
+                                        size="small"
+                                        variant="text"
+                                        color="primary"
+                                        icon={<PlusOutlined />}
+                                        onClick={() => addSpell(i)}
+                                    >
+                                        Add Spell
+                                    </Button>
+                                )}
                             </div>
                         </div>
                     ) : (
@@ -131,27 +143,46 @@ export default function Spells() {
                             onCancel={() => editSpellSource(-1)}
                         />
                     )}
-
+                    {addingSpellIndex === i && (
+                        <AddSpellForm
+                            onSubmit={onAddSpell}
+                            onCancel={() => addSpell(-1)}
+                        />
+                    )}
                     {!hidedList.includes(i) && (
                         <>
                             {item.spells.length > 0 ? (
                                 item.spells.map((spellGroup, idx) => {
                                     return (
-                                        <div key={idx}>
-                                            <Text strong style={{ color: 'gray' }}>{spellGroup.levelName}</Text>
-                                            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: "0.5rem" }}>
-                                                {spellGroup.spells.map((spell, index) => {
-                                                    return (
-                                                        <SpellItem
-                                                            key={index}
-                                                            spell={spell}
-                                                            handlePrepare={handlePrepare}
-                                                            loading={loading}
-                                                        />
-                                                    )
-                                                })}
+                                        spellGroup.spells.length > 0 && (
+                                            <div key={idx} style={{ marginBottom: '0.5rem' }}>
+                                                <Text strong style={{ color: 'gray' }}>{spellGroup.levelName}</Text>
+                                                <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: "0.5rem" }}>
+                                                    {spellGroup.spells.map((spell, index) => {
+                                                        return (
+                                                            <div key={index}>
+                                                                {editedSpellIndex.sourceIdx === i && editedSpellIndex.lvlGroupIdx === idx && editedSpellIndex.spellIdx === index ? (
+                                                                    <EditSpellForm
+                                                                        currentData={spell}
+                                                                        onSubmit={onEditSpell}
+                                                                        onRemove={() => removeSpell()}
+                                                                        onCancel={() => editSpell(-1, -1, -1)}
+                                                                    />
+                                                                ) : (
+                                                                    <SpellItem
+                                                                        spell={spell}
+                                                                        handlePrepare={handlePrepare}
+                                                                        loading={loading}
+                                                                        onEdit={() => editSpell(i, idx, index)}
+                                                                        editBtnDisabled={addingSpellIndex !== -1 || editedSpellIndex.spellIdx !== -1}
+                                                                    />
+                                                                )}
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
                                             </div>
-                                        </div>
+                                        )
                                     )
                                 })
                             ) : (
@@ -195,7 +226,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         padding: '1rem',
         position: 'sticky',
         top: 55,
-        zIndex: 1,
+        zIndex: 4,
     },
     source: {
         width: '100%',

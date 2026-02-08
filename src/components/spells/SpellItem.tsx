@@ -1,5 +1,5 @@
-import { Spin, Tag, Tooltip, Typography } from "antd";
-import { ThunderboltOutlined, InfoCircleOutlined, CheckCircleFilled, LoadingOutlined } from "@ant-design/icons";
+import { Button, Spin, Tag, Tooltip, Typography } from "antd";
+import { ThunderboltOutlined, InfoCircleOutlined, CheckCircleFilled, LoadingOutlined, EditOutlined } from "@ant-design/icons";
 
 // interfaces
 import type { Spell } from "../../models/dataInterface"
@@ -8,24 +8,35 @@ interface Props {
     spell: Spell;
     handlePrepare: (spellName: string, prepared: boolean, level: number) => void;
     loading: boolean;
+    onEdit: () => void;
+    editBtnDisabled: boolean;
 }
 
 const { Text, Title } = Typography;
 
-export default function SpellItem({ spell, handlePrepare, loading }: Props) {
+export default function SpellItem({ spell, handlePrepare, loading, onEdit, editBtnDisabled }: Props) {
     return (
         <div style={{ ...styles.card, border: `${spell.prepared ? '1px solid #5B5FEF' : '1px solid #E2E8F0'}` }}>
             <div style={styles.headerRow}>
                 <div style={styles.titleSection}>
-                    <Title level={5} style={{ margin: 0, marginRight: 8 }}>{spell.name}</Title>
-                    <Tag variant="outlined">Lvl {spell.level} • {spell.school}</Tag>
-                    {spell.ritual && (
-                        <Tooltip title="Ritual">
-                            <Tag variant="outlined" color="orange">
-                                <Text strong style={{ color: '#F2994A', fontSize: '12px' }}>R</Text>
-                            </Tag>
-                        </Tooltip>
-                    )}
+                    <Title level={5} style={{ margin: 0 }}>{spell.name}</Title>
+                    <Button
+                        type="text"
+                        icon={<EditOutlined />}
+                        style={{ marginRight: '8px' }}
+                        onClick={onEdit}
+                        disabled={editBtnDisabled}
+                    />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <Tag variant="outlined">Lvl {spell.level} • {spell.school}</Tag>
+                        {spell.ritual && (
+                            <Tooltip title="Ritual">
+                                <Tag variant="outlined" color="orange">
+                                    <Text strong style={{ color: '#F2994A', fontSize: '12px' }}>R</Text>
+                                </Tag>
+                            </Tooltip>
+                        )}
+                    </div>
                 </div>
                 <div
                     style={styles.toggleSection}
@@ -43,11 +54,15 @@ export default function SpellItem({ spell, handlePrepare, loading }: Props) {
 
             <div style={styles.statsGrid}>
                 <div style={styles.statItem}>
-                    <ThunderboltOutlined style={{ color: '#F2994A', marginRight: 6 }} />
+                    <Tooltip title="Casting Time">
+                        <ThunderboltOutlined style={{ color: '#F2994A', marginRight: 6 }} />
+                    </Tooltip>
                     <Text>{spell.castingTime}</Text>
                 </div>
                 <div style={styles.statItem}>
-                    <InfoCircleOutlined style={{ color: '#2F80ED', marginRight: 6 }} />
+                    <Tooltip title="Range">
+                        <InfoCircleOutlined style={{ color: '#2F80ED', marginRight: 6 }} />
+                    </Tooltip>
                     <Text>{spell.range}</Text>
                 </div>
                 <div style={styles.statItem}>
@@ -98,7 +113,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         maxWidth: '85%',
         display: 'flex',
         alignItems: 'center',
-        gap: '8px',
+        rowGap: '4px',
         flexWrap: 'wrap'
     },
     toggleSection: {
