@@ -1,11 +1,7 @@
 import { useEffect } from "react";
 
-// utils
-import { DefaultActionsEnum, ActionCategoryEnum, UsabilityEnum } from "../../utils/enums";
-
 // hooks
 import useDataHandler from "./useDataHandler";
-import { useActionState } from "../actions/useActionState";
 
 
 export default function usePopulate() {
@@ -33,8 +29,6 @@ export default function usePopulate() {
     useEffect(() => {
         populateData();
     }, []);
-
-    const populate = useActionState((state) => state.populate);
 
     const populateData = () => {
         const charInfoData = getCharInfoData();
@@ -256,41 +250,11 @@ export default function usePopulate() {
         changeOtherResourcesData([]);
 
         const actionsData = {
-            actions: [
-                {
-                    name: DefaultActionsEnum.STANDARD,
-                    level: null,
-                    category: ActionCategoryEnum.OTHER,
-                    activation: {
-                        type: UsabilityEnum.UTILITY,
-                        bonus: 0,
-                        dice: "",
-                        damageType: ""
-                    },
-                    description: "Dash / Disengage / Dodge / Help / Hide / Use an Object",
-                    resource: ""
-                }
-            ],
+            actions: [],
             bonusActions: [],
-            reactions: [
-                {
-                    name: DefaultActionsEnum.OPPORTUNITY,
-                    level: null,
-                    category: ActionCategoryEnum.OTHER,
-                    activation: {
-                        type: UsabilityEnum.ATTACK,
-                        bonus: 0,
-                        dice: "",
-                        damageType: ""
-                    },
-                    description: "Make one melee attack against a hostile creature that moves out of your reach.",
-                    resource: ""
-                }
-            ],
+            reactions: [],
         }
 
         changeActionEconomyData(actionsData);
-
-        populate(actionsData);
     }
 }

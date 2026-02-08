@@ -96,7 +96,6 @@ export default function EditOtherResourcesForm({
                     color="red"
                     icon={<DeleteOutlined />}
                     onClick={() => {
-                        onCancel();
                         reset();
                         onRemove();
                     }}

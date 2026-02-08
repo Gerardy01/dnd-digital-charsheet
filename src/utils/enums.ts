@@ -176,26 +176,3 @@ export const HitDiceEnum = {
     D12: "d12",
     D20: "d20",
 } as const
-
-export const RangeEnum = {
-    SELF: "Self",
-    TOUCH: "Touch",
-    TENFT: "10 feet",
-    FIFTEENFT: "15 feet",
-    THIRTYFT: "30 feet",
-    SIXTYFT: "60 feet",
-    HUNDREDFT: "100 feet",
-    ONEFIFTYFT: "150 feet",
-    FIVE_MILES: "5 miles",
-    SIGHT: "Sight",
-} as const
-
-export const DurationEnum = {
-    INSTANT: "Instantaneous",
-    ONEROUND: "1 round",
-    ONEMINUTE: "1 minute",
-    TENMINUTES: "10 minutes",
-    ONEHOUR: "1 hour",
-    EIGHTHOURS: "8 hours",
-    TWENTYFOURHOURS: "24 hours",
-} as const

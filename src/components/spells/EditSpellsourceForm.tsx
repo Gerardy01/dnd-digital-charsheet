@@ -38,7 +38,7 @@ export default function EditSpellsourceForm({ currentData, onSubmit, onRemove, o
                     <Form.Item
                         name="source"
                         rules={[{ required: true, message: 'Please input Source Name' }]}
-                        style={{ width: '47%' }}
+                        style={{ flex: '1' }}
                         initialValue={currentData.source}
                     >
                         <Input placeholder="Source Name" />
@@ -46,7 +46,7 @@ export default function EditSpellsourceForm({ currentData, onSubmit, onRemove, o
                     <Form.Item
                         name="sourceType"
                         rules={[{ required: true, message: 'Please select or key in the source' }]}
-                        style={{ width: '43%' }}
+                        style={{ flex: '1' }}
                         initialValue={currentData.sourceType}
                     >
                         <AutoComplete
@@ -74,7 +74,7 @@ export default function EditSpellsourceForm({ currentData, onSubmit, onRemove, o
                     <Form.Item
                         name="spellSaveDC"
                         rules={[{ required: true, message: 'Please input Spell Save DC' }]}
-                        style={{ width: '47%' }}
+                        style={{ flex: '1' }}
                         initialValue={currentData.spellSaveDC}
                     >
                         <InputNumber placeholder="Save DC" style={{ width: '100%' }} />
@@ -82,7 +82,7 @@ export default function EditSpellsourceForm({ currentData, onSubmit, onRemove, o
                     <Form.Item
                         name="spellAttackBonus"
                         rules={[{ required: true, message: 'Please input Spell Attack Bonus' }]}
-                        style={{ width: '43%' }}
+                        style={{ flex: '1' }}
                         initialValue={currentData.spellAttackBonus}
                     >
                         <InputNumber placeholder="Attack +" style={{ width: '100%' }} />

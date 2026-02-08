@@ -1,24 +1,35 @@
-import { Tag, Typography } from "antd";
+import { Button, Tag, Typography } from "antd";
+import { DownOutlined, EditOutlined, UpOutlined } from "@ant-design/icons";
 
 // interface
 import type { Item } from "../../models/dataInterface";
 interface Props {
     item: Item;
     handleEquip: (itemName: string, equip: boolean) => void;
+    onEdit: () => void;
+    editBtnDisabled: boolean;
+    handleClickQuantity: (itemName: string, isAdd: boolean) => void;
 }
 
 const { Title, Text } = Typography;
 
-export default function EquipmentItem({ item, handleEquip }: Props) {
+export default function EquipmentItem({ item, handleEquip, onEdit, editBtnDisabled, handleClickQuantity }: Props) {
     return (
         <div style={styles.card}>
             <div style={{ width: '83%' }}>
                 <div style={styles.header}>
-                    <Title level={5} style={{
-                        margin: '0px',
-                        color: '#1F2D3D',
-                        marginRight: '5px'
-                    }}>{item.name}</Title>
+                    <div style={{ display: 'flex', alignItems: 'center', marginRight: '5px' }}>
+                        <Title level={5} style={{
+                            margin: '0px',
+                            color: '#1F2D3D',
+                        }}>{item.name}</Title>
+                        <Button
+                            type="text"
+                            icon={<EditOutlined />}
+                            onClick={onEdit}
+                            disabled={editBtnDisabled}
+                        />
+                    </div>
                     {item.equipable && (
                         <div
                             style={{
@@ -55,7 +66,17 @@ export default function EquipmentItem({ item, handleEquip }: Props) {
                 flexDirection: 'column',
                 alignItems: 'flex-end',
             }}>
-                <Text style={{ fontSize: '1.1rem' }}>{item.quantity}x</Text>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <UpOutlined
+                        style={{ fontSize: '10px', cursor: 'pointer' }}
+                        onClick={() => handleClickQuantity(item.name, true)}
+                    />
+                    <Text style={{ fontSize: '1.1rem' }}>{item.quantity}x</Text>
+                    <DownOutlined
+                        style={{ fontSize: '10px', cursor: 'pointer' }}
+                        onClick={() => handleClickQuantity(item.name, false)}
+                    />
+                </div>
                 <Text strong style={{ fontSize: '10px', color: '#2E3740' }}>{item.weight} LBS</Text>
             </div>
         </div>

@@ -313,19 +313,6 @@
                     "max": 3,
                     "reset": "Long Rest"
                 }
-            },
-            {
-                "name": "Standard Combat Actions",
-                "level": null,
-                "category": "Other",
-                "activation": {
-                    "type": "Utility",
-                    "bonus": 0,
-                    "dice": "",
-                    "damageType": ""
-                },
-                "description": "Dash / Disengage / Dodge / Help / Hide / Use an Object",
-                "resource": ""
             }
         ],
         "bonusActions": [
@@ -356,21 +343,7 @@
                 "resource": ""
             }
         ],
-        "reactions": [
-            {
-                "name": "Opportunity Attack",
-                "level": null,
-                "category": "Other",
-                "activation": {
-                    "type": "Attack",
-                    "bonus": 0,
-                    "dice": "",
-                    "damageType": ""
-                },
-                "description": "Melee attack when enemy leaves reach",
-                "resource": ""
-            }
-        ]
+        "reactions": []
     },
     "otherResources": [
         {

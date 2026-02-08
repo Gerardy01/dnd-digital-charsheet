@@ -1,35 +1,35 @@
-import { AutoComplete, Button, Form, Input, Select } from "antd";
+import { Button, Checkbox, Form, Input, InputNumber, Select } from "antd";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 
 // hooks
-import { useAddFeatures } from "../../hooks/features/useFeatures";
+import { useAddItem } from "../../hooks/equipment/useEquipment";
 
 // utils
 import { actionTypeOptionalList } from "../../utils/selectionData";
 
 // interfaces
-import type { FeaturesAndTraits } from "../../models/dataInterface";
+import type { Item } from "../../models/dataInterface";
 interface Props {
-    onSubmit: (values: FeaturesAndTraits) => void;
+    onSubmit: (values: Item) => void;
     onCancel: () => void;
 }
 
-export default function AddFeatures({ onSubmit, onCancel }: Props) {
+
+export default function AddEquipment({ onSubmit, onCancel }: Props) {
 
     const {
-        addFeaturesForm,
-        sourceTypeSelection,
-        submitNewFeatures,
+        addItemForm,
+        submitNewItem,
         reset,
-    } = useAddFeatures(onSubmit);
+    } = useAddItem(onSubmit);
 
     return (
         <Form
-            form={addFeaturesForm}
-            name="addNewFeatures"
+            form={addItemForm}
+            name="addNewItem"
             layout="inline"
             style={styles.form}
-            onFinish={submitNewFeatures}
+            onFinish={submitNewItem}
         >
             <div style={styles.formContent}>
                 <Form.Item
@@ -39,41 +39,49 @@ export default function AddFeatures({ onSubmit, onCancel }: Props) {
                     ]}
                 >
                     <Input
-                        type="text"
                         placeholder="Name"
-                    />
-                </Form.Item>
-                <Form.Item
-                    name="sourceType"
-                    rules={[
-                        { required: true, message: 'Please select or key in the source' }
-                    ]}
-                >
-                    <AutoComplete
-                        options={sourceTypeSelection}
-                        placeholder="Source"
-                        showSearch={{
-                            filterOption: (inputValue, option) => {
-                                return option !== undefined && option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                            }
-                        }}
-                    />
-                </Form.Item>
-                <Form.Item
-                    name="source"
-                    rules={[
-                        { required: true, message: 'Please key in the source name' }
-                    ]}
-                >
-                    <Input
                         type="text"
-                        placeholder="Source Name : e.g. Elf"
                     />
+                </Form.Item>
+                <div style={{ display: 'flex' }}>
+                    <Form.Item
+                        name="quantity"
+                        rules={[
+                            { required: true, message: 'Please key in the quantity' }
+                        ]}
+                        style={{ flex: '1' }}
+                    >
+                        <InputNumber
+                            type="number"
+                            placeholder="Qty : 0"
+                            style={{ width: '100%' }}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="weight"
+                        rules={[
+                            { required: true, message: 'Please key in the weight' }
+                        ]}
+                        style={{ flex: '1' }}
+                    >
+                        <InputNumber
+                            type="number"
+                            placeholder="Weight"
+                            style={{ width: '100%' }}
+                        />
+                    </Form.Item>
+                </div>
+                <Form.Item
+                    name="equipable"
+                    valuePropName="checked"
+                    initialValue={false}
+                >
+                    <Checkbox>Equipable</Checkbox>
                 </Form.Item>
                 <Form.Item
                     name="actionType"
                     initialValue=""
-                    help="Select this field if this Feature need to be displayed in actions tab"
+                    help="Select this field if this Item need to be displayed in actions tab"
                 >
                     <Select
                         options={actionTypeOptionalList}
@@ -81,9 +89,12 @@ export default function AddFeatures({ onSubmit, onCancel }: Props) {
                 </Form.Item>
                 <Form.Item
                     name="description"
+                    rules={[
+                        { required: true, message: 'Please key in the description' }
+                    ]}
                 >
                     <Input.TextArea
-                        placeholder="Description (Optional)"
+                        placeholder="Description"
                         rows={4}
                     />
                 </Form.Item>
@@ -116,12 +127,12 @@ export default function AddFeatures({ onSubmit, onCancel }: Props) {
                 </Form.Item>
             </div>
         </Form>
-    )
+    );
 }
-
 
 const styles: { [key: string]: React.CSSProperties } = {
     form: {
+        width: '100%',
         backgroundColor: 'white',
         borderRadius: "14px",
         padding: '16px',

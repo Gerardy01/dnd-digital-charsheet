@@ -1,9 +1,12 @@
-import { Tag, Typography } from "antd"
-import { InboxOutlined, SketchOutlined } from "@ant-design/icons";
+import { Button, Tag, Typography } from "antd"
+import { InboxOutlined, PlusOutlined, SketchOutlined } from "@ant-design/icons";
 
 // components
 import EquipmentItem from "./EquipmentItem";
 import Icon from "../global/Icon";
+import AddItemForm from "./AddItemForm";
+import EditItemForm from "./EditItemForm";
+
 
 // hooks
 import useEquipment from "../../hooks/equipment/useEquipment";
@@ -17,7 +20,30 @@ const { Text, Title } = Typography;
 
 export default function Equipment() {
 
-    const { equipment, weightCarried, progress, handleEquip, handleCurrency } = useEquipment();
+    const {
+        equipment,
+        weightCarried,
+        progress,
+        addItem,
+        addMagicItem,
+        editItemIdx,
+        editMagicItemIdx,
+        handleEquip,
+        handleCurrency,
+        addingItem,
+        addingMagicItem,
+        editItem,
+        editMagicItem,
+        handleClickQuantity,
+        handleChangeCapacity,
+        handleChangePushDragLift,
+        onAddItem,
+        onAddMagicItem,
+        onEditItem,
+        onEditMagicItem,
+        removeItem,
+        removeMagicItem,
+    } = useEquipment();
 
     return (
         <div style={styles.holder}>
@@ -88,7 +114,25 @@ export default function Equipment() {
                 <div style={styles.carryTracker}>
                     <div style={styles.carryHeader}>
                         <Text style={{ color: '#6B7280' }} strong>Carrying Capacity</Text>
-                        <Text strong>{weightCarried} / {weightCarried > equipment.weightCapacity ? equipment.pushDragLift : equipment.weightCapacity} lbs</Text>
+                        <Text strong>
+                            {weightCarried} / {" "}
+                            {weightCarried > equipment.weightCapacity ? (
+                                <Text
+                                    editable={{
+                                        triggerType: ['text'],
+                                        onChange: (newText) => { handleChangePushDragLift(newText) }
+                                    }}
+                                >{equipment.pushDragLift}</Text>
+                            ) : (
+                                <Text
+                                    editable={{
+                                        triggerType: ['text'],
+                                        onChange: (newText) => { handleChangeCapacity(newText) }
+                                    }}
+                                >{equipment.weightCapacity}</Text>
+                            )}
+                            {" "}lbs
+                        </Text>
                     </div>
                     <div style={styles.progress}>
                         <div
@@ -111,14 +155,47 @@ export default function Equipment() {
                     />
                     <Title level={4} style={{ marginBottom: 0 }}>Items</Title>
                 </div>
+                {!addItem && editItemIdx === -1 && (
+                    <Button
+                        color="primary"
+                        variant="filled"
+                        size="small"
+                        icon={<PlusOutlined />}
+                        onClick={() => addingItem(true)}
+                    >Add</Button>
+                )}
             </div>
-            {equipment && equipment.items.length > 0 ? equipment?.items.map((item, index) => (
-                <EquipmentItem
-                    key={index}
-                    item={item}
-                    handleEquip={handleEquip}
-                />
-            )) : (
+            {addItem || (equipment && equipment.items.length > 0) ? (
+                <div style={{ width: '100%' }}>
+                    {equipment?.items.map((item, index) => (
+                        <div key={index}>
+                            {editItemIdx !== index ? (
+                                <EquipmentItem
+                                    item={item}
+                                    handleEquip={(itemName, equip) => handleEquip(itemName, equip, 'item')}
+                                    onEdit={() => editItem(index)}
+                                    editBtnDisabled={editItemIdx !== -1 || addItem}
+                                    handleClickQuantity={(itemName, isAdd) => handleClickQuantity(itemName, isAdd, 'item')}
+                                />
+                            ) : (
+                                <EditItemForm
+                                    currentData={item}
+                                    onSubmit={onEditItem}
+                                    onRemove={removeItem}
+                                    onCancel={() => editItem(-1)}
+                                />
+                            )}
+                        </div>
+                    ))}
+
+                    {addItem && (
+                        <AddItemForm
+                            onSubmit={onAddItem}
+                            onCancel={() => addingItem(false)}
+                        />
+                    )}
+                </div>
+            ) : (
                 <Text italic style={{ textAlign: 'center' }}>--- No Data ---</Text>
             )}
             <div style={{ marginTop: '1.5rem' }} />
@@ -130,14 +207,47 @@ export default function Equipment() {
                     />
                     <Title level={4} style={{ marginBottom: 0 }}>Attuned Magic Items</Title>
                 </div>
+                {!addMagicItem && editMagicItemIdx === -1 && (
+                    <Button
+                        color="primary"
+                        variant="filled"
+                        size="small"
+                        icon={<PlusOutlined />}
+                        onClick={() => addingMagicItem(true)}
+                    >Add</Button>
+                )}
             </div>
-            {equipment && equipment.attunedMagicItems.length > 0 ? equipment?.attunedMagicItems.map((item, index) => (
-                <EquipmentItem
-                    key={index}
-                    item={item}
-                    handleEquip={handleEquip}
-                />
-            )) : (
+            {addMagicItem || (equipment && equipment.attunedMagicItems.length > 0) ? (
+                <div style={{ width: '100%' }}>
+                    {equipment?.attunedMagicItems.map((item, index) => (
+                        <div key={index}>
+                            {editMagicItemIdx !== index ? (
+                                <EquipmentItem
+                                    item={item}
+                                    handleEquip={(itemName, equip) => handleEquip(itemName, equip, 'magicItem')}
+                                    onEdit={() => editMagicItem(index)}
+                                    editBtnDisabled={editMagicItemIdx !== -1 || addMagicItem}
+                                    handleClickQuantity={(itemName, isAdd) => handleClickQuantity(itemName, isAdd, 'magicItem')}
+                                />
+                            ) : (
+                                <EditItemForm
+                                    currentData={item}
+                                    onSubmit={onEditMagicItem}
+                                    onRemove={removeMagicItem}
+                                    onCancel={() => editMagicItem(-1)}
+                                />
+                            )}
+                        </div>
+                    ))}
+
+                    {addMagicItem && (
+                        <AddItemForm
+                            onSubmit={onAddMagicItem}
+                            onCancel={() => addingMagicItem(false)}
+                        />
+                    )}
+                </div>
+            ) : (
                 <div style={{ paddingBottom: '2rem' }}>
                     <Text italic style={{ textAlign: 'center' }}>--- No Data ---</Text>
                 </div>
@@ -203,6 +313,10 @@ const styles: { [key: string]: React.CSSProperties } = {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: '0.5rem',
+        paddingBottom: '0.7rem',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1,
+        backgroundColor: 'white',
     }
 }

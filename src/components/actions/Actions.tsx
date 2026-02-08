@@ -8,13 +8,20 @@ import Icon from "../global/Icon";
 // hooks
 import useActions from "../../hooks/actions/useActions";
 
+// utils
+import { ActionCategoryEnum, ActionTypeEnum, DefaultActionsEnum, UsabilityEnum } from "../../utils/enums";
+
 
 const { Title, Text } = Typography;
 
 
 export default function Actions() {
 
-    const { actions } = useActions();
+    const {
+        actions,
+        edited,
+        editAction
+    } = useActions();
 
     return (
         <div style={styles.holder}>
@@ -26,14 +33,31 @@ export default function Actions() {
                 <Title level={4} style={{ marginBottom: 0 }}>Actions</Title>
             </div>
             <div style={styles.contentHolder}>
-                {actions.actions.length > 0 ? actions.actions.map((item, i) => {
+                {actions.actions.map((item, i) => {
                     return (
                         <ActionItem
                             key={i}
                             actionItem={item}
+                            onEdit={() => editAction(i, ActionTypeEnum.ACTION)}
+                            editBtnDisabled={edited.actionType !== "" || edited.index !== -1}
                         />
                     )
-                }) : <Text italic style={{ textAlign: 'center' }}>--- No Data ---</Text>}
+                })}
+                <ActionItem
+                    actionItem={{
+                        name: DefaultActionsEnum.STANDARD,
+                        level: null,
+                        category: ActionCategoryEnum.OTHER,
+                        activation: {
+                            type: UsabilityEnum.UTILITY,
+                            bonus: 0,
+                            dice: "",
+                            damageType: ""
+                        },
+                        description: "Dash / Disengage / Dodge / Help / Hide / Use an Object",
+                        resource: ""
+                    }}
+                />
             </div>
             <div style={styles.titleHolder}>
                 <Icon
@@ -48,6 +72,8 @@ export default function Actions() {
                         <ActionItem
                             key={i}
                             actionItem={item}
+                            onEdit={() => editAction(i, ActionTypeEnum.BONUSACTION)}
+                            editBtnDisabled={edited.actionType !== "" || edited.index !== -1}
                         />
                     )
                 }) : (
@@ -62,14 +88,31 @@ export default function Actions() {
                 <Title level={4} style={{ marginBottom: 0 }}>Reactions</Title>
             </div>
             <div style={styles.contentHolder}>
-                {actions.reactions.length > 0 ? actions.reactions.map((item, i) => {
+                {actions.reactions.map((item, i) => {
                     return (
                         <ActionItem
                             key={i}
                             actionItem={item}
+                            onEdit={() => editAction(i, ActionTypeEnum.REACTION)}
+                            editBtnDisabled={edited.actionType !== "" || edited.index !== -1}
                         />
                     )
-                }) : <Text italic style={{ textAlign: 'center' }}>--- No Data ---</Text>}
+                })}
+                <ActionItem
+                    actionItem={{
+                        name: DefaultActionsEnum.OPPORTUNITY,
+                        level: null,
+                        category: ActionCategoryEnum.OTHER,
+                        activation: {
+                            type: UsabilityEnum.ATTACK,
+                            bonus: 0,
+                            dice: "",
+                            damageType: ""
+                        },
+                        description: "Make one melee attack against a hostile creature that moves out of your reach.",
+                        resource: ""
+                    }}
+                />
             </div>
         </div>
     )
