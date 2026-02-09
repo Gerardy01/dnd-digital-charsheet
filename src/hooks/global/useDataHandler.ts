@@ -19,7 +19,8 @@ import type {
     Equipment,
     SpellcastingSource,
     ActionEconomy,
-    OtherResources
+    OtherResources,
+    ActionItem
 } from "../../models/dataInterface";
 
 export default function useDataHandler() {
@@ -93,6 +94,10 @@ export default function useDataHandler() {
         return getDataFromLocalStorage<ActionEconomy>(StorageKey.ACTIONECONOMY);
     }
 
+    const getActionCache = (): ActionItem[] => {
+        return getDataFromLocalStorage<ActionItem[]>(StorageKey.ACTIONCACHE) ?? [];
+    }
+
     const changeCharInfoData = (newData: CharacterInfo): void => {
         localStorage.setItem(StorageKey.CHARINFO, JSON.stringify(newData));
     }
@@ -157,6 +162,10 @@ export default function useDataHandler() {
         localStorage.setItem(StorageKey.OTHERRESOURCES, JSON.stringify(newData));
     }
 
+    const changeActionCache = (newData: ActionItem[]): void => {
+        localStorage.setItem(StorageKey.ACTIONCACHE, JSON.stringify(newData));
+    }
+
     return {
         getCharInfoData,
         getInfoStatData,
@@ -174,6 +183,7 @@ export default function useDataHandler() {
         getSpellsData,
         getActionEconomyData,
         getOtherResourcesData,
+        getActionCache,
         changeCharInfoData,
         changeCharacterDetailsData,
         changeInfoStatData,
@@ -190,5 +200,11 @@ export default function useDataHandler() {
         changeSpellsData,
         changeFeaturesAndTraits,
         changeOtherResourcesData,
+        changeActionCache,
     }
+}
+
+export function getActionCache(): ActionItem[] {
+    const storedData = localStorage.getItem(StorageKey.ACTIONCACHE);
+    return storedData ? (JSON.parse(storedData)) : [];
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, type FormProps, notification } from "antd";
+import { Form, type FormProps, Modal, notification } from "antd";
 
 // hooks
 import { useActionState } from "./useActionState";
@@ -26,16 +26,34 @@ interface ActionForm {
     resourceReset: string;
 }
 
+const { confirm } = Modal;
+
 
 export default function useActions() {
 
-    const { getActionEconomyData, changeActionEconomyData } = useDataHandler();
+    const {
+        getActionEconomyData,
+        getActionCache,
+        changeActionEconomyData,
+        changeActionCache,
+    } = useDataHandler();
 
     const actions = useActionState();
-    const { editAction: editActionState, populate, isPopulated } = actions;
+    const {
+        editAction: editActionState,
+        populate,
+        isPopulated,
+        cacheNameToChange,
+        resetNameToChange,
+        changeTrackerPoint,
+    } = actions;
 
     const [actionsFromStorage] = useState<ActionEconomy | null>(() => {
         return getActionEconomyData();
+    });
+
+    const [actionCache, setActionCache] = useState<ActionItem[]>(() => {
+        return getActionCache();
     });
 
     const [edited, setEdited] = useState<EditAction>({
@@ -53,6 +71,20 @@ export default function useActions() {
         changeActionEconomyData(actions);
     }, [actions]);
 
+    useEffect(() => {
+        changeActionCache(actionCache);
+    }, [actionCache]);
+
+    useEffect(() => {
+        handleChangeCacheName();
+    }, [cacheNameToChange]);
+
+    const changePoint = (newCurrent: number, actionType: string, index: number) => {
+        const targetAction = actions[actionType as keyof ActionEconomy][index];
+        if (typeof targetAction.resource === "string") return;
+        changeTrackerPoint(actionType, targetAction.name, newCurrent);
+    }
+
     const editAction = (index: number, actionType: string) => {
         setEdited({ index, actionType });
     }
@@ -65,11 +97,56 @@ export default function useActions() {
         setEdited({ index: -1, actionType: "" });
     }
 
+    const handleCache = async (index: number, actionType: string): Promise<void> => {
+
+        const targetAction = actions[actionType as keyof ActionEconomy][index];
+
+        if (!targetAction) return;
+
+        confirm({
+            title: "Caching Actions",
+            content: `By confirming this, "${targetAction.name}" action data will be saved and persist even when you remove it from actions tab.`,
+            centered: true,
+            onOk() {
+                const actionExist = actionCache.find(item => item.name === targetAction.name);
+                if (!actionExist) {
+                    setActionCache(prev => [...prev, targetAction]);
+                    return;
+                }
+
+                const updated = actionCache.map(item => {
+                    if (item.name !== targetAction.name) return item;
+                    return targetAction;
+                });
+
+                setActionCache(updated);
+            },
+        });
+    }
+
+    const handleChangeCacheName = () => {
+        if (!cacheNameToChange) return;
+
+        const updated = actionCache.map(item => {
+            if (item.name !== cacheNameToChange.targetName) return item;
+            return {
+                ...item,
+                name: cacheNameToChange.newName,
+            }
+        });
+
+        setActionCache(updated);
+        resetNameToChange();
+    }
+
     return {
         actions,
         edited,
+        actionCache,
         editAction,
         onEditAction,
+        handleCache,
+        changePoint,
     }
 }
 

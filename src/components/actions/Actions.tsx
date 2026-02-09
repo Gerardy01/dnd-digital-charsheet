@@ -21,8 +21,11 @@ export default function Actions() {
     const {
         actions,
         edited,
+        actionCache,
         editAction,
         onEditAction,
+        handleCache,
+        changePoint,
     } = useActions();
 
     return (
@@ -36,6 +39,7 @@ export default function Actions() {
             </div>
             <div style={styles.contentHolder}>
                 {actions.actions.map((item, i) => {
+                    const cachedData = actionCache.find(cache => cache.name === item.name);
                     return (
                         <div key={i}>
                             {edited.actionType === ActionTypeEnum.ACTION && edited.index === i ? (
@@ -49,6 +53,11 @@ export default function Actions() {
                                     actionItem={item}
                                     onEdit={() => editAction(i, ActionTypeEnum.ACTION)}
                                     editBtnDisabled={edited.actionType !== "" || edited.index !== -1}
+                                    onCaching={() => handleCache(i, ActionTypeEnum.ACTION)}
+                                    cacheDisabled={`${JSON.stringify(cachedData)}` === `${JSON.stringify(item)}`}
+                                    onChangePoint={(newCurrent) => {
+                                        changePoint(newCurrent, ActionTypeEnum.ACTION, i);
+                                    }}
                                 />
                             )}
                         </div>
@@ -79,6 +88,7 @@ export default function Actions() {
             </div>
             <div style={styles.contentHolder}>
                 {actions.bonusActions.length > 0 ? actions.bonusActions.map((item, i) => {
+                    const cachedData = actionCache.find(cache => cache.name === item.name);
                     return (
                         <div key={i}>
                             {edited.actionType === ActionTypeEnum.BONUSACTION && edited.index === i ? (
@@ -92,6 +102,11 @@ export default function Actions() {
                                     actionItem={item}
                                     onEdit={() => editAction(i, ActionTypeEnum.BONUSACTION)}
                                     editBtnDisabled={edited.actionType !== "" || edited.index !== -1}
+                                    onCaching={() => handleCache(i, ActionTypeEnum.BONUSACTION)}
+                                    cacheDisabled={`${JSON.stringify(cachedData)}` === `${JSON.stringify(item)}`}
+                                    onChangePoint={(newCurrent) => {
+                                        changePoint(newCurrent, ActionTypeEnum.BONUSACTION, i);
+                                    }}
                                 />
                             )}
                         </div>
@@ -109,6 +124,7 @@ export default function Actions() {
             </div>
             <div style={styles.contentHolder}>
                 {actions.reactions.map((item, i) => {
+                    const cachedData = actionCache.find(cache => cache.name === item.name);
                     return (
                         <div key={i}>
                             {edited.actionType === ActionTypeEnum.REACTION && edited.index === i ? (
@@ -122,6 +138,11 @@ export default function Actions() {
                                     actionItem={item}
                                     onEdit={() => editAction(i, ActionTypeEnum.REACTION)}
                                     editBtnDisabled={edited.actionType !== "" || edited.index !== -1}
+                                    onCaching={() => handleCache(i, ActionTypeEnum.REACTION)}
+                                    cacheDisabled={`${JSON.stringify(cachedData)}` === `${JSON.stringify(item)}`}
+                                    onChangePoint={(newCurrent) => {
+                                        changePoint(newCurrent, ActionTypeEnum.REACTION, i);
+                                    }}
                                 />
                             )}
                         </div>

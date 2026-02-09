@@ -212,6 +212,7 @@ export default function AddSpellForm({ onSubmit, onCancel }: Props) {
 
 const styles: { [key: string]: React.CSSProperties } = {
     form: {
+        width: '100%',
         backgroundColor: 'white',
         borderRadius: "14px",
         padding: '16px',

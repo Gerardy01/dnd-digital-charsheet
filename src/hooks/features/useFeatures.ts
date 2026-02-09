@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, Modal, type FormProps } from "antd";
+import { Form, Modal, notification, type FormProps } from "antd";
 
 // hooks
 import useDataHandler from "../global/useDataHandler"
@@ -49,6 +49,17 @@ export function useFeatures() {
     const onAddFeatures = (newData: FeaturesAndTraits) => {
         if (!featuresAndTraits) return;
 
+        const nameExist = featuresAndTraits.find(item => item.name === newData.name);
+        if (nameExist) {
+            notification.warning({
+                message: 'Feature Name Already Used',
+                description: `Feature with name ${newData.name} is already exist.`,
+                placement: 'top',
+                style: { backgroundColor: '#fef08a', color: '#92400e' }
+            });
+            return;
+        }
+
         const newFeatures = [...featuresAndTraits, newData];
 
         setFeaturesAndTraits(newFeatures);
@@ -59,6 +70,17 @@ export function useFeatures() {
 
     const onEditFeatures = (newData: FeaturesAndTraits) => {
         if (!featuresAndTraits) return;
+
+        const nameExist = featuresAndTraits.find((item, i) => item.name === newData.name && i !== editedIndex);
+        if (nameExist) {
+            notification.warning({
+                message: 'Feature Name Already Used',
+                description: `Feature with name ${newData.name} is already exist.`,
+                placement: 'top',
+                style: { backgroundColor: '#fef08a', color: '#92400e' }
+            });
+            return;
+        }
 
         const newFeatures = featuresAndTraits.map((item, i) => {
             if (i === editedIndex) {

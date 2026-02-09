@@ -228,6 +228,17 @@ export default function useSpells() {
     const onAddSpell = (values: Spell): void => {
         if (loading) return;
 
+        const nameExist = spellcasting.some(item => item.spells.some(spell => spell.name === values.name));
+        if (nameExist) {
+            notification.warning({
+                message: 'Spell Name Already Used',
+                description: `Spell with name ${values.name} is already exist.`,
+                placement: 'top',
+                style: { backgroundColor: '#fef08a', color: '#92400e' }
+            });
+            return;
+        }
+
         const updatedData = spellcasting.map((item, i) => {
             if (i === addingSpellIndex) {
                 return {
@@ -256,6 +267,22 @@ export default function useSpells() {
         const targetSpell = spellcasting[sourceIdx].spells.find(spell => spell.name === targetSpellName);
 
         if (!targetSpell) return;
+
+        const nameExist = spellcasting.some(item =>
+            item.spells.some(
+                spell => spell.name === values.name &&
+                    JSON.stringify(spell) !== JSON.stringify(targetSpell)
+            )
+        );
+        if (nameExist) {
+            notification.warning({
+                message: 'Spell Name Already Used',
+                description: `Spell with name ${values.name} is already exist.`,
+                placement: 'top',
+                style: { backgroundColor: '#fef08a', color: '#92400e' }
+            });
+            return;
+        }
 
         const updatedData = spellcasting.map((item, i) => {
             if (i === sourceIdx) {

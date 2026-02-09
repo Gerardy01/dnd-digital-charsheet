@@ -24,6 +24,7 @@ export default function usePopulate() {
         changeFeaturesAndTraits,
         changeActionEconomyData,
         changeOtherResourcesData,
+        changeActionCache,
     } = useDataHandler();
 
     useEffect(() => {
@@ -256,5 +257,6 @@ export default function usePopulate() {
         }
 
         changeActionEconomyData(actionsData);
+        changeActionCache([]);
     }
 }

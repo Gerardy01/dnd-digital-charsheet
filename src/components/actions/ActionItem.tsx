@@ -1,5 +1,5 @@
 import { Button, Divider, Tag, Typography } from "antd";
-import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined, SaveOutlined } from "@ant-design/icons";
 
 // components
 import Tracker from "../global/Tracker";
@@ -10,27 +10,40 @@ interface Props {
     actionItem: ActionItem;
     onEdit?: () => void;
     editBtnDisabled?: boolean;
+    onCaching?: () => void;
+    cacheDisabled?: boolean;
+    onChangePoint?: (newCurrent: number) => void;
 }
 
 const { Text, Title } = Typography;
 
-export default function ActionItem({ actionItem, onEdit, editBtnDisabled = false }: Props) {
+export default function ActionItem({ actionItem, onEdit, onCaching, editBtnDisabled = false, cacheDisabled = false, onChangePoint }: Props) {
     return (
         <div style={styles.card}>
             <div style={styles.header}>
-                <div style={{ maxWidth: '80%' }}>
-                    <div style={{ marginBottom: "5px", display: 'flex', alignItems: 'center' }}>
+                <div style={{ maxWidth: '75%' }}>
+                    <div style={{ marginBottom: "5px", display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
                         <Title level={5} style={{ fontSize: '17px', margin: '0px' }}>
                             {actionItem.name} {actionItem.level ? `(Lvl ${actionItem.level})` : ''}
                         </Title>
-                        {onEdit && (
-                            <Button
-                                type="text"
-                                icon={<EditOutlined />}
-                                onClick={onEdit}
-                                disabled={editBtnDisabled}
-                            />
-                        )}
+                        <div>
+                            {onEdit && (
+                                <Button
+                                    type="text"
+                                    icon={<EditOutlined />}
+                                    onClick={onEdit}
+                                    disabled={editBtnDisabled}
+                                />
+                            )}
+                            {onCaching && (
+                                <Button
+                                    type="text"
+                                    icon={<SaveOutlined />}
+                                    onClick={onCaching}
+                                    disabled={editBtnDisabled || cacheDisabled}
+                                />
+                            )}
+                        </div>
                     </div>
                     <Text strong style={{ color: '#778899', fontSize: '12px' }}>{actionItem.category.toUpperCase()}</Text>
                 </div>
@@ -90,6 +103,7 @@ export default function ActionItem({ actionItem, onEdit, editBtnDisabled = false
                                 max={actionItem.resource.max}
                                 notes={`Resets on ${actionItem.resource.reset}`}
 
+                                changeCurrent={onChangePoint}
                                 onlyShowTracker
                             />
                             <Text italic style={{ color: 'gray' }}>Resets on {actionItem.resource.reset}</Text>

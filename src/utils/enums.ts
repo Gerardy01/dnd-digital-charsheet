@@ -18,6 +18,7 @@ export const StorageKey = {
     SPELLCASTING: "spellcasting",
     ACTIONECONOMY: "actionEconomy",
     OTHERRESOURCES: "otherResources",
+    ACTIONCACHE: "actionCache",
 }
 
 export const AbilityEnum = {

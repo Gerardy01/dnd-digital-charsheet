@@ -2,11 +2,17 @@ import { create } from "zustand";
 
 // utils
 import { ActionTypeEnum } from "../../utils/enums";
+import { getActionCache } from "../global/useDataHandler";
 
 // DTO
 import type { ActionEconomy, ActionItem, ActionPopulateParams } from "../../models/dataInterface";
+interface CacheNameToChange {
+    targetName: string;
+    newName: string;
+}
 interface ActionState extends ActionEconomy {
     isPopulated: boolean;
+    cacheNameToChange: CacheNameToChange | null;
     addActions: (data: ActionPopulateParams) => void;
     editAction: (actionType: string, targetName: string, newData: ActionItem) => void;
     removeActions: (actionType: string, targetName: string) => void;
@@ -14,6 +20,8 @@ interface ActionState extends ActionEconomy {
     changeLevel: (actionType: string, targetName: string, newLevel: number | null) => void;
     changeActionType: (actionType: string, targetName: string, newActionType: string) => void;
     populate: (data: ActionEconomy) => void;
+    resetNameToChange: () => void;
+    changeTrackerPoint: (actionType: string, actionName: string, newMax: number) => void;
 }
 
 
@@ -22,10 +30,11 @@ export const useActionState = create<ActionState>((set) => ({
     bonusActions: [],
     reactions: [],
     isPopulated: false,
+    cacheNameToChange: null,
 
     addActions: (data: ActionPopulateParams) => {
 
-        const newAction: ActionItem = {
+        let newAction: ActionItem = {
             name: data.name,
             level: data.level,
             category: data.category,
@@ -37,6 +46,11 @@ export const useActionState = create<ActionState>((set) => ({
             },
             description: data.description,
             resource: ""
+        }
+
+        const cachedDataExist = getActionCache().find(item => item.name === data.name);
+        if (cachedDataExist) {
+            newAction = cachedDataExist;
         }
 
         set((state) => {
@@ -135,22 +149,51 @@ export const useActionState = create<ActionState>((set) => ({
             let bonusActionData = state.bonusActions;
             let reactionData = state.reactions;
 
+            const cachedDataExist = getActionCache().find(item => item.name === newName);
+
             if (actionType === ActionTypeEnum.ACTION) {
-                actionData = state.actions.map((item) => item.name === targetName ? { ...item, name: newName } : item);
+                actionData = state.actions.map(item => {
+                    if (item.name !== targetName) return item;
+                    if (cachedDataExist) return cachedDataExist;
+                    return {
+                        ...item,
+                        name: newName
+                    }
+                });
             }
 
             if (actionType === ActionTypeEnum.BONUSACTION) {
-                bonusActionData = state.bonusActions.map((item) => item.name === targetName ? { ...item, name: newName } : item);
+                bonusActionData = state.bonusActions.map(item => {
+                    if (item.name !== targetName) return item;
+                    if (cachedDataExist) return cachedDataExist;
+                    return {
+                        ...item,
+                        name: newName
+                    }
+                });
             }
 
             if (actionType === ActionTypeEnum.REACTION) {
-                reactionData = state.reactions.map((item) => item.name === targetName ? { ...item, name: newName } : item);
+                reactionData = state.reactions.map(item => {
+                    if (item.name !== targetName) return item;
+                    if (cachedDataExist) return cachedDataExist;
+                    return {
+                        ...item,
+                        name: newName
+                    }
+                });
+            }
+
+            const nameToChange = {
+                targetName: targetName,
+                newName: newName,
             }
 
             const newState = {
                 actions: actionData,
                 bonusActions: bonusActionData,
                 reactions: reactionData,
+                cacheNameToChange: cachedDataExist ? null : nameToChange,
             }
 
             return newState;
@@ -225,4 +268,66 @@ export const useActionState = create<ActionState>((set) => ({
             isPopulated: true,
         });
     },
+    resetNameToChange: () => {
+        set({
+            cacheNameToChange: null,
+        });
+    },
+    changeTrackerPoint: (actionType: string, actionName: string, newCurrent: number) => {
+        set((state) => {
+            let actionData = state.actions;
+            let bonusActionData = state.bonusActions;
+            let reactionData = state.reactions;
+
+            if (actionType === ActionTypeEnum.ACTION) {
+                actionData = state.actions.map((item) => {
+                    if (item.name !== actionName) return item;
+                    if (typeof item.resource === "string") return item;
+                    return {
+                        ...item,
+                        resource: {
+                            ...item.resource,
+                            current: newCurrent
+                        }
+                    }
+                });
+            }
+
+            if (actionType === ActionTypeEnum.BONUSACTION) {
+                bonusActionData = state.bonusActions.map((item) => {
+                    if (item.name !== actionName) return item;
+                    if (typeof item.resource === "string") return item;
+                    return {
+                        ...item,
+                        resource: {
+                            ...item.resource,
+                            current: newCurrent
+                        }
+                    }
+                });
+            }
+
+            if (actionType === ActionTypeEnum.REACTION) {
+                reactionData = state.reactions.map((item) => {
+                    if (item.name !== actionName) return item;
+                    if (typeof item.resource === "string") return item;
+                    return {
+                        ...item,
+                        resource: {
+                            ...item.resource,
+                            current: newCurrent
+                        }
+                    }
+                });
+            }
+
+            const newState = {
+                actions: actionData,
+                bonusActions: bonusActionData,
+                reactions: reactionData,
+            }
+
+            return newState;
+        });
+    }
 }));

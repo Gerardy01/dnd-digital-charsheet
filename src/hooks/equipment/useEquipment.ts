@@ -166,6 +166,19 @@ export default function useEquipment() {
     const onAddItem = (newData: Item) => {
         if (!equipment) return;
 
+        const nameExist = equipment.items.some(item => item.name === newData.name) ||
+            equipment.attunedMagicItems.some(item => item.name === newData.name);
+
+        if (nameExist) {
+            notification.warning({
+                message: 'Item Name Already Used',
+                description: `Item with name ${newData.name} is already exist.`,
+                placement: 'top',
+                style: { backgroundColor: '#fef08a', color: '#92400e' }
+            });
+            return;
+        }
+
         setEquipment({ ...equipment, items: [...equipment.items, newData] });
         addingItem(false);
 
@@ -175,6 +188,19 @@ export default function useEquipment() {
     const onAddMagicItem = (newData: Item) => {
         if (!equipment) return;
 
+        const nameExist = equipment.attunedMagicItems.some(item => item.name === newData.name) ||
+            equipment.items.some(item => item.name === newData.name);
+
+        if (nameExist) {
+            notification.warning({
+                message: 'Magic Item Name Already Used',
+                description: `Magic item with name ${newData.name} is already exist.`,
+                placement: 'top',
+                style: { backgroundColor: '#fef08a', color: '#92400e' }
+            });
+            return;
+        }
+
         setEquipment({ ...equipment, attunedMagicItems: [...equipment.attunedMagicItems, newData] });
         addingMagicItem(false);
 
@@ -183,6 +209,19 @@ export default function useEquipment() {
 
     const onEditItem = (newData: Item) => {
         if (!equipment) return;
+
+        const nameExist = equipment.items.some((item, idx) => item.name === newData.name && idx !== editItemIdx) ||
+            equipment.attunedMagicItems.some(item => item.name === newData.name);
+
+        if (nameExist) {
+            notification.warning({
+                message: 'Item Name Already Used',
+                description: `Item with name ${newData.name} is already exist.`,
+                placement: 'top',
+                style: { backgroundColor: '#fef08a', color: '#92400e' }
+            });
+            return;
+        }
 
         const updated = equipment.items.map((item, index) => {
             if (index === editItemIdx) {
@@ -203,7 +242,19 @@ export default function useEquipment() {
 
     const onEditMagicItem = (newData: Item) => {
         if (!equipment) return;
-        console.log(newData);
+
+        const nameExist = equipment.attunedMagicItems.some((item, idx) => item.name === newData.name && idx !== editMagicItemIdx) ||
+            equipment.items.some(item => item.name === newData.name);
+
+        if (nameExist) {
+            notification.warning({
+                message: 'Magic Item Name Already Used',
+                description: `Magic item with name ${newData.name} is already exist.`,
+                placement: 'top',
+                style: { backgroundColor: '#fef08a', color: '#92400e' }
+            });
+            return;
+        }
 
         const updated = equipment.attunedMagicItems.map((item, index) => {
             if (index === editMagicItemIdx) {
