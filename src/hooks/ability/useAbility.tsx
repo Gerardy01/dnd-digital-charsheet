@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useDataHandler from "../global/useDataHandler";
 
 // DTO
-import type { AbilityScores, AbilityScore } from "../../models/dataInterface";
+import type { AbilityScores } from "../../models/dataInterface";
 
 
 
