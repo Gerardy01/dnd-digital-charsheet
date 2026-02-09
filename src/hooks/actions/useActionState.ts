@@ -8,6 +8,7 @@ import type { ActionEconomy, ActionItem, ActionPopulateParams } from "../../mode
 interface ActionState extends ActionEconomy {
     isPopulated: boolean;
     addActions: (data: ActionPopulateParams) => void;
+    editAction: (actionType: string, targetName: string, newData: ActionItem) => void;
     removeActions: (actionType: string, targetName: string) => void;
     changeName: (actionType: string, targetName: string, newName: string) => void;
     changeLevel: (actionType: string, targetName: string, newLevel: number | null) => void;
@@ -43,6 +44,57 @@ export const useActionState = create<ActionState>((set) => ({
                 actions: data.actionType === ActionTypeEnum.ACTION ? [...state.actions, newAction] : state.actions,
                 bonusActions: data.actionType === ActionTypeEnum.BONUSACTION ? [...state.bonusActions, newAction] : state.bonusActions,
                 reactions: data.actionType === ActionTypeEnum.REACTION ? [...state.reactions, newAction] : state.reactions,
+            }
+
+            return newState;
+        });
+    },
+    editAction: (actionType: string, targetName: string, newData: ActionItem) => {
+        set((state) => {
+            let actionData = state.actions;
+            let bonusActionData = state.bonusActions;
+            let reactionData = state.reactions;
+
+            if (actionType === ActionTypeEnum.ACTION) {
+                actionData = state.actions.map((item) => {
+                    if (item.name !== targetName) return item;
+                    return {
+                        ...newData,
+                        name: item.name,
+                        level: item.level,
+                        category: item.category,
+                    }
+                });
+            }
+
+            if (actionType === ActionTypeEnum.BONUSACTION) {
+                bonusActionData = state.bonusActions.map((item) => {
+                    if (item.name !== targetName) return item;
+                    return {
+                        ...newData,
+                        name: item.name,
+                        level: item.level,
+                        category: item.category,
+                    }
+                });
+            }
+
+            if (actionType === ActionTypeEnum.REACTION) {
+                reactionData = state.reactions.map((item) => {
+                    if (item.name !== targetName) return item;
+                    return {
+                        ...newData,
+                        name: item.name,
+                        level: item.level,
+                        category: item.category,
+                    }
+                });
+            }
+
+            const newState = {
+                actions: actionData,
+                bonusActions: bonusActionData,
+                reactions: reactionData,
             }
 
             return newState;

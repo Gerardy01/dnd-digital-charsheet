@@ -10,6 +10,8 @@ import {
     AbilitySelectionEnum,
     SpellSchoolEnum,
     SpellComponentsEnum,
+    UsabilityEnum,
+    DamageTypeEnum,
 } from "./enums";
 
 
@@ -119,5 +121,28 @@ export const componentList: string[] = [
     SpellComponentsEnum.S,
     SpellComponentsEnum.M,
 ];
+
+export const usabilityList: string[] = [
+    UsabilityEnum.ATTACK,
+    UsabilityEnum.UTILITY,
+    UsabilityEnum.HEALING,
+    UsabilityEnum.BUFF,
+];
+
+export const damageTypeList: string[] = [
+    DamageTypeEnum.SLASHING,
+    DamageTypeEnum.PIERCING,
+    DamageTypeEnum.BLUDGEONING,
+    DamageTypeEnum.FIRE,
+    DamageTypeEnum.COLD,
+    DamageTypeEnum.LIGHTNING,
+    DamageTypeEnum.ACID,
+    DamageTypeEnum.POISON,
+    DamageTypeEnum.THUNDER,
+    DamageTypeEnum.FORCE,
+    DamageTypeEnum.PSYCHIC,
+    DamageTypeEnum.RADIANT,
+    DamageTypeEnum.NECROTIC,
+]
 
 

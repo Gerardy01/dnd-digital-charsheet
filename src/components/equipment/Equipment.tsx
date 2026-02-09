@@ -316,7 +316,7 @@ const styles: { [key: string]: React.CSSProperties } = {
         paddingBottom: '0.7rem',
         position: 'sticky',
         top: 0,
-        zIndex: 1,
+        zIndex: 5,
         backgroundColor: 'white',
     }
 }

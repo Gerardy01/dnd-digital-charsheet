@@ -4,6 +4,7 @@ import { FieldTimeOutlined, SafetyOutlined, ThunderboltOutlined } from "@ant-des
 // components
 import ActionItem from "./ActionItem";
 import Icon from "../global/Icon";
+import EditActionForm from "./EditActionForm";
 
 // hooks
 import useActions from "../../hooks/actions/useActions";
@@ -20,7 +21,8 @@ export default function Actions() {
     const {
         actions,
         edited,
-        editAction
+        editAction,
+        onEditAction,
     } = useActions();
 
     return (
@@ -35,12 +37,21 @@ export default function Actions() {
             <div style={styles.contentHolder}>
                 {actions.actions.map((item, i) => {
                     return (
-                        <ActionItem
-                            key={i}
-                            actionItem={item}
-                            onEdit={() => editAction(i, ActionTypeEnum.ACTION)}
-                            editBtnDisabled={edited.actionType !== "" || edited.index !== -1}
-                        />
+                        <div key={i}>
+                            {edited.actionType === ActionTypeEnum.ACTION && edited.index === i ? (
+                                <EditActionForm
+                                    currentData={item}
+                                    onSubmit={onEditAction}
+                                    onCancel={() => editAction(-1, "")}
+                                />
+                            ) : (
+                                <ActionItem
+                                    actionItem={item}
+                                    onEdit={() => editAction(i, ActionTypeEnum.ACTION)}
+                                    editBtnDisabled={edited.actionType !== "" || edited.index !== -1}
+                                />
+                            )}
+                        </div>
                     )
                 })}
                 <ActionItem
@@ -69,12 +80,21 @@ export default function Actions() {
             <div style={styles.contentHolder}>
                 {actions.bonusActions.length > 0 ? actions.bonusActions.map((item, i) => {
                     return (
-                        <ActionItem
-                            key={i}
-                            actionItem={item}
-                            onEdit={() => editAction(i, ActionTypeEnum.BONUSACTION)}
-                            editBtnDisabled={edited.actionType !== "" || edited.index !== -1}
-                        />
+                        <div key={i}>
+                            {edited.actionType === ActionTypeEnum.BONUSACTION && edited.index === i ? (
+                                <EditActionForm
+                                    currentData={item}
+                                    onSubmit={onEditAction}
+                                    onCancel={() => editAction(-1, "")}
+                                />
+                            ) : (
+                                <ActionItem
+                                    actionItem={item}
+                                    onEdit={() => editAction(i, ActionTypeEnum.BONUSACTION)}
+                                    editBtnDisabled={edited.actionType !== "" || edited.index !== -1}
+                                />
+                            )}
+                        </div>
                     )
                 }) : (
                     <Text italic style={{ textAlign: 'center' }}>--- No Data ---</Text>
@@ -90,12 +110,21 @@ export default function Actions() {
             <div style={styles.contentHolder}>
                 {actions.reactions.map((item, i) => {
                     return (
-                        <ActionItem
-                            key={i}
-                            actionItem={item}
-                            onEdit={() => editAction(i, ActionTypeEnum.REACTION)}
-                            editBtnDisabled={edited.actionType !== "" || edited.index !== -1}
-                        />
+                        <div key={i}>
+                            {edited.actionType === ActionTypeEnum.REACTION && edited.index === i ? (
+                                <EditActionForm
+                                    currentData={item}
+                                    onSubmit={onEditAction}
+                                    onCancel={() => editAction(-1, "")}
+                                />
+                            ) : (
+                                <ActionItem
+                                    actionItem={item}
+                                    onEdit={() => editAction(i, ActionTypeEnum.REACTION)}
+                                    editBtnDisabled={edited.actionType !== "" || edited.index !== -1}
+                                />
+                            )}
+                        </div>
                     )
                 })}
                 <ActionItem
@@ -131,7 +160,11 @@ const styles: { [key: string]: React.CSSProperties } = {
         display: 'flex',
         alignItems: 'center',
         gap: 8,
-        marginBottom: '1rem'
+        paddingBottom: '0.7rem',
+        position: 'sticky',
+        top: 0,
+        zIndex: 5,
+        backgroundColor: 'white',
     },
     contentHolder: {
         width: '100%',

@@ -40,34 +40,35 @@ export default function ActionItem({ actionItem, onEdit, editBtnDisabled = false
                     </div>
                 )}
             </div>
-            {actionItem.activation.bonus !== 0 &&
-                actionItem.activation.dice !== "" && (
-                    <div style={styles.activations}>
-                        {actionItem.activation.bonus !== 0 && (
-                            <Tag
-                                style={{
-                                    padding: '0.2rem 0.5rem',
-                                }}
-                                color="blue"
-                                variant="outlined"
-                            >
-                                To Hit:
-                                +{actionItem.activation.bonus}
-                            </Tag>
-                        )}
-                        {actionItem.activation.dice !== "" && (
-                            <Tag
-                                style={{
-                                    padding: '0.2rem 0.5rem',
-                                }}
-                                color="red"
-                                variant="outlined"
-                            >
-                                {actionItem.activation.dice} • {actionItem.activation.damageType}
-                            </Tag>
-                        )}
-                    </div>
-                )}
+            {(actionItem.activation.bonus !== 0 || (actionItem.activation.dice !== "" || actionItem.activation.damageType !== "")) && (
+                <div style={styles.activations}>
+                    {actionItem.activation.bonus !== 0 && (
+                        <Tag
+                            style={{
+                                padding: '0.2rem 0.5rem',
+                            }}
+                            color="blue"
+                            variant="outlined"
+                        >
+                            To Hit:
+                            +{actionItem.activation.bonus}
+                        </Tag>
+                    )}
+                    {(actionItem.activation.dice !== "" || actionItem.activation.damageType !== "") && (
+                        <Tag
+                            style={{
+                                padding: '0.2rem 0.5rem',
+                            }}
+                            color="red"
+                            variant="outlined"
+                        >
+                            {actionItem.activation.dice}
+                            {actionItem.activation.damageType !== "" && actionItem.activation.dice !== "" && " • "}
+                            {actionItem.activation.damageType}
+                        </Tag>
+                    )}
+                </div>
+            )}
             {actionItem.description && (
                 <Text style={{ color: '#45556E', fontSize: '16px' }}>{actionItem.description}</Text>
             )}
