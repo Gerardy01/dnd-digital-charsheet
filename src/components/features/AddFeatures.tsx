@@ -81,6 +81,7 @@ export default function AddFeatures({ onSubmit, onCancel }: Props) {
                 </Form.Item>
                 <Form.Item
                     name="description"
+                    initialValue=""
                 >
                     <Input.TextArea
                         placeholder="Description (Optional)"

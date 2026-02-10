@@ -37,6 +37,7 @@ export default function useEquipment() {
     const [addItem, setAddItem] = useState<boolean>(false);
     const [addMagicItem, setAddMagicItem] = useState<boolean>(false);
 
+    const [editCapacity, setEditCapacity] = useState<boolean>(false);
     const [editItemIdx, setEditItemIdx] = useState<number>(-1);
     const [editMagicItemIdx, setEditMagicItemIdx] = useState<number>(-1);
 
@@ -135,23 +136,29 @@ export default function useEquipment() {
         setEquipment({ ...equipment, attunedMagicItems: updated });
     }
 
-    const handleChangeCapacity = (capacity: string) => {
-        if (!equipment || !capacity) return;
-
-        setEquipment({ ...equipment, weightCapacity: Number(capacity) });
-    }
-
-    const handleChangePushDragLift = (value: string) => {
-        if (!equipment || !value) return;
-
-        setEquipment({ ...equipment, pushDragLift: Number(value) });
-    }
-
     const addingItem = (adding: boolean) => {
+        if (equipment && equipment.pushDragLift <= 0) {
+            notification.warning({
+                title: 'Set Weight Capacity First',
+                description: 'Please set carrying capacity first before adding items.',
+                placement: 'top',
+                style: { backgroundColor: '#fef08a', color: '#92400e' }
+            });
+            return;
+        }
         setAddItem(adding);
     }
 
     const addingMagicItem = (adding: boolean) => {
+        if (equipment && equipment.pushDragLift <= 0) {
+            notification.warning({
+                title: 'Set Weight Capacity First',
+                description: 'Please set carrying capacity first before adding magic items.',
+                placement: 'top',
+                style: { backgroundColor: '#fef08a', color: '#92400e' }
+            });
+            return;
+        }
         setAddMagicItem(adding);
     }
 
@@ -161,6 +168,17 @@ export default function useEquipment() {
 
     const editMagicItem = (idx: number) => {
         setEditMagicItemIdx(idx);
+    }
+
+    const handleEditCapacity = (editing: boolean) => {
+        setEditCapacity(editing);
+    }
+
+    const onEditCapacity = ({ weightCapacity, pushDragLift }: { weightCapacity: number, pushDragLift: number }) => {
+        if (!equipment || !weightCapacity || !pushDragLift) return;
+
+        setEquipment({ ...equipment, weightCapacity, pushDragLift });
+        handleEditCapacity(false);
     }
 
     const onAddItem = (newData: Item) => {
@@ -386,6 +404,7 @@ export default function useEquipment() {
         addMagicItem,
         editItemIdx,
         editMagicItemIdx,
+        editCapacity,
         handleEquip,
         handleCurrency,
         addingItem,
@@ -393,14 +412,14 @@ export default function useEquipment() {
         editItem,
         editMagicItem,
         handleClickQuantity,
-        handleChangeCapacity,
-        handleChangePushDragLift,
         onAddItem,
         onAddMagicItem,
         onEditItem,
         onEditMagicItem,
         removeItem,
         removeMagicItem,
+        onEditCapacity,
+        handleEditCapacity,
     }
 }
 
@@ -466,6 +485,30 @@ export function useEditItem(
     return {
         editItemForm,
         submitEditedItem,
+        reset,
+    }
+}
+
+
+export function useEditCapacity(
+    onSubmit: (values: { weightCapacity: number; pushDragLift: number }) => void,
+) {
+
+    const [editCapacityForm] = Form.useForm();
+
+    const submitEditedCapacity: FormProps<{ weightCapacity: number; pushDragLift: number }>['onFinish'] = (values) => {
+        onSubmit(values);
+        console.log(values);
+        reset();
+    }
+
+    const reset = () => {
+        editCapacityForm.resetFields();
+    }
+
+    return {
+        editCapacityForm,
+        submitEditedCapacity,
         reset,
     }
 }

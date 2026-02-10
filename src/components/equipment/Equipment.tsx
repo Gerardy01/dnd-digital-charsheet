@@ -1,12 +1,12 @@
 import { Button, Tag, Typography } from "antd"
-import { InboxOutlined, PlusOutlined, SketchOutlined } from "@ant-design/icons";
+import { EditOutlined, InboxOutlined, PlusOutlined, SketchOutlined } from "@ant-design/icons";
 
 // components
 import EquipmentItem from "./EquipmentItem";
 import Icon from "../global/Icon";
 import AddItemForm from "./AddItemForm";
 import EditItemForm from "./EditItemForm";
-
+import EditCarryCapacityForm from "./EditCarryCapacityForm";
 
 // hooks
 import useEquipment from "../../hooks/equipment/useEquipment";
@@ -28,6 +28,7 @@ export default function Equipment() {
         addMagicItem,
         editItemIdx,
         editMagicItemIdx,
+        editCapacity,
         handleEquip,
         handleCurrency,
         addingItem,
@@ -35,14 +36,14 @@ export default function Equipment() {
         editItem,
         editMagicItem,
         handleClickQuantity,
-        handleChangeCapacity,
-        handleChangePushDragLift,
         onAddItem,
         onAddMagicItem,
         onEditItem,
         onEditMagicItem,
         removeItem,
         removeMagicItem,
+        onEditCapacity,
+        handleEditCapacity,
     } = useEquipment();
 
     return (
@@ -111,39 +112,46 @@ export default function Equipment() {
             </div>
 
             {equipment && (
-                <div style={styles.carryTracker}>
-                    <div style={styles.carryHeader}>
-                        <Text style={{ color: '#6B7280' }} strong>Carrying Capacity</Text>
-                        <Text strong>
-                            {weightCarried} / {" "}
-                            {weightCarried > equipment.weightCapacity ? (
-                                <Text
-                                    editable={{
-                                        triggerType: ['text'],
-                                        onChange: (newText) => { handleChangePushDragLift(newText) }
+                <>
+                    {!editCapacity ? (
+                        <div style={styles.carryTracker}>
+                            <div style={styles.carryHeader}>
+                                <div>
+                                    <Text style={{ color: '#6B7280' }} strong>Carrying Capacity</Text>
+                                    <Button
+                                        type="text"
+                                        icon={<EditOutlined />}
+                                        onClick={() => handleEditCapacity(true)}
+                                    />
+                                </div>
+                                <Text strong>
+                                    {weightCarried} / {" "}
+                                    {weightCarried > equipment.weightCapacity ? (
+                                        <Text>{equipment.pushDragLift}</Text>
+                                    ) : (
+                                        <Text>{equipment.weightCapacity}</Text>
+                                    )}
+                                    {" "}lbs
+                                </Text>
+                            </div>
+                            <div style={styles.progress}>
+                                <div
+                                    style={{
+                                        width: `${progress}%`,
+                                        height: '100%',
+                                        backgroundColor: `${weightCarried > equipment?.weightCapacity ? 'red' : 'blue'}`
                                     }}
-                                >{equipment.pushDragLift}</Text>
-                            ) : (
-                                <Text
-                                    editable={{
-                                        triggerType: ['text'],
-                                        onChange: (newText) => { handleChangeCapacity(newText) }
-                                    }}
-                                >{equipment.weightCapacity}</Text>
-                            )}
-                            {" "}lbs
-                        </Text>
-                    </div>
-                    <div style={styles.progress}>
-                        <div
-                            style={{
-                                width: `${progress}%`,
-                                height: '100%',
-                                backgroundColor: `${weightCarried > equipment?.weightCapacity ? 'red' : 'blue'}`
-                            }}
+                                />
+                            </div>
+                        </div>
+                    ) : (
+                        <EditCarryCapacityForm
+                            currentData={equipment}
+                            onSubmit={onEditCapacity}
+                            onCancel={() => handleEditCapacity(false)}
                         />
-                    </div>
-                </div>
+                    )}
+                </>
             )}
             <div style={{ marginTop: '0.5rem' }} />
             <div style={styles.titleHolder}>
