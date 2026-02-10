@@ -1,5 +1,5 @@
-import { Typography, Tabs } from 'antd';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { Typography, Tabs, Button, Dropdown } from 'antd';
+import { CheckOutlined, CloseOutlined, SettingOutlined } from '@ant-design/icons';
 
 // components
 import Ability from '../components/ability/Ability';
@@ -26,6 +26,7 @@ export default function Main() {
         infoStatData,
         selectedTab,
         tabs,
+        dropdownItem,
         changeName,
         changeRace,
         changeClassAndLevel,
@@ -41,14 +42,32 @@ export default function Main() {
         <div style={styles.container}>
             <div style={styles.contentHolder}>
                 <div style={styles.charInfoHolder}>
-                    <Title
-                        style={styles.title}
-                        level={1}
-                        editable={{
-                            triggerType: ['text'],
-                            onChange: (newText) => { changeName(newText) }
-                        }}
-                    >{charInfoData?.characterName || 'Character name'}</Title>
+                    <div style={styles.titleHolder}>
+                        <div style={{ width: '10%' }} />
+                        <div style={{ flex: '1', maxWidth: '80%' }}>
+                            <Title
+                                style={styles.title}
+                                level={1}
+                                editable={{
+                                    triggerType: ['text'],
+                                    onChange: (newText) => { changeName(newText) }
+                                }}
+                            >{charInfoData?.characterName || 'Character name'}</Title>
+                        </div>
+                        <div style={{ width: '10%', display: 'flex', justifyContent: 'flex-end' }}>
+                            <Dropdown
+                                menu={{ items: dropdownItem }}
+                                trigger={['click']}
+                                placement="bottomRight"
+                            >
+                                <Button
+                                    type="text"
+                                    icon={<SettingOutlined />}
+                                    style={{ fontSize: '1.5rem', color: 'white' }}
+                                />
+                            </Dropdown>
+                        </div>
+                    </div>
                     <Title
                         style={styles.subTitle}
                         level={4}
@@ -185,10 +204,18 @@ const styles: { [key: string]: React.CSSProperties } = {
         alignItems: 'center',
         boxShadow: '1px 0px 10px 1px gray'
     },
+    titleHolder: {
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        marginBottom: '1rem',
+        gap: '8px',
+        textAlign: 'center',
+    },
     title: {
         color: 'white',
         margin: '0px',
-        marginBottom: '0.5rem'
+        lineHeight: '1'
     },
     subTitle: {
         color: '#E6D9A2',

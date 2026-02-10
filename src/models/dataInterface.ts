@@ -33,7 +33,7 @@ export interface CharacterDetails {
 
 export interface Appearance {
     gender: string;
-    age: number;
+    age: string;
     height: string;
     weight: string;
     size: string;
@@ -113,7 +113,6 @@ export interface Combat {
     armorClass: number;
     initiative: number;
     hitDice: HitDice[];
-    heroicInspiration: boolean;
 }
 
 export interface HitPoints {
@@ -187,13 +186,6 @@ export interface OtherResources extends Resources {
 /* =========================
    Attacks & Features
 ========================= */
-
-export interface AttackOrCantrip {
-    name: string;
-    attackBonus: number;
-    damage: string;
-    damageType: string;
-}
 
 export interface FeaturesAndTraits {
     name: string;

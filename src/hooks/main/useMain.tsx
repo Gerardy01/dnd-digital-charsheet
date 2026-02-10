@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { ArrowsAltOutlined, BookOutlined, InboxOutlined, UserOutlined } from "@ant-design/icons";
+import { Upload, type MenuProps } from "antd";
+import { ArrowsAltOutlined, BookOutlined, ExportOutlined, ImportOutlined, InboxOutlined, UserOutlined } from "@ant-design/icons";
 
 // components
 import Features from "../../components/features/Features";
@@ -13,6 +14,7 @@ import type { CharacterInfo, InfoStat } from "../../models/dataInterface";
 // hooks
 import useDataHandler from "../global/useDataHandler"
 import usePopulate from "../global/usePopulate";
+import useExportImport from "../global/useExportImport";
 
 
 export default function useMain() {
@@ -25,6 +27,11 @@ export default function useMain() {
         getInfoStatData,
         changeInfoStatData,
     } = useDataHandler();
+
+    const {
+        exportJsonData,
+        importJsonData
+    } = useExportImport();
 
     const [charInfoData, setCharInfoData] = useState<CharacterInfo | null>(null);
     const [infoStatData, setInfoStatData] = useState<InfoStat | null>(null);
@@ -56,6 +63,38 @@ export default function useMain() {
             children: <Features />,
         }
     ];
+
+    const dropdownItem: MenuProps['items'] = [
+        {
+            key: '1',
+            type: 'group',
+            label: 'Import Export Data',
+            children: [
+                {
+                    key: '1-1',
+                    label: (
+                        <Upload
+                            showUploadList={false}
+                            accept=".json"
+                            beforeUpload={importJsonData}
+                        >
+                            Import Data
+                        </Upload>
+                    ),
+                    icon: <ImportOutlined />,
+                },
+                {
+                    key: '1-2',
+                    label: (
+                        <span onClick={exportJsonData}>
+                            Export Data
+                        </span>
+                    ),
+                    icon: <ExportOutlined />,
+                },
+            ]
+        }
+    ]
 
     useEffect(() => {
         setCharInfoData(getCharInfoData());
@@ -176,6 +215,7 @@ export default function useMain() {
         infoStatData,
         selectedTab,
         tabs,
+        dropdownItem,
         changeName,
         changeRace,
         changeClassAndLevel,
