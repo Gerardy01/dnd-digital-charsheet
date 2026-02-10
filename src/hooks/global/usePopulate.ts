@@ -47,7 +47,7 @@ export default function usePopulate() {
         changeCharacterDetailsData({
             appearance: {
                 gender: "",
-                age: 0,
+                age: "",
                 height: "",
                 weight: "",
                 size: "",
@@ -82,7 +82,6 @@ export default function usePopulate() {
             armorClass: 0,
             initiative: 0,
             hitDice: [],
-            heroicInspiration: false,
         });
 
         changePassiveScores({
