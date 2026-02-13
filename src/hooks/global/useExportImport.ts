@@ -106,7 +106,7 @@ export default function useExportImport() {
                 const rawData = JSON.parse(result);
 
                 const validation = characterSheetSchema.safeParse(rawData);
-                console.log(validation)
+
                 if (!validation.success) {
                     throw new Error('Invalid Character Sheet Data');
                 }

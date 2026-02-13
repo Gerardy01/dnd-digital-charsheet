@@ -28,12 +28,13 @@ export default function usePopulate() {
     } = useDataHandler();
 
     useEffect(() => {
+        const charInfoData = getCharInfoData();
+        if (charInfoData) return;
+
         populateData();
     }, []);
 
     const populateData = () => {
-        const charInfoData = getCharInfoData();
-        if (charInfoData) return;
 
         changeCharInfoData({
             characterName: "--- Name ---",
@@ -257,5 +258,9 @@ export default function usePopulate() {
 
         changeActionEconomyData(actionsData);
         changeActionCache([]);
+    }
+
+    return {
+        populateData,
     }
 }

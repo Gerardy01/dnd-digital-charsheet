@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Upload, type MenuProps } from "antd";
-import { ArrowsAltOutlined, BookOutlined, ExportOutlined, ImportOutlined, InboxOutlined, UserOutlined } from "@ant-design/icons";
+import { Modal, Upload, type MenuProps } from "antd";
+import { ArrowsAltOutlined, BookOutlined, DeleteOutlined, ExportOutlined, ImportOutlined, InboxOutlined, UserOutlined } from "@ant-design/icons";
 
 // components
 import Features from "../../components/features/Features";
@@ -16,10 +16,12 @@ import useDataHandler from "../global/useDataHandler"
 import usePopulate from "../global/usePopulate";
 import useExportImport from "../global/useExportImport";
 
+const { confirm } = Modal;
+
 
 export default function useMain() {
 
-    usePopulate();
+    const { populateData } = usePopulate();
 
     const {
         getCharInfoData,
@@ -36,6 +38,19 @@ export default function useMain() {
     const [charInfoData, setCharInfoData] = useState<CharacterInfo | null>(null);
     const [infoStatData, setInfoStatData] = useState<InfoStat | null>(null);
     const [selectedTab, setSelectedTab] = useState<string>('1');
+
+    const resetData = () => {
+
+        confirm({
+            title: "Reset Data",
+            content: "Are you sure you want to reset data?",
+            centered: true,
+            onOk() {
+                populateData();
+                window.location.reload();
+            },
+        });
+    }
 
     const tabs = [
         {
@@ -91,6 +106,22 @@ export default function useMain() {
                         </span>
                     ),
                     icon: <ExportOutlined />,
+                },
+            ]
+        },
+        {
+            key: '2',
+            type: 'group',
+            label: 'Manage Data',
+            children: [
+                {
+                    key: '2-1',
+                    label: (
+                        <span onClick={resetData}>
+                            Reset Data
+                        </span>
+                    ),
+                    icon: <DeleteOutlined />,
                 },
             ]
         }
