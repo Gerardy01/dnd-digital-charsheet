@@ -62,74 +62,92 @@ export default function Skills() {
                 <>
                     <SkillsItem
                         name="Acrobatics"
+                        ability="Dex"
                         skillsData={skillsData.acrobatics}
                     />
                     <SkillsItem
                         name="Animal Handling"
+                        ability="Wis"
                         skillsData={skillsData.animalHandling}
                     />
                     <SkillsItem
                         name="Arcana"
+                        ability="Int"
                         skillsData={skillsData.arcana}
                     />
                     <SkillsItem
                         name="Athletics"
+                        ability="Str"
                         skillsData={skillsData.athletics}
                     />
                     <SkillsItem
                         name="Deception"
+                        ability="Cha"
                         skillsData={skillsData.deception}
                     />
                     <SkillsItem
                         name="History"
+                        ability="Int"
                         skillsData={skillsData.history}
                     />
                     <SkillsItem
                         name="Insight"
+                        ability="Wis"
                         skillsData={skillsData.insight}
                     />
                     <SkillsItem
                         name="Intimidation"
+                        ability="Cha"
                         skillsData={skillsData.intimidation}
                     />
                     <SkillsItem
                         name="Investigation"
+                        ability="Int"
                         skillsData={skillsData.investigation}
                     />
                     <SkillsItem
                         name="Medicine"
+                        ability="Wis"
                         skillsData={skillsData.medicine}
                     />
                     <SkillsItem
                         name="Nature"
+                        ability="Int"
                         skillsData={skillsData.nature}
                     />
                     <SkillsItem
                         name="Perception"
+                        ability="Wis"
                         skillsData={skillsData.perception}
                     />
                     <SkillsItem
                         name="Performance"
+                        ability="Cha"
                         skillsData={skillsData.performance}
                     />
                     <SkillsItem
                         name="Persuasion"
+                        ability="Cha"
                         skillsData={skillsData.persuasion}
                     />
                     <SkillsItem
                         name="Religion"
+                        ability="Int"
                         skillsData={skillsData.religion}
                     />
                     <SkillsItem
                         name="Sleight of Hand"
+                        ability="Dex"
                         skillsData={skillsData.sleightOfHand}
                     />
                     <SkillsItem
                         name="Stealth"
+                        ability="Dex"
                         skillsData={skillsData.stealth}
                     />
                     <SkillsItem
                         name="Survival"
+                        ability="Wis"
                         skillsData={skillsData.survival}
                     />
                 </>
@@ -144,6 +162,7 @@ export default function Skills() {
                 >
                     <EditRows
                         rowName="Acrobatics"
+                        info="Dex"
                         proficiencyName="acrobaticsProficiency"
                         proficiencyValue={skillsData.acrobatics.proficient}
                         modifierName="acrobaticsValue"
@@ -151,6 +170,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Animal Handling"
+                        info="Wis"
                         proficiencyName="animalHandlingProficiency"
                         proficiencyValue={skillsData.animalHandling.proficient}
                         modifierName="animalHandlingValue"
@@ -158,6 +178,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Arcana"
+                        info="Int"
                         proficiencyName="arcanaProficiency"
                         proficiencyValue={skillsData.arcana.proficient}
                         modifierName="arcanaValue"
@@ -165,6 +186,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Athletics"
+                        info="Str"
                         proficiencyName="athleticsProficiency"
                         proficiencyValue={skillsData.athletics.proficient}
                         modifierName="athleticsValue"
@@ -172,6 +194,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Deception"
+                        info="Cha"
                         proficiencyName="deceptionProficiency"
                         proficiencyValue={skillsData.deception.proficient}
                         modifierName="deceptionValue"
@@ -179,6 +202,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="History"
+                        info="Int"
                         proficiencyName="historyProficiency"
                         proficiencyValue={skillsData.history.proficient}
                         modifierName="historyValue"
@@ -186,6 +210,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Insight"
+                        info="Wis"
                         proficiencyName="insightProficiency"
                         proficiencyValue={skillsData.insight.proficient}
                         modifierName="insightValue"
@@ -193,6 +218,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Intimidation"
+                        info="Cha"
                         proficiencyName="intimidationProficiency"
                         proficiencyValue={skillsData.intimidation.proficient}
                         modifierName="intimidationValue"
@@ -200,6 +226,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Investigation"
+                        info="Int"
                         proficiencyName="investigationProficiency"
                         proficiencyValue={skillsData.investigation.proficient}
                         modifierName="investigationValue"
@@ -207,6 +234,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Medicine"
+                        info="Wis"
                         proficiencyName="medicineProficiency"
                         proficiencyValue={skillsData.medicine.proficient}
                         modifierName="medicineValue"
@@ -214,6 +242,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Nature"
+                        info="Int"
                         proficiencyName="natureProficiency"
                         proficiencyValue={skillsData.nature.proficient}
                         modifierName="natureValue"
@@ -221,6 +250,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Perception"
+                        info="Wis"
                         proficiencyName="perceptionProficiency"
                         proficiencyValue={skillsData.perception.proficient}
                         modifierName="perceptionValue"
@@ -228,6 +258,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Performance"
+                        info="Cha"
                         proficiencyName="performanceProficiency"
                         proficiencyValue={skillsData.performance.proficient}
                         modifierName="performanceValue"
@@ -235,6 +266,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Persuasion"
+                        info="Cha"
                         proficiencyName="persuasionProficiency"
                         proficiencyValue={skillsData.persuasion.proficient}
                         modifierName="persuasionValue"
@@ -242,6 +274,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Religion"
+                        info="Int"
                         proficiencyName="religionProficiency"
                         proficiencyValue={skillsData.religion.proficient}
                         modifierName="religionValue"
@@ -249,6 +282,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Sleight of Hand"
+                        info="Dex"
                         proficiencyName="sleightOfHandProficiency"
                         proficiencyValue={skillsData.sleightOfHand.proficient}
                         modifierName="sleightOfHandValue"
@@ -256,6 +290,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Stealth"
+                        info="Dex"
                         proficiencyName="stealthProficiency"
                         proficiencyValue={skillsData.stealth.proficient}
                         modifierName="stealthValue"
@@ -263,6 +298,7 @@ export default function Skills() {
                     />
                     <EditRows
                         rowName="Survival"
+                        info="Wis"
                         proficiencyName="survivalProficiency"
                         proficiencyValue={skillsData.survival.proficient}
                         modifierName="survivalValue"

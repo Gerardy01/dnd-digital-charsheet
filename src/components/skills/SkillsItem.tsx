@@ -5,13 +5,14 @@ import { CheckCircleTwoTone, CloseCircleOutlined } from "@ant-design/icons";
 import type { SaveOrSkill } from "../../models/dataInterface";
 interface Props {
     name: string;
-    skillsData : SaveOrSkill;
+    ability: string;
+    skillsData: SaveOrSkill;
 }
 
 const { Text } = Typography;
 
 
-export default function SkillsItem({ name, skillsData } : Props) {
+export default function SkillsItem({ name, ability, skillsData }: Props) {
     return (
         <div style={styles.skillsItem}>
             <div style={styles.info}>
@@ -20,22 +21,22 @@ export default function SkillsItem({ name, skillsData } : Props) {
                 ) : (
                     <CloseCircleOutlined style={{ marginRight: '10px', color: 'lightgray' }} />
                 )}
-                <Text>{name}</Text>
+                <Text>{name} <Text type="secondary">({ability})</Text></Text>
             </div>
-            <Text strong>{skillsData.modifier >= 0? `+${skillsData.modifier}` : `${skillsData.modifier}`}</Text>
+            <Text strong>{skillsData.modifier >= 0 ? `+${skillsData.modifier}` : `${skillsData.modifier}`}</Text>
         </div>
     )
 }
 
-const styles : { [key: string]: React.CSSProperties } = {
-    skillsItem : {
+const styles: { [key: string]: React.CSSProperties } = {
+    skillsItem: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         margin: '0.5rem',
         marginLeft: '0.25rem',
     },
-    info : {
+    info: {
         display: 'flex',
         alignItems: 'center',
     }

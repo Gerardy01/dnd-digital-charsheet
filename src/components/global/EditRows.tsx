@@ -5,13 +5,14 @@ const { Text } = Typography;
 // interface
 interface Props {
     rowName: string;
+    info?: string;
     proficiencyName: string;
     proficiencyValue: boolean;
     modifierName: string;
     modifierValue: number;
 }
 
-export default function EditRows({ rowName, proficiencyName, proficiencyValue, modifierName, modifierValue }: Props) {
+export default function EditRows({ rowName, info, proficiencyName, proficiencyValue, modifierName, modifierValue }: Props) {
     return (
         <div style={styles.formRow}>
             <div style={styles.rightRow}>
@@ -23,7 +24,7 @@ export default function EditRows({ rowName, proficiencyName, proficiencyValue, m
                 >
                     <Checkbox />
                 </Form.Item>
-                <Text>{rowName}</Text>
+                <Text>{rowName} {info && <Text type="secondary">({info})</Text>}</Text>
             </div>
             <Form.Item
                 name={modifierName}
