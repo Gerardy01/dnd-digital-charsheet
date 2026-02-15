@@ -216,7 +216,7 @@ export default function useMain() {
         if (!infoStatData) return;
 
         const numberValue = Number(newProficiencyBonus);
-        if (!numberValue) return;
+        if (!numberValue && numberValue !== 0) return;
 
         const newInfoStat: InfoStat = {
             ...infoStatData,
