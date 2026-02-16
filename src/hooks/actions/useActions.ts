@@ -199,7 +199,7 @@ export function useEditAction(
                 category: "",
                 activation: {
                     type: value.type,
-                    bonus: value.bonus,
+                    bonus: value.bonus || 0,
                     dice: value.dice,
                     damageType: value.damageType,
                 },

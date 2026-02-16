@@ -72,24 +72,29 @@ export default function useEquipment() {
         if (!equipment) return;
 
         if (type === 'item') {
+            let targetItem;
             const updated = equipment.items.map((item) => {
                 if (item.name === itemName) {
                     item.equipped = equip;
+                    targetItem = item;
                 }
                 return item;
             });
             setEquipment({ ...equipment, items: updated });
-
+            handleUponEquip(targetItem!, equip);
             return;
         }
 
+        let targetItem;
         const updated = equipment.attunedMagicItems.map((item) => {
             if (item.name === itemName) {
                 item.equipped = equip;
+                targetItem = item;
             }
             return item;
         });
         setEquipment({ ...equipment, attunedMagicItems: updated });
+        handleUponEquip(targetItem!, equip);
     }
 
     const handleCurrency = (currencyType: string, amount: string) => {
@@ -241,17 +246,20 @@ export default function useEquipment() {
             return;
         }
 
+        let newDataEdited;
         const updated = equipment.items.map((item, index) => {
             if (index === editItemIdx) {
-                return {
+                const edited = {
                     ...newData,
                     equipped: newData.equipable ? item.equipped : false,
                 }
+                newDataEdited = newData;
+                return edited;
             }
             return item;
         });
 
-        handleActionUponEdit(newData, equipment.items[editItemIdx]);
+        handleActionUponEdit(newDataEdited ?? newData, equipment.items[editItemIdx]);
 
         setEquipment({ ...equipment, items: updated });
         editItem(-1);
@@ -274,17 +282,20 @@ export default function useEquipment() {
             return;
         }
 
+        let newDataEdited;
         const updated = equipment.attunedMagicItems.map((item, index) => {
             if (index === editMagicItemIdx) {
-                return {
+                const edited = {
                     ...newData,
                     equipped: newData.equipable ? item.equipped : false,
                 }
+                newDataEdited = edited;
+                return edited;
             }
             return item;
         });
 
-        handleActionUponEdit(newData, equipment.attunedMagicItems[editMagicItemIdx]);
+        handleActionUponEdit(newDataEdited ?? newData, equipment.attunedMagicItems[editMagicItemIdx]);
 
         setEquipment({ ...equipment, attunedMagicItems: updated });
         editMagicItem(-1);
@@ -354,6 +365,7 @@ export default function useEquipment() {
 
     const handleActionUponAdding = (data: Item) => {
         if (data.actionType === "") return;
+        if (data.equipable && !data.equipped) return;
 
         const category = data.equipable ? ActionCategoryEnum.EQUIPABLE : ActionCategoryEnum.ITEM;
         addActions({
@@ -381,12 +393,27 @@ export default function useEquipment() {
                 description: newData.description,
                 level: null,
             });
-        } else if ((newData.actionType !== currentData.actionType) && newData.actionType !== "") {
+        } else if (newData.actionType !== currentData.actionType && newData.actionType !== "") {
             changeActionType(currentData.actionType, newData.name, newData.actionType);
         }
 
         if ((newData.actionType !== currentData.actionType) && newData.actionType === "") {
             removeActions(currentData.actionType, newData.name);
+        }
+
+        if (newData.equipable && !newData.equipped && newData.actionType !== "") {
+            removeActions(currentData.actionType, newData.name);
+            removeActions(newData.actionType, newData.name);
+        }
+
+        if (currentData.equipable && !newData.equipable && !currentData.equipped && newData.actionType !== "") {
+            addActions({
+                name: newData.name,
+                actionType: newData.actionType,
+                category: category,
+                description: newData.description,
+                level: null,
+            });
         }
     }
 
@@ -394,6 +421,22 @@ export default function useEquipment() {
         if (data.actionType === "") return;
 
         removeActions(data.actionType, data.name);
+    }
+
+    const handleUponEquip = (data: Item, equip: boolean) => {
+
+        if (!equip && data.actionType !== "") {
+            removeActions(data.actionType, data.name);
+            return;
+        }
+
+        addActions({
+            name: data.name,
+            actionType: data.actionType,
+            category: ActionCategoryEnum.EQUIPABLE,
+            description: data.description,
+            level: null,
+        });
     }
 
     return {
