@@ -15,6 +15,9 @@ import OtherResources from '../components/otherResources/OtherResources';
 // hooks
 import useMain from "../hooks/main/useMain";
 
+// assets
+import { logo } from '../assets';
+
 const { Title, Text } = Typography;
 
 
@@ -27,6 +30,7 @@ export default function Main() {
         selectedTab,
         tabs,
         dropdownItem,
+        handleLogoClick,
         changeName,
         changeRace,
         changeClassAndLevel,
@@ -43,7 +47,12 @@ export default function Main() {
             <div style={styles.contentHolder}>
                 <div style={styles.charInfoHolder}>
                     <div style={styles.titleHolder}>
-                        <div style={{ width: '10%' }} />
+                        <div
+                            style={{ width: '10%', display: 'flex', justifyContent: 'flex-start' }}
+                            onClick={handleLogoClick}
+                        >
+                            <img src={logo} alt="Logo" style={styles.logo} />
+                        </div>
                         <div style={{ flex: '1', maxWidth: '80%' }}>
                             <Title
                                 style={styles.title}
@@ -203,6 +212,11 @@ const styles: { [key: string]: React.CSSProperties } = {
         flexDirection: 'column',
         alignItems: 'center',
         boxShadow: '1px 0px 10px 1px gray'
+    },
+    logo: {
+        width: '29px',
+        aspectRatio: '1/1',
+        filter: 'brightness(0) invert(1)',
     },
     titleHolder: {
         width: '100%',

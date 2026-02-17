@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Modal, Upload, type MenuProps } from "antd";
-import { ArrowsAltOutlined, BookOutlined, DeleteOutlined, ExportOutlined, ImportOutlined, InboxOutlined, UserOutlined } from "@ant-design/icons";
+import { useEffect, useMemo, useState } from "react";
+import { message, Upload, type MenuProps } from "antd";
+import { ArrowsAltOutlined, BookOutlined, CopyOutlined, DeleteOutlined, DownSquareOutlined, ExportOutlined, ImportOutlined, InboxOutlined, UserOutlined } from "@ant-design/icons";
 
 // components
 import Features from "../../components/features/Features";
@@ -15,13 +15,13 @@ import type { CharacterInfo, InfoStat } from "../../models/dataInterface";
 import useDataHandler from "../global/useDataHandler"
 import usePopulate from "../global/usePopulate";
 import useExportImport from "../global/useExportImport";
-
-const { confirm } = Modal;
+import useManageData from "./useManageData";
 
 
 export default function useMain() {
 
     const { populateData } = usePopulate();
+    const { resetData, handleCopy, handleLoadData } = useManageData(populateData);
 
     const {
         getCharInfoData,
@@ -39,18 +39,8 @@ export default function useMain() {
     const [infoStatData, setInfoStatData] = useState<InfoStat | null>(null);
     const [selectedTab, setSelectedTab] = useState<string>('1');
 
-    const resetData = () => {
-
-        confirm({
-            title: "Reset Data",
-            content: "Are you sure you want to reset data?",
-            centered: true,
-            onOk() {
-                populateData();
-                window.location.reload();
-            },
-        });
-    }
+    const [logoClickCount, setLogoClickCount] = useState<number>(0);
+    const [secretToggle, setSecretToggle] = useState<boolean>(false);
 
     const tabs = [
         {
@@ -79,53 +69,67 @@ export default function useMain() {
         }
     ];
 
-    const dropdownItem: MenuProps['items'] = [
-        {
-            key: '1',
-            type: 'group',
-            label: 'Import Export Data',
-            children: [
-                {
-                    key: '1-1',
-                    label: (
-                        <Upload
-                            showUploadList={false}
-                            accept=".json"
-                            beforeUpload={importJsonData}
-                        >
-                            Import Data
-                        </Upload>
-                    ),
-                    icon: <ImportOutlined />,
-                },
-                {
-                    key: '1-2',
-                    label: (
-                        <span onClick={exportJsonData}>
-                            Export Data
-                        </span>
-                    ),
-                    icon: <ExportOutlined />,
-                },
-            ]
-        },
-        {
-            key: '2',
-            type: 'group',
-            label: 'Manage Data',
-            children: [
-                {
-                    key: '2-1',
-                    label: (
-                        <span onClick={resetData}>
-                            Reset Data
-                        </span>
-                    ),
-                    icon: <DeleteOutlined />,
-                },
-            ]
-        }
-    ]
+    const dropdownItem: MenuProps['items'] = useMemo(() => {
+        return [
+            {
+                key: '1',
+                type: 'group',
+                label: 'Import Export Data',
+                children: [
+                    {
+                        key: '1-1',
+                        label: (
+                            <Upload
+                                showUploadList={false}
+                                accept=".json"
+                                beforeUpload={importJsonData}
+                            >
+                                Import Data
+                            </Upload>
+                        ),
+                        icon: <ImportOutlined />,
+                    },
+                    {
+                        key: '1-2',
+                        label: (
+                            <span onClick={exportJsonData}>
+                                Export Data
+                            </span>
+                        ),
+                        icon: <ExportOutlined />,
+                    },
+                ]
+            },
+            {
+                key: '2',
+                type: 'group',
+                label: 'Manage Data',
+                children: [
+                    ...(secretToggle ? [
+                        {
+                            key: '2-1',
+                            label: <span onClick={handleCopy}>Copy Data</span>,
+                            icon: <CopyOutlined />,
+                        },
+                        {
+                            key: '2-2',
+                            label: <span onClick={handleLoadData}>Load Data</span>,
+                            icon: <DownSquareOutlined />,
+                        },
+                    ] : []),
+                    {
+                        key: '2-3',
+                        label: (
+                            <span onClick={resetData}>
+                                Reset Data
+                            </span>
+                        ),
+                        icon: <DeleteOutlined />,
+                    },
+                ]
+            }
+        ]
+    }, [secretToggle]);
 
     useEffect(() => {
         setCharInfoData(getCharInfoData());
@@ -145,6 +149,28 @@ export default function useMain() {
         changeInfoStatData(infoStatData);
 
     }, [infoStatData]);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setLogoClickCount(0);
+        }, 1000);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [logoClickCount]);
+
+    const handleLogoClick = (): void => {
+        setLogoClickCount(prev => prev + 1);
+
+        if (logoClickCount === 4) {
+            if (!secretToggle) message.info('You found a secret! 👀');
+
+            setSecretToggle(prev => !prev);
+            setLogoClickCount(0);
+
+        }
+    }
 
     const changeName = (newName: string): void => {
         if (!charInfoData) return;
@@ -247,6 +273,7 @@ export default function useMain() {
         selectedTab,
         tabs,
         dropdownItem,
+        handleLogoClick,
         changeName,
         changeRace,
         changeClassAndLevel,
