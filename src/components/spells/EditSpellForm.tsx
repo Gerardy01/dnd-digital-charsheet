@@ -5,7 +5,7 @@ import { CheckOutlined, CloseOutlined, DeleteOutlined } from "@ant-design/icons"
 import { useEditSpell } from "../../hooks/spells/useSpells";
 
 // utils
-import { actionTypeList } from "../../utils/selectionData";
+import { actionTypeOptionalList } from "../../utils/selectionData";
 
 // interface
 import type { Spell } from "../../models/dataInterface";
@@ -181,7 +181,7 @@ export default function EditSpellForm({
                     help="Select this field if this Spell need to be displayed in actions tab"
                 >
                     <Select
-                        options={actionTypeList}
+                        options={actionTypeOptionalList}
                     />
                 </Form.Item>
                 <Form.Item

@@ -284,16 +284,20 @@ export default function useSpells() {
             return;
         }
 
+        let newData;
+
         const updatedData = spellcasting.map((item, i) => {
             if (i === sourceIdx) {
                 return {
                     ...item,
                     spells: item.spells.map((spell) => {
                         if (spell.name === targetSpellName) {
-                            return {
+                            const newValue = {
                                 ...values,
                                 prepared: values.level === 0 ? true : spell.prepared,
                             }
+                            newData = newValue;
+                            return newValue;
                         }
                         return spell;
                     })
@@ -304,7 +308,7 @@ export default function useSpells() {
         setSpellcasting(updatedData);
         editSpell(-1, -1, -1);
 
-        handleActionUponEdit(values, targetSpell);
+        handleActionUponEdit(newData!, targetSpell);
     }
 
     const removeSpell = (): void => {
@@ -345,7 +349,7 @@ export default function useSpells() {
     const handleActionUponPrepare = (spellName: string, prepared: boolean) => {
         const targetSpellSource = spellcasting.find(item => item.spells.some(spell => spell.name === spellName));
         const targetSpell = targetSpellSource?.spells.find(spell => spell.name === spellName);
-        if (!targetSpell || targetSpell.level === 0) return;
+        if (!targetSpell || targetSpell.level === 0 || targetSpell.actionType === "") return;
 
         if (prepared) {
             addActions({
@@ -361,13 +365,12 @@ export default function useSpells() {
     }
 
     const handleActionUponAdd = (data: Spell) => {
-        if (data.level !== 0) return;
+        if (data.level !== 0 || data.actionType === "") return;
 
-        const category = ActionCategoryEnum.SPELL;
         addActions({
             name: data.name,
             actionType: data.actionType,
-            category: category,
+            category: ActionCategoryEnum.SPELL,
             description: data.description,
             level: null,
         });
@@ -375,15 +378,27 @@ export default function useSpells() {
 
     const handleActionUponEdit = (newData: Spell, currentData: Spell) => {
 
-        if (newData.name !== currentData.name && currentData.prepared) {
+        if (newData.name !== currentData.name && newData.actionType !== "" && currentData.prepared) {
             changeName(currentData.actionType, currentData.name, newData.name);
         }
 
-        if (currentData.actionType !== newData.actionType && currentData.prepared) {
+        if (currentData.actionType === "" && newData.actionType !== "" && newData.prepared) {
+            addActions({
+                name: newData.name,
+                actionType: newData.actionType,
+                category: ActionCategoryEnum.SPELL,
+                description: newData.description,
+                level: newData.level === 0 ? null : newData.level,
+            });
+        } else if (currentData.actionType !== newData.actionType && newData.actionType !== "" && currentData.prepared) {
             changeActionType(currentData.actionType, newData.name, newData.actionType);
         }
 
-        if (newData.level === 0 && currentData.level !== 0 && !currentData.prepared) {
+        if ((newData.actionType !== currentData.actionType) && newData.actionType === "") {
+            removeActions(currentData.actionType, newData.name);
+        }
+
+        if (newData.level === 0 && currentData.level !== 0 && currentData.actionType !== "" && newData.actionType !== "" && !currentData.prepared) {
             addActions({
                 name: newData.name,
                 actionType: newData.actionType,
@@ -393,13 +408,13 @@ export default function useSpells() {
             });
         }
 
-        if (currentData.level !== newData.level && currentData.prepared) {
+        if (currentData.level !== newData.level && newData.actionType !== "" && currentData.prepared) {
             changeLevel(currentData.actionType, newData.name, newData.level === 0 ? null : newData.level);
         }
     }
 
     const handleActionUponRemove = (data: Spell) => {
-        if (!data.prepared) return;
+        if (!data.prepared || data.actionType === "") return;
 
         removeActions(data.actionType, data.name);
     }

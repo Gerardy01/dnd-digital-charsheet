@@ -5,7 +5,7 @@ import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { useAddSpell } from "../../hooks/spells/useSpells";
 
 // utils
-import { actionTypeList } from "../../utils/selectionData";
+import { actionTypeOptionalList } from "../../utils/selectionData";
 
 // interfaces
 import type { Spell } from "../../models/dataInterface";
@@ -162,10 +162,11 @@ export default function AddSpellForm({ onSubmit, onCancel }: Props) {
                 </Form.Item>
                 <Form.Item
                     name="actionType"
-                    help="Which action type this spell is"
+                    initialValue=""
+                    help="Select this field if this Spell need to be displayed in actions tab"
                 >
                     <Select
-                        options={actionTypeList}
+                        options={actionTypeOptionalList}
                         placeholder="Action Type"
                     />
                 </Form.Item>
