@@ -70,6 +70,7 @@ export default function AddOtherResourcesForm({ onSubmit, onCancel }: Props) {
                 </Form.Item>
                 <Form.Item
                     name="notes"
+                    initialValue=""
                 >
                     <Input.TextArea
                         placeholder="Notes (Optional)"

@@ -201,7 +201,7 @@ const otherResourceSchema = z.object({
     current: z.number(),
     max: z.number(),
     reset: z.string(),
-    notes: z.string().optional(),
+    notes: z.string(),
 });
 
 const activationSchema = z.object({
